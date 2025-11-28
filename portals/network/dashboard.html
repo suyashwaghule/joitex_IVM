@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Admin Dashboard - Joitex Fiber</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <style>
+        .olt-status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .olt-card {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .olt-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .olt-card.online {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #22c55e;
+        }
+        .olt-card.offline {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #ef4444;
+        }
+        .olt-card.maintenance {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #f59e0b;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-logo">
+                <i class="bi bi-router-fill" style="color: #16a34a;"></i>
+                <span>Joitex Fiber</span>
+            </a>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link active">
+                            <i class="bi bi-speedometer2"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="olt-details.html" class="nav-link">
+                            <i class="bi bi-hdd-network"></i>
+                            <span>OLT Details</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ip-management.html" class="nav-link">
+                            <i class="bi bi-diagram-3"></i>
+                            <span>IP Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="downtime.html" class="nav-link">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <span>Downtime Logs</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                
+                <nav aria-label="breadcrumb" class="breadcrumb-container d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Network</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </nav>
+            </div>
+            
+            <div class="header-right">
+                <button class="header-action" id="themeToggle" data-bs-toggle="tooltip" title="Toggle Theme">
+                    <i class="bi bi-moon"></i>
+                </button>
+                
+                <button class="header-action" data-bs-toggle="tooltip" title="Notifications">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-badge"></span>
+                </button>
+                
+                <button class="header-action" onclick="refreshAll()">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+                
+                <div class="dropdown">
+                    <div class="user-menu" data-bs-toggle="dropdown">
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);">NA</div>
+                        <div class="user-info d-none d-md-block">
+                            <div class="user-name" id="userName">Network Admin</div>
+                            <div class="user-role">NOC</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-2"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Content -->
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">Network Operations Center</h1>
+                        <p class="content-subtitle">Real-time monitoring and network management</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-success">Auto-refresh: ON</span>
+                        <span class="text-muted small">Last updated: <span id="lastUpdate">Just now</span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(34, 197, 94, 0.1); color: #22c55e;">
+                            <i class="bi bi-check-circle pulse"></i>
+                        </div>
+                        <div class="kpi-trend up">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>2%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-title">OLTs Online</div>
+                    <div class="kpi-value">45/48</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        93.75% uptime
+                    </div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                            <i class="bi bi-x-circle pulse"></i>
+                        </div>
+                        <div class="kpi-trend">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-title">OLTs Offline</div>
+                    <div class="kpi-value">3</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        Requires attention
+                    </div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+                        <div class="kpi-trend up">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>5</span>
+                        </div>
+                    </div>
+                    <div class="kpi-title">Alerts Today</div>
+                    <div class="kpi-value">12</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        8 acknowledged
+                    </div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(147, 51, 234, 0.1); color: #9333ea;">
+                            <i class="bi bi-diagram-3"></i>
+                        </div>
+                        <div class="kpi-trend">
+                            <i class="bi bi-info-circle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-title">IP Utilization</div>
+                    <div class="kpi-value">68%</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        1,245 / 1,832 allocated
+                    </div>
+                </div>
+            </div>
+            
+            <!-- OLT Status Grid -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">OLT Status Overview</h5>
+                    <div class="d-flex gap-3">
+                        <span><span class="badge bg-success">●</span> Online (45)</span>
+                        <span><span class="badge bg-danger">●</span> Offline (3)</span>
+                        <span><span class="badge bg-warning">●</span> Maintenance (0)</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="olt-status-grid" id="oltGrid">
+                        <!-- OLTs will be dynamically loaded -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Network Uptime (Last 7 Days)</h3>
+                            <div class="chart-actions">
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-secondary active">7D</button>
+                                    <button class="btn btn-outline-secondary">30D</button>
+                                    <button class="btn btn-outline-secondary">90D</button>
+                                </div>
+                            </div>
+                        </div>
+                        <canvas id="uptimeChart" height="80"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Outage Distribution</h3>
+                        </div>
+                        <canvas id="outageChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Active Alerts & IP Pools -->
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Active Alerts</h5>
+                            <span class="badge bg-danger">12 Active</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="d-flex align-items-start">
+                                            <i class="bi bi-exclamation-triangle-fill text-danger fs-4 me-3"></i>
+                                            <div>
+                                                <h6 class="mb-1">OLT-SECTOR-12 Offline</h6>
+                                                <p class="mb-1 text-muted small">Device not responding to ping</p>
+                                                <small class="text-muted">Location: Whitefield</small>
+                                            </div>
+                                        </div>
+                                        <div class="text-end">
+                                            <small class="text-muted d-block">5m ago</small>
+                                            <button class="btn btn-sm btn-outline-primary mt-1" onclick="acknowledgeAlert('OLT-SECTOR-12')">
+                                                Acknowledge
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="d-flex align-items-start">
+                                            <i class="bi bi-exclamation-circle-fill text-warning fs-4 me-3"></i>
+                                            <div>
+                                                <h6 class="mb-1">High Packet Loss</h6>
+                                                <p class="mb-1 text-muted small">OLT-SECTOR-8: 15% packet loss detected</p>
+                                                <small class="text-muted">Location: Koramangala</small>
+                                            </div>
+                                        </div>
+                                        <div class="text-end">
+                                            <small class="text-muted d-block">12m ago</small>
+                                            <button class="btn btn-sm btn-outline-primary mt-1" onclick="acknowledgeAlert('OLT-SECTOR-8')">
+                                                Acknowledge
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="d-flex align-items-start">
+                                            <i class="bi bi-info-circle-fill text-info fs-4 me-3"></i>
+                                            <div>
+                                                <h6 class="mb-1">Maintenance Window</h6>
+                                                <p class="mb-1 text-muted small">OLT-SECTOR-5 scheduled maintenance</p>
+                                                <small class="text-muted">Starts in 2 hours</small>
+                                            </div>
+                                        </div>
+                                        <div class="text-end">
+                                            <small class="text-muted d-block">30m ago</small>
+                                            <button class="btn btn-sm btn-outline-secondary mt-1" disabled>
+                                                Scheduled
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="olts.html" class="text-decoration-none">View All Alerts <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">IP Pool Status</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Pool Name</th>
+                                            <th>Type</th>
+                                            <th>Total</th>
+                                            <th>Used</th>
+                                            <th>Utilization</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Public-Pool-1</strong></td>
+                                            <td><span class="badge bg-primary">Public</span></td>
+                                            <td>512</td>
+                                            <td>387</td>
+                                            <td>
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar bg-warning" style="width: 75%">75%</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Public-Pool-2</strong></td>
+                                            <td><span class="badge bg-primary">Public</span></td>
+                                            <td>256</td>
+                                            <td>142</td>
+                                            <td>
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar bg-success" style="width: 55%">55%</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Private-Pool-1</strong></td>
+                                            <td><span class="badge bg-secondary">Private</span></td>
+                                            <td>1024</td>
+                                            <td>716</td>
+                                            <td>
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar bg-warning" style="width: 70%">70%</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="ipam.html" class="text-decoration-none">View IP Management <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/portal-switcher.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['network']);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+            
+            loadOLTGrid();
+            initUptimeChart();
+            initOutageChart();
+            startAutoRefresh();
+        });
+        
+        function loadOLTGrid() {
+            const grid = document.getElementById('oltGrid');
+            const olts = [];
+            
+            // Generate 48 OLTs
+            for (let i = 1; i <= 48; i++) {
+                const status = i <= 45 ? 'online' : 'offline';
+                olts.push({
+                    id: i,
+                    name: `OLT-${i}`,
+                    status: status
+                });
+            }
+            
+            grid.innerHTML = olts.map(olt => `
+                <div class="olt-card ${olt.status}" onclick="viewOLT('${olt.name}')">
+                    <i class="bi bi-hdd-network fs-3 mb-2"></i>
+                    <div class="fw-semibold">${olt.name}</div>
+                    <small class="text-capitalize">${olt.status}</small>
+                </div>
+            `).join('');
+        }
+        
+        function initUptimeChart() {
+            const ctx = document.getElementById('uptimeChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Uptime %',
+                        data: [99.2, 98.8, 99.5, 99.1, 98.9, 99.3, 99.4],
+                        borderColor: 'rgba(22, 163, 74, 1)',
+                        backgroundColor: 'rgba(22, 163, 74, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12
+                        }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: {
+                            min: 95,
+                            max: 100,
+                            ticks: { callback: value => value + '%' },
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function initOutageChart() {
+            const ctx = document.getElementById('outageChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Hardware', 'Network', 'Power', 'Maintenance'],
+                    datasets: [{
+                        data: [35, 28, 22, 15],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(147, 51, 234, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+        
+        function viewOLT(name) {
+            window.location.href = `olts.html?olt=${name}`;
+        }
+        
+        function acknowledgeAlert(oltName) {
+            Toast.info(`Acknowledging alert for ${oltName}...`, 1500);
+            setTimeout(() => {
+                Toast.success('Alert acknowledged', 2000);
+            }, 1500);
+        }
+        
+        function refreshAll() {
+            Toast.info('Refreshing data...', 1500);
+            document.getElementById('lastUpdate').textContent = 'Just now';
+            setTimeout(() => {
+                Toast.success('Data refreshed', 2000);
+            }, 1500);
+        }
+        
+        function startAutoRefresh() {
+            setInterval(() => {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString();
+                document.getElementById('lastUpdate').textContent = timeStr;
+            }, 30000); // Update every 30 seconds
+        }
+    </script>
+</body>
+</html>

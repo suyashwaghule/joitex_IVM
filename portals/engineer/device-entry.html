@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Entry - Joitex Fiber</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-logo">
+                <i class="bi bi-router-fill" style="color: #f97316;"></i>
+                <span>Joitex Fiber</span>
+            </a>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link">
+                            <i class="bi bi-speedometer2"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="assigned-jobs.html" class="nav-link">
+                            <i class="bi bi-list-task"></i>
+                            <span>Assigned Jobs</span>
+                            <span class="nav-badge">5</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="device-entry.html" class="nav-link active">
+                            <i class="bi bi-hdd-rack"></i>
+                            <span>Device Entry</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="completion.html" class="nav-link">
+                            <i class="bi bi-check-circle"></i>
+                            <span>Completion Report</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                
+                <nav aria-label="breadcrumb" class="breadcrumb-container d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Engineer</a></li>
+                        <li class="breadcrumb-item active">Device Entry</li>
+                    </ol>
+                </nav>
+            </div>
+            
+            <div class="header-right">
+                <button class="header-action" id="themeToggle" data-bs-toggle="tooltip" title="Toggle Theme">
+                    <i class="bi bi-moon"></i>
+                </button>
+                
+                <button class="header-action" data-bs-toggle="tooltip" title="Notifications">
+                    <i class="bi bi-bell"></i>
+                </button>
+                
+                <div class="dropdown">
+                    <div class="user-menu" data-bs-toggle="dropdown">
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);">EN</div>
+                        <div class="user-info d-none d-md-block">
+                            <div class="user-name" id="userName">Field Engineer</div>
+                            <div class="user-role">Engineer</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-2"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Content -->
+        <main class="content">
+            <div class="content-header">
+                <h1 class="content-title">Device Entry</h1>
+                <p class="content-subtitle">Record installed device details</p>
+            </div>
+            
+            <!-- Job Info -->
+            <div class="alert alert-info d-flex align-items-center mb-4">
+                <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+                <div>
+                    <strong>Job #J-2024-0089</strong> - Rajesh Kumar<br>
+                    <small>MG Road, Sector 5, Bangalore | Installation Type: New Connection</small>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Device Entry Form -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Add Device</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="deviceForm">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="deviceType" class="form-label">Device Type <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="deviceType" required>
+                                            <option value="">Select device type</option>
+                                            <option value="ont">ONT (Optical Network Terminal)</option>
+                                            <option value="router">Router</option>
+                                            <option value="switch">Switch</option>
+                                            <option value="cable">Cable/Fiber</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="deviceModel" class="form-label">Model <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="deviceModel" placeholder="e.g., ONT-5000" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="serialNumber" class="form-label">Serial Number <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="serialNumber" placeholder="Enter or scan" required>
+                                            <button class="btn btn-outline-secondary" type="button" onclick="scanBarcode()">
+                                                <i class="bi bi-upc-scan"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="macAddress" class="form-label">MAC Address <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="macAddress" placeholder="XX:XX:XX:XX:XX:XX" required pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$">
+                                        <div class="invalid-feedback">Please enter valid MAC address</div>
+                                    </div>
+                                    
+                                    <div class="col-md-12">
+                                        <label for="installLocation" class="form-label">Installation Location</label>
+                                        <input type="text" class="form-control" id="installLocation" placeholder="e.g., Living Room, Server Room">
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="installDate" class="form-label">Installation Date <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="installDate" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="installTime" class="form-label">Installation Time <span class="text-danger">*</span></label>
+                                        <input type="time" class="form-control" id="installTime" required>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <label for="deviceNotes" class="form-label">Notes</label>
+                                        <textarea class="form-control" id="deviceNotes" rows="2" placeholder="Any additional information..."></textarea>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <label class="form-label">Device Photos (Optional)</label>
+                                        <div class="border rounded p-3 text-center" style="background-color: #f8f9fa;">
+                                            <i class="bi bi-camera fs-1 text-muted"></i>
+                                            <p class="mb-2">Click to capture or upload photos</p>
+                                            <input type="file" class="form-control" accept="image/*" multiple>
+                                            <small class="text-muted">Max 5 photos, 5MB each</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <button type="button" class="btn btn-engineer" onclick="addDevice()">
+                                        <i class="bi bi-plus-circle me-2"></i>Add Device
+                                    </button>
+                                    <button type="reset" class="btn btn-outline-secondary">
+                                        <i class="bi bi-arrow-counterclockwise me-2"></i>Reset
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <!-- Quick Scan -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h6 class="mb-0">Quick Scan</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="border rounded p-4 mb-3" style="background-color: #f8f9fa;">
+                                <i class="bi bi-qr-code-scan" style="font-size: 4rem; color: #f97316;"></i>
+                                <p class="mt-3 mb-0">Scan QR/Barcode</p>
+                            </div>
+                            <button class="btn btn-outline-primary w-100" onclick="openScanner()">
+                                <i class="bi bi-camera me-2"></i>Open Scanner
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Device Templates -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0">Quick Templates</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="useTemplate('ont')">
+                                    <i class="bi bi-hdd-network me-2"></i>Standard ONT
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="useTemplate('router')">
+                                    <i class="bi bi-router me-2"></i>Standard Router
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="useTemplate('combo')">
+                                    <i class="bi bi-hdd-rack me-2"></i>ONT + Router Combo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Installed Devices List -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Installed Devices</h5>
+                    <span class="badge bg-success" id="deviceCount">0 Devices</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0" id="devicesTable">
+                            <thead>
+                                <tr>
+                                    <th>Device Type</th>
+                                    <th>Model</th>
+                                    <th>Serial Number</th>
+                                    <th>MAC Address</th>
+                                    <th>Location</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="devicesTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                        No devices added yet. Add your first device above.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="dashboard.html" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+                        </a>
+                        <button class="btn btn-engineer" onclick="proceedToCompletion()" id="proceedBtn" disabled>
+                            <i class="bi bi-arrow-right me-2"></i>Proceed to Completion
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['engineer']);
+        
+        let devices = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+            
+            // Set current date and time
+            const now = new Date();
+            document.getElementById('installDate').valueAsDate = now;
+            document.getElementById('installTime').value = now.toTimeString().slice(0, 5);
+        });
+        
+        function addDevice() {
+            const form = document.getElementById('deviceForm');
+            
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                Toast.error('Please fill all required fields', 3000);
+                return;
+            }
+            
+            const device = {
+                id: Date.now(),
+                type: document.getElementById('deviceType').value,
+                model: document.getElementById('deviceModel').value,
+                serial: document.getElementById('serialNumber').value,
+                mac: document.getElementById('macAddress').value,
+                location: document.getElementById('installLocation').value,
+                date: document.getElementById('installDate').value,
+                time: document.getElementById('installTime').value,
+                notes: document.getElementById('deviceNotes').value
+            };
+            
+            devices.push(device);
+            updateDevicesTable();
+            
+            Toast.success('Device added successfully!', 2000);
+            form.reset();
+            form.classList.remove('was-validated');
+            
+            // Reset date/time to current
+            const now = new Date();
+            document.getElementById('installDate').valueAsDate = now;
+            document.getElementById('installTime').value = now.toTimeString().slice(0, 5);
+        }
+        
+        function updateDevicesTable() {
+            const tbody = document.getElementById('devicesTableBody');
+            const deviceCount = document.getElementById('deviceCount');
+            const proceedBtn = document.getElementById('proceedBtn');
+            
+            if (devices.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            No devices added yet. Add your first device above.
+                        </td>
+                    </tr>
+                `;
+                proceedBtn.disabled = true;
+            } else {
+                tbody.innerHTML = devices.map(device => `
+                    <tr>
+                        <td>
+                            <i class="bi bi-hdd-network me-2 text-primary"></i>
+                            <span class="text-capitalize">${device.type}</span>
+                        </td>
+                        <td><strong>${device.model}</strong></td>
+                        <td><code>${device.serial}</code></td>
+                        <td><code>${device.mac}</code></td>
+                        <td>${device.location || '-'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-danger" onclick="removeDevice(${device.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+                proceedBtn.disabled = false;
+            }
+            
+            deviceCount.textContent = `${devices.length} Device${devices.length !== 1 ? 's' : ''}`;
+        }
+        
+        function removeDevice(id) {
+            Modal.confirm(
+                'Remove Device',
+                'Are you sure you want to remove this device?',
+                () => {
+                    devices = devices.filter(d => d.id !== id);
+                    updateDevicesTable();
+                    Toast.info('Device removed', 2000);
+                }
+            );
+        }
+        
+        function scanBarcode() {
+            Toast.info('Opening barcode scanner...', 2000);
+            // In real app, this would open camera for scanning
+            setTimeout(() => {
+                document.getElementById('serialNumber').value = 'SN' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                Toast.success('Barcode scanned!', 2000);
+            }, 2000);
+        }
+        
+        function openScanner() {
+            Toast.info('Camera scanner would open here', 2000);
+        }
+        
+        function useTemplate(type) {
+            const templates = {
+                ont: {
+                    type: 'ont',
+                    model: 'ONT-5000',
+                    location: 'Main Distribution Box'
+                },
+                router: {
+                    type: 'router',
+                    model: 'RT-AC5000',
+                    location: 'Living Room'
+                },
+                combo: {
+                    type: 'ont',
+                    model: 'ONT-RT-COMBO',
+                    location: 'Main Distribution Box'
+                }
+            };
+            
+            const template = templates[type];
+            document.getElementById('deviceType').value = template.type;
+            document.getElementById('deviceModel').value = template.model;
+            document.getElementById('installLocation').value = template.location;
+            
+            Toast.success('Template applied!', 2000);
+        }
+        
+        function proceedToCompletion() {
+            if (devices.length === 0) {
+                Toast.error('Please add at least one device', 3000);
+                return;
+            }
+            
+            // Store devices in session
+            sessionStorage.setItem('installation_devices', JSON.stringify(devices));
+            window.location.href = 'completion.html?job=J-2024-0089';
+        }
+    </script>
+</body>
+</html>

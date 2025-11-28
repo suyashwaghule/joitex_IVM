@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feasibility Queue - Joitex Fiber</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+    
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-logo">
+                <i class="bi bi-router-fill" style="color: #4f46e5;"></i>
+                <span>Joitex Fiber</span>
+            </a>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-chevron-left"></i></button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Sales</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="leads.html" class="nav-link"><i class="bi bi-funnel"></i><span>Lead Management</span></a></li>
+                    <li class="nav-item"><a href="feasibility.html" class="nav-link active"><i class="bi bi-check-circle"></i><span>Feasibility Queue</span></a></li>
+                    <li class="nav-item"><a href="installations.html" class="nav-link"><i class="bi bi-tools"></i><span>Installations</span></a></li>
+                    <li class="nav-item"><a href="activation.html" class="nav-link"><i class="bi bi-power"></i><span>Activation & Billing</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    
+    <div class="main-content">
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="bi bi-list"></i></button>
+                <nav aria-label="breadcrumb" class="breadcrumb-container d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Sales</a></li>
+                        <li class="breadcrumb-item active">Feasibility Queue</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="header-right">
+                <button class="header-action" id="themeToggle"><i class="bi bi-moon"></i></button>
+                <button class="header-action"><i class="bi bi-bell"></i></button>
+                <div class="dropdown">
+                    <div class="user-menu" data-bs-toggle="dropdown">
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);">SM</div>
+                        <div class="user-info d-none d-md-block">
+                            <div class="user-name" id="userName">Sales Manager</div>
+                            <div class="user-role">Sales Manager</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-2"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        
+        <main class="content">
+            <div class="content-header">
+                <h1 class="content-title">Feasibility Queue</h1>
+                <p class="content-subtitle">Review and approve feasibility checks</p>
+            </div>
+            
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Pending Review</p>
+                                    <h3 class="mb-0">24</h3>
+                                </div>
+                                <i class="bi bi-hourglass-split fs-1 text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Feasible</p>
+                                    <h3 class="mb-0">156</h3>
+                                </div>
+                                <i class="bi bi-check-circle fs-1 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Not Feasible</p>
+                                    <h3 class="mb-0">18</h3>
+                                </div>
+                                <i class="bi bi-x-circle fs-1 text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Pending Feasibility Checks</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Inquiry ID</th>
+                                    <th>Customer</th>
+                                    <th>Location</th>
+                                    <th>Plan</th>
+                                    <th>Nearest OLT</th>
+                                    <th>Distance</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge bg-secondary">INQ-5678</span></td>
+                                    <td>
+                                        <strong>Suresh Reddy</strong>
+                                        <div class="small text-muted">+91 98765 43213</div>
+                                    </td>
+                                    <td>
+                                        <div>HSR Layout, Bangalore</div>
+                                        <div class="small text-muted">Sector 2, 560102</div>
+                                    </td>
+                                    <td><span class="badge bg-info">100 Mbps</span></td>
+                                    <td>
+                                        <div>OLT-SECTOR-15</div>
+                                        <div class="small text-success">Online</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-success">450m</span>
+                                    </td>
+                                    <td>
+                                        <div>Jan 04, 2025</div>
+                                        <div class="small text-muted">2 hours ago</div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-success" onclick="markFeasible('INQ-5678')">
+                                                <i class="bi bi-check"></i> Feasible
+                                            </button>
+                                            <button class="btn btn-danger" onclick="markNotFeasible('INQ-5678')">
+                                                <i class="bi bi-x"></i> Not Feasible
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-secondary">INQ-5679</span></td>
+                                    <td>
+                                        <strong>Lakshmi Iyer</strong>
+                                        <div class="small text-muted">+91 98765 43214</div>
+                                    </td>
+                                    <td>
+                                        <div>Jayanagar, Bangalore</div>
+                                        <div class="small text-muted">4th Block, 560041</div>
+                                    </td>
+                                    <td><span class="badge bg-success">200 Mbps</span></td>
+                                    <td>
+                                        <div>OLT-SECTOR-08</div>
+                                        <div class="small text-success">Online</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-success">320m</span>
+                                    </td>
+                                    <td>
+                                        <div>Jan 04, 2025</div>
+                                        <div class="small text-muted">3 hours ago</div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-success" onclick="markFeasible('INQ-5679')">
+                                                <i class="bi bi-check"></i> Feasible
+                                            </button>
+                                            <button class="btn btn-danger" onclick="markNotFeasible('INQ-5679')">
+                                                <i class="bi bi-x"></i> Not Feasible
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <td><span class="badge bg-secondary">INQ-5680</span></td>
+                                    <td>
+                                        <strong>Mohammed Ali</strong>
+                                        <div class="small text-muted">+91 98765 43215</div>
+                                    </td>
+                                    <td>
+                                        <div>Electronic City, Bangalore</div>
+                                        <div class="small text-muted">Phase 2, 560100</div>
+                                    </td>
+                                    <td><span class="badge bg-info">100 Mbps</span></td>
+                                    <td>
+                                        <div>OLT-SECTOR-22</div>
+                                        <div class="small text-success">Online</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-warning">850m</span>
+                                    </td>
+                                    <td>
+                                        <div>Jan 04, 2025</div>
+                                        <div class="small text-muted">4 hours ago</div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-success" onclick="markFeasible('INQ-5680')">
+                                                <i class="bi bi-check"></i> Feasible
+                                            </button>
+                                            <button class="btn btn-danger" onclick="markNotFeasible('INQ-5680')">
+                                                <i class="bi bi-x"></i> Not Feasible
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['sales']);
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+        });
+        
+        function markFeasible(inquiryId) {
+            Modal.confirm('Mark as Feasible', 'Confirm that this location is feasible for installation?', () => {
+                Toast.success(`${inquiryId} marked as feasible!`, 2000);
+                setTimeout(() => location.reload(), 2000);
+            });
+        }
+        
+        function markNotFeasible(inquiryId) {
+            Modal.confirm('Mark as Not Feasible', 'Confirm that this location is NOT feasible? Customer will be notified.', () => {
+                Toast.warning(`${inquiryId} marked as not feasible`, 2000);
+                setTimeout(() => location.reload(), 2000);
+            });
+        }
+    </script>
+</body>
+</html>

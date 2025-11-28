@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Management - Joitex Fiber</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+    
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-logo">
+                <i class="bi bi-router-fill" style="color: #4f46e5;"></i>
+                <span>Joitex Fiber</span>
+            </a>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-chevron-left"></i></button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Sales</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="leads.html" class="nav-link active"><i class="bi bi-funnel"></i><span>Lead Management</span></a></li>
+                    <li class="nav-item"><a href="feasibility.html" class="nav-link"><i class="bi bi-check-circle"></i><span>Feasibility Queue</span></a></li>
+                    <li class="nav-item"><a href="installations.html" class="nav-link"><i class="bi bi-tools"></i><span>Installations</span></a></li>
+                    <li class="nav-item"><a href="activation.html" class="nav-link"><i class="bi bi-power"></i><span>Activation & Billing</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    
+    <div class="main-content">
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="bi bi-list"></i></button>
+                <nav aria-label="breadcrumb" class="breadcrumb-container d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Sales</a></li>
+                        <li class="breadcrumb-item active">Lead Management</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="header-right">
+                <button class="header-action" id="themeToggle"><i class="bi bi-moon"></i></button>
+                <button class="header-action"><i class="bi bi-bell"></i></button>
+                <div class="dropdown">
+                    <div class="user-menu" data-bs-toggle="dropdown">
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);">SM</div>
+                        <div class="user-info d-none d-md-block">
+                            <div class="user-name" id="userName">Sales Manager</div>
+                            <div class="user-role">Sales Manager</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-2"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">Lead Management</h1>
+                        <p class="content-subtitle">Manage and track all sales leads</p>
+                    </div>
+                    <button class="btn btn-sales" onclick="exportLeads()">
+                        <i class="bi bi-download me-2"></i>Export Leads
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Filters</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="new">New</option>
+                                <option value="contacted">Contacted</option>
+                                <option value="feasibility">Feasibility Check</option>
+                                <option value="quoted">Quoted</option>
+                                <option value="won">Won</option>
+                                <option value="lost">Lost</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Source</label>
+                            <select class="form-select" id="sourceFilter">
+                                <option value="">All Sources</option>
+                                <option value="call">Call Center</option>
+                                <option value="executive">Sales Executive</option>
+                                <option value="website">Website</option>
+                                <option value="referral">Referral</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Assigned To</label>
+                            <select class="form-select" id="assignedFilter">
+                                <option value="">All Executives</option>
+                                <option value="exec1">Rajesh Kumar</option>
+                                <option value="exec2">Priya Sharma</option>
+                                <option value="exec3">Amit Patel</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Search</label>
+                            <input type="text" class="form-control" placeholder="Search by name, phone..." id="searchInput">
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-sales" onclick="applyFilters()">
+                            <i class="bi bi-funnel me-2"></i>Apply Filters
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="resetFilters()">
+                            <i class="bi bi-x-circle me-2"></i>Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Total Leads</p>
+                                    <h3 class="mb-0">342</h3>
+                                </div>
+                                <i class="bi bi-funnel fs-1 text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">New Leads</p>
+                                    <h3 class="mb-0">48</h3>
+                                </div>
+                                <i class="bi bi-star fs-1 text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">In Progress</p>
+                                    <h3 class="mb-0">156</h3>
+                                </div>
+                                <i class="bi bi-hourglass-split fs-1 text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Converted</p>
+                                    <h3 class="mb-0">89</h3>
+                                </div>
+                                <i class="bi bi-check-circle fs-1 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">All Leads</h5>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary active">List View</button>
+                        <button class="btn btn-outline-primary" onclick="window.location.href='feasibility.html'">Kanban View</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Lead ID</th>
+                                    <th>Customer</th>
+                                    <th>Contact</th>
+                                    <th>Location</th>
+                                    <th>Plan Interest</th>
+                                    <th>Source</th>
+                                    <th>Assigned To</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge bg-secondary">LEAD-1234</span></td>
+                                    <td>
+                                        <strong>Rajesh Kumar</strong>
+                                        <div class="small text-muted">Created: Jan 04, 2025</div>
+                                    </td>
+                                    <td>
+                                        <div>+91 98765 43210</div>
+                                        <div class="small text-muted">rajesh@email.com</div>
+                                    </td>
+                                    <td>Koramangala, Bangalore</td>
+                                    <td><span class="badge bg-info">100 Mbps</span></td>
+                                    <td><span class="badge bg-primary">Call Center</span></td>
+                                    <td>Priya Sharma</td>
+                                    <td><span class="badge bg-warning">Contacted</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLead('LEAD-1234')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-success" onclick="updateStatus('LEAD-1234')">
+                                                <i class="bi bi-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-secondary">LEAD-1235</span></td>
+                                    <td>
+                                        <strong>Priya Menon</strong>
+                                        <div class="small text-muted">Created: Jan 04, 2025</div>
+                                    </td>
+                                    <td>
+                                        <div>+91 98765 43211</div>
+                                        <div class="small text-muted">priya@email.com</div>
+                                    </td>
+                                    <td>Whitefield, Bangalore</td>
+                                    <td><span class="badge bg-success">200 Mbps</span></td>
+                                    <td><span class="badge bg-warning">Sales Executive</span></td>
+                                    <td>Amit Patel</td>
+                                    <td><span class="badge bg-info">Feasibility</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLead('LEAD-1235')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-success" onclick="updateStatus('LEAD-1235')">
+                                                <i class="bi bi-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-success">
+                                    <td><span class="badge bg-secondary">LEAD-1236</span></td>
+                                    <td>
+                                        <strong>Amit Verma</strong>
+                                        <div class="small text-muted">Created: Jan 03, 2025</div>
+                                    </td>
+                                    <td>
+                                        <div>+91 98765 43212</div>
+                                        <div class="small text-muted">amit@email.com</div>
+                                    </td>
+                                    <td>Indiranagar, Bangalore</td>
+                                    <td><span class="badge bg-info">100 Mbps</span></td>
+                                    <td><span class="badge bg-primary">Call Center</span></td>
+                                    <td>Rajesh Kumar</td>
+                                    <td><span class="badge bg-success">Won</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLead('LEAD-1236')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-info" onclick="scheduleInstallation('LEAD-1236')">
+                                                <i class="bi bi-calendar-check"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>Showing 1 to 3 of 342 entries</div>
+                        <nav>
+                            <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['sales']);
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+        });
+        
+        function applyFilters() {
+            Toast.info('Applying filters...', 1500);
+            setTimeout(() => {
+                Toast.success('Filters applied!', 2000);
+            }, 1500);
+        }
+        
+        function resetFilters() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('sourceFilter').value = '';
+            document.getElementById('assignedFilter').value = '';
+            document.getElementById('searchInput').value = '';
+            Toast.info('Filters reset', 1500);
+        }
+        
+        function viewLead(leadId) {
+            Toast.info(`Viewing lead ${leadId}...`, 2000);
+        }
+        
+        function updateStatus(leadId) {
+            Toast.info(`Updating status for ${leadId}...`, 2000);
+        }
+        
+        function scheduleInstallation(leadId) {
+            Toast.success(`Installation scheduled for ${leadId}!`, 2000);
+        }
+        
+        function exportLeads() {
+            Toast.info('Exporting leads...', 2000);
+            setTimeout(() => {
+                Toast.success('Leads exported successfully!', 2000);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

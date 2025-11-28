@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Registry - Joitex Fiber</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+    
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-logo">
+                <i class="bi bi-router-fill" style="color: #f59e0b;"></i>
+                <span>Joitex Fiber</span>
+            </a>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-chevron-left"></i></button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="licenses.html" class="nav-link active"><i class="bi bi-key"></i><span>License Registry</span></a></li>
+                    <li class="nav-item"><a href="renewals.html" class="nav-link"><i class="bi bi-calendar-check"></i><span>Renewal Tracker</span><span class="nav-badge">8</span></a></li>
+                    <li class="nav-item"><a href="vendors.html" class="nav-link"><i class="bi bi-building"></i><span>Vendors & Costs</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    
+    <div class="main-content">
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="bi bi-list"></i></button>
+                <nav aria-label="breadcrumb" class="breadcrumb-container d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Finance</a></li>
+                        <li class="breadcrumb-item active">License Registry</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="header-right">
+                <button class="header-action" id="themeToggle"><i class="bi bi-moon"></i></button>
+                <button class="header-action"><i class="bi bi-bell"></i></button>
+                <div class="dropdown">
+                    <div class="user-menu" data-bs-toggle="dropdown">
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">FM</div>
+                        <div class="user-info d-none d-md-block">
+                            <div class="user-name" id="userName">Finance Manager</div>
+                            <div class="user-role">Finance</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-2"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">License Registry</h1>
+                        <p class="content-subtitle">Manage all software and regulatory licenses</p>
+                    </div>
+                    <button class="btn btn-finance" data-bs-toggle="modal" data-bs-target="#addLicenseModal">
+                        <i class="bi bi-plus-circle me-2"></i>Add License
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Summary Cards -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Total Licenses</p>
+                                    <h3 class="mb-0">24</h3>
+                                </div>
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                                    <i class="bi bi-key"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Active</p>
+                                    <h3 class="mb-0 text-success">18</h3>
+                                </div>
+                                <div class="stat-icon bg-success">
+                                    <i class="bi bi-check-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Expiring Soon</p>
+                                    <h3 class="mb-0 text-warning">6</h3>
+                                    <small class="text-muted">Within 60 days</small>
+                                </div>
+                                <div class="stat-icon bg-warning">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Annual Cost</p>
+                                    <h3 class="mb-0">₹12.5L</h3>
+                                </div>
+                                <div class="stat-icon bg-info">
+                                    <i class="bi bi-currency-rupee"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <select class="form-select" id="categoryFilter">
+                                <option value="">All Categories</option>
+                                <option value="software">Software Licenses</option>
+                                <option value="regulatory">Regulatory Licenses</option>
+                                <option value="telecom">Telecom Licenses</option>
+                                <option value="infrastructure">Infrastructure</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="expiring">Expiring Soon</option>
+                                <option value="expired">Expired</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Search licenses..." id="searchInput">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- License Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">All Licenses</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>License Name</th>
+                                    <th>Category</th>
+                                    <th>License Number</th>
+                                    <th>Vendor</th>
+                                    <th>Issue Date</th>
+                                    <th>Expiry Date</th>
+                                    <th>Annual Cost</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>ISP License</strong>
+                                        <small class="text-muted d-block">Category A</small>
+                                    </td>
+                                    <td>Regulatory</td>
+                                    <td><code>ISP-MH-2023-001</code></td>
+                                    <td>DoT India</td>
+                                    <td>Jan 15, 2023</td>
+                                    <td>Jan 14, 2028</td>
+                                    <td>₹5,00,000</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLicense('LIC-001')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary" onclick="editLicense('LIC-001')">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-outline-info" onclick="downloadDocs('LIC-001')">
+                                                <i class="bi bi-download"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <td>
+                                        <strong>Microsoft Office 365</strong>
+                                        <small class="text-muted d-block">Business Premium</small>
+                                    </td>
+                                    <td>Software</td>
+                                    <td><code>MS-365-2024-789</code></td>
+                                    <td>Microsoft</td>
+                                    <td>Mar 1, 2024</td>
+                                    <td>Feb 28, 2025</td>
+                                    <td>₹2,40,000</td>
+                                    <td><span class="badge bg-warning">Expiring Soon</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLicense('LIC-002')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-warning" onclick="renewLicense('LIC-002')">
+                                                <i class="bi bi-arrow-clockwise"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Network Monitoring Tool</strong>
+                                        <small class="text-muted d-block">Enterprise Edition</small>
+                                    </td>
+                                    <td>Software</td>
+                                    <td><code>NMT-ENT-2024-456</code></td>
+                                    <td>SolarWinds</td>
+                                    <td>Jun 1, 2024</td>
+                                    <td>May 31, 2025</td>
+                                    <td>₹1,80,000</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLicense('LIC-003')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary" onclick="editLicense('LIC-003')">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <td>
+                                        <strong>Right of Way Permit</strong>
+                                        <small class="text-muted d-block">Andheri Zone</small>
+                                    </td>
+                                    <td>Infrastructure</td>
+                                    <td><code>ROW-AND-2024-123</code></td>
+                                    <td>BMC Mumbai</td>
+                                    <td>Apr 10, 2024</td>
+                                    <td>Apr 9, 2025</td>
+                                    <td>₹50,000</td>
+                                    <td><span class="badge bg-warning">Expiring Soon</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLicense('LIC-004')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-warning" onclick="renewLicense('LIC-004')">
+                                                <i class="bi bi-arrow-clockwise"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Billing Software</strong>
+                                        <small class="text-muted d-block">Professional Plan</small>
+                                    </td>
+                                    <td>Software</td>
+                                    <td><code>BILL-PRO-2024-321</code></td>
+                                    <td>Zoho Corporation</td>
+                                    <td>Jan 1, 2024</td>
+                                    <td>Dec 31, 2025</td>
+                                    <td>₹1,20,000</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLicense('LIC-005')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary" onclick="editLicense('LIC-005')">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Telecom License</strong>
+                                        <small class="text-muted d-block">Unified License</small>
+                                    </td>
+                                    <td>Telecom</td>
+                                    <td><code>UL-MH-2023-567</code></td>
+                                    <td>DoT India</td>
+                                    <td>Feb 1, 2023</td>
+                                    <td>Jan 31, 2033</td>
+                                    <td>₹1,00,000</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" onclick="viewLicense('LIC-006')">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary" onclick="editLicense('LIC-006')">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-muted">Showing 1-6 of 24 licenses</div>
+                        <nav>
+                            <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+    
+    <!-- Add License Modal -->
+    <div class="modal fade" id="addLicenseModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New License</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">License Name</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Category</label>
+                                <select class="form-select" required>
+                                    <option value="">Select category</option>
+                                    <option value="software">Software Licenses</option>
+                                    <option value="regulatory">Regulatory Licenses</option>
+                                    <option value="telecom">Telecom Licenses</option>
+                                    <option value="infrastructure">Infrastructure</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">License Number</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Vendor</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Issue Date</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Expiry Date</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Annual Cost (₹)</label>
+                                <input type="number" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Upload Documents</label>
+                                <input type="file" class="form-control" multiple>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Notes</label>
+                                <textarea class="form-control" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-finance" onclick="saveLicense()">Add License</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['finance']);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+        });
+        
+        function viewLicense(licenseId) {
+            Toast.info(`Viewing license ${licenseId}...`, 2000);
+        }
+        
+        function editLicense(licenseId) {
+            Toast.info(`Editing license ${licenseId}...`, 2000);
+        }
+        
+        function renewLicense(licenseId) {
+            Toast.warning(`Initiating renewal for ${licenseId}...`, 2000);
+        }
+        
+        function downloadDocs(licenseId) {
+            Toast.info(`Downloading documents for ${licenseId}...`, 2000);
+        }
+        
+        function saveLicense() {
+            Toast.info('Adding license...', 1500);
+            setTimeout(() => {
+                Toast.success('License added successfully!', 2000);
+                bootstrap.Modal.getInstance(document.getElementById('addLicenseModal')).hide();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

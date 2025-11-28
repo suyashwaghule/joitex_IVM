@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet Plans - Joitex Fiber</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+    
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-logo">
+                <i class="bi bi-router-fill" style="color: #1976d2;"></i>
+                <span>Joitex Fiber</span>
+            </a>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="users.html" class="nav-link"><i class="bi bi-people"></i><span>User Management</span></a></li>
+                    <li class="nav-item"><a href="roles.html" class="nav-link"><i class="bi bi-shield-check"></i><span>Roles & Permissions</span></a></li>
+                    <li class="nav-item"><a href="plans.html" class="nav-link active"><i class="bi bi-speedometer"></i><span>Internet Plans</span></a></li>
+                    <li class="nav-item"><a href="olts.html" class="nav-link"><i class="bi bi-hdd-network"></i><span>OLT Catalog</span></a></li>
+                    <li class="nav-item"><a href="ip-pools.html" class="nav-link"><i class="bi bi-diagram-3"></i><span>IP Pools</span></a></li>
+                </ul>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">System</div>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="settings.html" class="nav-link"><i class="bi bi-gear"></i><span>Settings</span></a></li>
+                    <li class="nav-item"><a href="reports.html" class="nav-link"><i class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></a></li>
+                    <li class="nav-item"><a href="audits.html" class="nav-link"><i class="bi bi-clock-history"></i><span>Audit Logs</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    
+    <div class="main-content">
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle"><i class="bi bi-list"></i></button>
+                <nav aria-label="breadcrumb" class="breadcrumb-container d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Admin</a></li>
+                        <li class="breadcrumb-item active">Internet Plans</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="header-right">
+                <button class="header-action" id="themeToggle"><i class="bi bi-moon"></i></button>
+                <button class="header-action"><i class="bi bi-bell"></i></button>
+                <div class="dropdown">
+                    <div class="user-menu" data-bs-toggle="dropdown">
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);">AD</div>
+                        <div class="user-info d-none d-md-block">
+                            <div class="user-name" id="userName">Admin User</div>
+                            <div class="user-role">Administrator</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-2"></i>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">Internet Plans</h1>
+                        <p class="content-subtitle">Manage broadband plans and pricing</p>
+                    </div>
+                    <button class="btn btn-admin" data-bs-toggle="modal" data-bs-target="#addPlanModal">
+                        <i class="bi bi-plus-circle me-2"></i>Add New Plan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Total Plans</p>
+                                    <h3 class="mb-0">12</h3>
+                                </div>
+                                <i class="bi bi-speedometer fs-1 text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Active Plans</p>
+                                    <h3 class="mb-0">10</h3>
+                                </div>
+                                <i class="bi bi-check-circle fs-1 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Home Plans</p>
+                                    <h3 class="mb-0">8</h3>
+                                </div>
+                                <i class="bi bi-house fs-1 text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Business Plans</p>
+                                    <h3 class="mb-0">4</h3>
+                                </div>
+                                <i class="bi bi-building fs-1 text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">50 Mbps</h5>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <h2 class="mb-0">₹599</h2>
+                                <small class="text-muted">per month</small>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>50 Mbps Speed</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Unlimited Data</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Free Router</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>24/7 Support</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Home Plan</li>
+                            </ul>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary btn-sm" onclick="editPlan('PLAN-001')"><i class="bi bi-pencil me-2"></i>Edit</button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="deletePlan('PLAN-001')"><i class="bi bi-trash me-2"></i>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card border-success">
+                        <div class="card-header bg-success text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">100 Mbps</h5>
+                                <span class="badge bg-warning">Popular</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <h2 class="mb-0">₹899</h2>
+                                <small class="text-muted">per month</small>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>100 Mbps Speed</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Unlimited Data</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Free Router</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Priority Support</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Home Plan</li>
+                            </ul>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary btn-sm" onclick="editPlan('PLAN-002')"><i class="bi bi-pencil me-2"></i>Edit</button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="deletePlan('PLAN-002')"><i class="bi bi-trash me-2"></i>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-warning text-dark">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">200 Mbps</h5>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <h2 class="mb-0">₹1,299</h2>
+                                <small class="text-muted">per month</small>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>200 Mbps Speed</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Unlimited Data</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Free Router + ONT</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Premium Support</li>
+                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Business Plan</li>
+                            </ul>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary btn-sm" onclick="editPlan('PLAN-003')"><i class="bi bi-pencil me-2"></i>Edit</button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="deletePlan('PLAN-003')"><i class="bi bi-trash me-2"></i>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+    
+    <div class="modal fade" id="addPlanModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Plan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addPlanForm">
+                        <div class="mb-3">
+                            <label class="form-label">Plan Name</label>
+                            <input type="text" class="form-control" placeholder="e.g., 100 Mbps Unlimited" required>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Speed (Mbps)</label>
+                                <input type="number" class="form-control" placeholder="100" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Price (₹)</label>
+                                <input type="number" class="form-control" placeholder="899" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Plan Type</label>
+                            <select class="form-select" required>
+                                <option value="">Select type</option>
+                                <option value="home">Home</option>
+                                <option value="business">Business</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Data Limit</label>
+                            <select class="form-select" required>
+                                <option value="unlimited">Unlimited</option>
+                                <option value="limited">Limited</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Features (one per line)</label>
+                            <textarea class="form-control" rows="4" placeholder="Free Router&#10;24/7 Support&#10;Unlimited Data"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-admin" onclick="savePlan()">Create Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['admin']);
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+        });
+        
+        function editPlan(planId) {
+            Toast.info(`Editing plan ${planId}...`, 2000);
+        }
+        
+        function deletePlan(planId) {
+            Modal.confirm('Delete Plan', 'Are you sure you want to delete this plan?', () => {
+                Toast.success(`Plan ${planId} deleted successfully!`, 2000);
+            });
+        }
+        
+        function savePlan() {
+            Toast.info('Creating plan...', 1500);
+            setTimeout(() => {
+                Toast.success('Plan created successfully!', 2000);
+                bootstrap.Modal.getInstance(document.getElementById('addPlanModal')).hide();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Map - Joitex Fiber</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
+        }
+        .portal-card {
+            transition: transform 0.2s;
+        }
+        .portal-card:hover {
+            transform: translateY(-5px);
+        }
+        .page-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            color: #333;
+        }
+        .page-link:hover {
+            background-color: #f0f0f0;
+        }
+        .page-link.completed {
+            background-color: #d1fae5;
+        }
+        .badge-completed {
+            background-color: #22c55e;
+        }
+        .badge-pending {
+            background-color: #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="bi bi-router-fill text-primary" style="font-size: 4rem;"></i>
+                <h1 class="mt-3">Joitex Fiber ISP Management System</h1>
+                <p class="text-muted">Complete Site Map & Navigation</p>
+                <div class="d-flex gap-2 justify-content-center mt-3">
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                    </a>
+                    <a href="QUICK_START.html" class="btn btn-success">
+                        <i class="bi bi-rocket me-2"></i>Quick Start
+                    </a>
+                    <a href="README.md" class="btn btn-info">
+                        <i class="bi bi-book me-2"></i>Documentation
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Admin Portal -->
+            <div class="col-md-6">
+                <div class="card portal-card" style="border-left: 4px solid #1976d2;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-shield-lock me-2"></i>Admin Portal</h5>
+                        <small>Super Administrator</small>
+                    </div>
+                    <div class="card-body">
+                        <a href="/portals/admin/dashboard.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Dashboard
+                        </a>
+                        <a href="/portals/admin/users.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>User Management
+                        </a>
+                        <a href="/portals/admin/roles.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Roles & Permissions
+                        </a>
+                        <a href="/portals/admin/plans.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Plans Configuration
+                        </a>
+                        <a href="/portals/admin/olts.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>OLT Catalog
+                        </a>
+                        <a href="/portals/admin/ip-pools.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>IP Pools
+                        </a>
+                        <a href="/portals/admin/settings.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>System Settings
+                        </a>
+                        <a href="/portals/admin/reports.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Global Reports
+                        </a>
+                        <a href="/portals/admin/audits.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Audit Logs
+                        </a>
+                        <div class="mt-2">
+                            <span class="badge badge-completed">9 Complete</span>
+                            <span class="badge bg-success">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call Center Portal -->
+            <div class="col-md-6">
+                <div class="card portal-card" style="border-left: 4px solid #0d9488;">
+                    <div class="card-header text-white" style="background-color: #0d9488;">
+                        <h5 class="mb-0"><i class="bi bi-telephone me-2"></i>Call Center Portal</h5>
+                        <small>Customer Service Agent</small>
+                    </div>
+                    <div class="card-body">
+                        <a href="/portals/callcenter/dashboard.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Dashboard
+                        </a>
+                        <a href="/portals/callcenter/create-inquiry.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Create Inquiry
+                        </a>
+                        <a href="/portals/callcenter/my-inquiries.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>My Inquiries
+                        </a>
+                        <a href="/portals/callcenter/status-board.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Status Board
+                        </a>
+                        <div class="mt-2">
+                            <span class="badge badge-completed">4 Complete</span>
+                            <span class="badge bg-success">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Manager Portal -->
+            <div class="col-md-6">
+                <div class="card portal-card" style="border-left: 4px solid #4f46e5;">
+                    <div class="card-header text-white" style="background-color: #4f46e5;">
+                        <h5 class="mb-0"><i class="bi bi-graph-up me-2"></i>Sales Manager Portal</h5>
+                        <small>Sales Team Lead</small>
+                    </div>
+                    <div class="card-body">
+                        <a href="/portals/sales/dashboard.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Dashboard
+                        </a>
+                        <a href="/portals/sales/leads.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Lead Management
+                        </a>
+                        <a href="/portals/sales/feasibility.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Feasibility Queue
+                        </a>
+                        <a href="/portals/sales/installations.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Installations
+                        </a>
+                        <a href="/portals/sales/activation.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Activation & Billing
+                        </a>
+                        <div class="mt-2">
+                            <span class="badge badge-completed">5 Complete</span>
+                            <span class="badge bg-success">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Executive Portal -->
+            <div class="col-md-6">
+                <div class="card portal-card" style="border-left: 4px solid #6366f1;">
+                    <div class="card-header text-white" style="background-color: #6366f1;">
+                        <h5 class="mb-0"><i class="bi bi-person-badge me-2"></i>Sales Executive Portal</h5>
+                        <small>Field Sales Representative</small>
+                    </div>
+                    <div class="card-body">
+                        <a href="/portals/salesexec/dashboard.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Dashboard
+                        </a>
+                        <a href="/portals/salesexec/my-leads.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>My Leads
+                        </a>
+                        <a href="/portals/salesexec/follow-ups.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Follow-ups
+                        </a>
+                        <a href="/portals/salesexec/conversions.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Conversions
+                        </a>
+                        <div class="mt-2">
+                            <span class="badge badge-completed">4 Complete</span>
+                            <span class="badge bg-success">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Engineer Portal -->
+            <div class="col-md-6">
+                <div class="card portal-card" style="border-left: 4px solid #f97316;">
+                    <div class="card-header text-white" style="background-color: #f97316;">
+                        <h5 class="mb-0"><i class="bi bi-tools me-2"></i>Engineer Portal</h5>
+                        <small>Field Installation Engineer</small>
+                    </div>
+                    <div class="card-body">
+                        <a href="/portals/engineer/dashboard.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Dashboard
+                        </a>
+                        <a href="/portals/engineer/device-entry.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Device Entry
+                        </a>
+                        <a href="/portals/engineer/completion.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Completion Report
+                        </a>
+                        <div class="mt-2">
+                            <span class="badge badge-completed">3 Complete</span>
+                            <span class="badge bg-success">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Portal -->
+            <div class="col-md-6">
+                <div class="card portal-card" style="border-left: 4px solid #9333ea;">
+                    <div class="card-header text-white" style="background-color: #9333ea;">
+                        <h5 class="mb-0"><i class="bi bi-box-seam me-2"></i>Inventory Portal</h5>
+                        <small>Inventory Manager</small>
+                    </div>
+                    <div class="card-body">
+                        <a href="/portals/inventory/dashboard.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Dashboard
+                        </a>
+                        <a href="/portals/inventory/catalog.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Inventory Catalog
+                        </a>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>Receive Stock
+                        </div>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>Issue to Engineer
+                        </div>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>Material Requests
+                        </div>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>Vendor Management
+                        </div>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>Transactions
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge badge-completed">2 Complete</span>
+                            <span class="badge badge-pending">5 Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Admin Portal -->
+            <div class="col-md-6">
+                <div class="card portal-card" style="border-left: 4px solid #16a34a;">
+                    <div class="card-header text-white" style="background-color: #16a34a;">
+                        <h5 class="mb-0"><i class="bi bi-hdd-network me-2"></i>Network Admin Portal</h5>
+                        <small>NOC Engineer</small>
+                    </div>
+                    <div class="card-body">
+                        <a href="/portals/network/dashboard.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Dashboard
+                        </a>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>OLT Monitoring
+                        </div>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>Downtime Logs
+                        </div>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>IP Management (IPAM)
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge badge-completed">1 Complete</span>
+                            <span class="badge badge-pending">3 Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finance Portal -->
+            <div class="col-md-6">
+                <div class="card portal-card" style="border-left: 4px solid #f59e0b;">
+                    <div class="card-header text-white" style="background-color: #f59e0b;">
+                        <h5 class="mb-0"><i class="bi bi-currency-rupee me-2"></i>Finance Portal</h5>
+                        <small>Finance & License Manager</small>
+                    </div>
+                    <div class="card-body">
+                        <a href="/portals/finance/dashboard.html" class="page-link completed">
+                            <i class="bi bi-check-circle text-success me-2"></i>Dashboard
+                        </a>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>License Registry
+                        </div>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>Renewal Tracker
+                        </div>
+                        <div class="page-link">
+                            <i class="bi bi-circle text-muted me-2"></i>Vendors & Costs
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge badge-completed">1 Complete</span>
+                            <span class="badge badge-pending">3 Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0"><i class="bi bi-book me-2"></i>Documentation & Resources</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <a href="README.md" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-file-text me-2"></i>README
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="PROJECT_STRUCTURE.md" class="btn btn-outline-info w-100">
+                            <i class="bi bi-folder-tree me-2"></i>Project Structure
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="FEATURES.md" class="btn btn-outline-success w-100">
+                            <i class="bi bi-star me-2"></i>Features List
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="DEPLOYMENT_GUIDE.md" class="btn btn-outline-warning w-100">
+                            <i class="bi bi-rocket me-2"></i>Deployment Guide
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="403.html" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-shield-lock me-2"></i>403 Error Page
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="404.html" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-compass me-2"></i>404 Error Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="mb-4">Project Statistics</h5>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h2 class="text-primary">8</h2>
+                        <p class="text-muted">Portals</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="text-success">37+</h2>
+                        <p class="text-muted">Functional Pages</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="text-info">200+</h2>
+                        <p class="text-muted">UI Components</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="text-warning">18K+</h2>
+                        <p class="text-muted">Lines of Code</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center text-white mt-4">
+            <p>&copy; 2025 Joitex Fiber ISP Management System. All rights reserved.</p>
+            <p>Version 1.0.0 | Built with HTML, CSS, JavaScript & Bootstrap</p>
+        </div>
+    </div>
+</body>
+</html>
+

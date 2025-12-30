@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP Management - Joitex Fiber</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <style>
         .ip-block {
             padding: 1rem;
@@ -17,22 +18,27 @@
             transition: all 0.2s ease;
             cursor: pointer;
         }
+
         .ip-block:hover {
             border-color: #0ea5e9;
             box-shadow: 0 2px 8px rgba(14, 165, 233, 0.2);
         }
+
         .ip-block.allocated {
             background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
             border-color: #22c55e;
         }
+
         .ip-block.reserved {
             background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
             border-color: #f59e0b;
         }
+
         .ip-block.available {
             background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
             border-color: #0ea5e9;
         }
+
         .ip-utilization {
             height: 8px;
             background: #e5e7eb;
@@ -40,6 +46,7 @@
             overflow: hidden;
             margin-top: 0.5rem;
         }
+
         .ip-utilization-bar {
             height: 100%;
             background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
@@ -47,9 +54,10 @@
         }
     </style>
 </head>
+
 <body data-theme="light">
     <div class="sidebar-overlay"></div>
-    
+
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="dashboard.html" class="sidebar-logo">
@@ -58,20 +66,24 @@
             </a>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-chevron-left"></i></button>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <div class="nav-section-title">Network</div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a href="olt-details.html" class="nav-link"><i class="bi bi-hdd-network"></i><span>OLT Details</span></a></li>
-                    <li class="nav-item"><a href="ip-management.html" class="nav-link active"><i class="bi bi-diagram-3"></i><span>IP Management</span></a></li>
-                    <li class="nav-item"><a href="downtime.html" class="nav-link"><i class="bi bi-exclamation-triangle"></i><span>Downtime Logs</span></a></li>
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i
+                                class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="olt-details.html" class="nav-link"><i
+                                class="bi bi-hdd-network"></i><span>OLT Details</span></a></li>
+                    <li class="nav-item"><a href="ip-management.html" class="nav-link active"><i
+                                class="bi bi-diagram-3"></i><span>IP Management</span></a></li>
+                    <li class="nav-item"><a href="downtime.html" class="nav-link"><i
+                                class="bi bi-exclamation-triangle"></i><span>Downtime Logs</span></a></li>
                 </ul>
             </div>
         </nav>
     </aside>
-    
+
     <div class="main-content">
         <header class="header">
             <div class="header-left">
@@ -88,7 +100,8 @@
                 <button class="header-action"><i class="bi bi-bell"></i></button>
                 <div class="dropdown">
                     <div class="user-menu" data-bs-toggle="dropdown">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);">NA</div>
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);">
+                            NA</div>
                         <div class="user-info d-none d-md-block">
                             <div class="user-name" id="userName">Network Admin</div>
                             <div class="user-role">Network Admin</div>
@@ -98,13 +111,16 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-        
+
         <main class="content">
             <div class="content-header">
                 <div class="d-flex justify-content-between align-items-center">
@@ -117,7 +133,7 @@
                     </button>
                 </div>
             </div>
-            
+
             <!-- Summary Cards -->
             <div class="row g-4 mb-4">
                 <div class="col-md-3">
@@ -126,7 +142,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Total IP Pools</p>
-                                    <h3 class="mb-0">12</h3>
+                                    <h3 class="mb-0">0</h3>
                                 </div>
                                 <div class="stat-icon bg-primary">
                                     <i class="bi bi-diagram-3"></i>
@@ -141,9 +157,10 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Total IPs</p>
-                                    <h3 class="mb-0">4,096</h3>
+                                    <h3 class="mb-0">0</h3>
                                 </div>
-                                <div class="stat-icon" style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);">
+                                <div class="stat-icon"
+                                    style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);">
                                     <i class="bi bi-hdd-network"></i>
                                 </div>
                             </div>
@@ -156,8 +173,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Allocated</p>
-                                    <h3 class="mb-0 text-success">2,847</h3>
-                                    <small class="text-muted">69.5%</small>
+                                    <h3 class="mb-0 text-success">0</h3>
                                 </div>
                                 <div class="stat-icon bg-success">
                                     <i class="bi bi-check-circle"></i>
@@ -172,8 +188,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Available</p>
-                                    <h3 class="mb-0 text-info">1,249</h3>
-                                    <small class="text-muted">30.5%</small>
+                                    <h3 class="mb-0 text-info">0</h3>
                                 </div>
                                 <div class="stat-icon bg-info">
                                     <i class="bi bi-circle"></i>
@@ -183,157 +198,12 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Filters -->
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-3">
-                            <select class="form-select" id="poolFilter">
-                                <option value="">All Pools</option>
-                                <option value="public">Public IPs</option>
-                                <option value="private">Private IPs</option>
-                                <option value="management">Management</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-select" id="statusFilter">
-                                <option value="">All Status</option>
-                                <option value="allocated">Allocated</option>
-                                <option value="reserved">Reserved</option>
-                                <option value="available">Available</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Search IP address or customer..." id="searchInput">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+
             <!-- IP Pools -->
-            <div class="row g-4 mb-4">
-                <div class="col-md-6">
-                    <div class="ip-block allocated" onclick="viewPool('POOL-001')">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h5 class="mb-1">Public IP Pool - Andheri</h5>
-                                <p class="text-muted mb-0">103.45.120.0/24</p>
-                            </div>
-                            <span class="badge bg-success">Active</span>
-                        </div>
-                        <div class="row g-2 mb-2">
-                            <div class="col-4">
-                                <small class="text-muted">Total IPs</small>
-                                <div class="fw-bold">256</div>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Allocated</small>
-                                <div class="fw-bold text-success">189</div>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Available</small>
-                                <div class="fw-bold text-info">67</div>
-                            </div>
-                        </div>
-                        <div class="ip-utilization">
-                            <div class="ip-utilization-bar" style="width: 74%;"></div>
-                        </div>
-                        <small class="text-muted">74% utilized</small>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="ip-block allocated" onclick="viewPool('POOL-002')">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h5 class="mb-1">Public IP Pool - Bandra</h5>
-                                <p class="text-muted mb-0">103.45.121.0/24</p>
-                            </div>
-                            <span class="badge bg-success">Active</span>
-                        </div>
-                        <div class="row g-2 mb-2">
-                            <div class="col-4">
-                                <small class="text-muted">Total IPs</small>
-                                <div class="fw-bold">256</div>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Allocated</small>
-                                <div class="fw-bold text-success">142</div>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Available</small>
-                                <div class="fw-bold text-info">114</div>
-                            </div>
-                        </div>
-                        <div class="ip-utilization">
-                            <div class="ip-utilization-bar" style="width: 55%;"></div>
-                        </div>
-                        <small class="text-muted">55% utilized</small>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="ip-block reserved" onclick="viewPool('POOL-003')">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h5 class="mb-1">Private IP Pool - Corporate</h5>
-                                <p class="text-muted mb-0">10.10.0.0/16</p>
-                            </div>
-                            <span class="badge bg-warning">Reserved</span>
-                        </div>
-                        <div class="row g-2 mb-2">
-                            <div class="col-4">
-                                <small class="text-muted">Total IPs</small>
-                                <div class="fw-bold">65,536</div>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Allocated</small>
-                                <div class="fw-bold text-success">2,456</div>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Available</small>
-                                <div class="fw-bold text-info">63,080</div>
-                            </div>
-                        </div>
-                        <div class="ip-utilization">
-                            <div class="ip-utilization-bar" style="width: 4%;"></div>
-                        </div>
-                        <small class="text-muted">4% utilized</small>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="ip-block available" onclick="viewPool('POOL-004')">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h5 class="mb-1">Management Network</h5>
-                                <p class="text-muted mb-0">192.168.100.0/24</p>
-                            </div>
-                            <span class="badge bg-info">Available</span>
-                        </div>
-                        <div class="row g-2 mb-2">
-                            <div class="col-4">
-                                <small class="text-muted">Total IPs</small>
-                                <div class="fw-bold">256</div>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Allocated</small>
-                                <div class="fw-bold text-success">48</div>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Available</small>
-                                <div class="fw-bold text-info">208</div>
-                            </div>
-                        </div>
-                        <div class="ip-utilization">
-                            <div class="ip-utilization-bar" style="width: 19%;"></div>
-                        </div>
-                        <small class="text-muted">19% utilized</small>
-                    </div>
-                </div>
+            <div class="row g-4 mb-4" id="poolsContainer">
+                <!-- IP Pools will be dynamically loaded -->
             </div>
-            
+
             <!-- IP Allocation Table -->
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -356,142 +226,50 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="allocationsTbody">
                                 <tr>
-                                    <td><code>103.45.120.15</code></td>
-                                    <td>Public - Andheri</td>
-                                    <td>
-                                        <strong>Rajesh Kumar</strong>
-                                        <small class="text-muted d-block">CUS-2025-001</small>
-                                    </td>
-                                    <td><code>00:1A:2B:3C:4D:5E</code></td>
-                                    <td>Jan 4, 2025</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewIP('103.45.120.15')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-warning" onclick="releaseIP('103.45.120.15')">
-                                                <i class="bi bi-x-circle"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><code>103.45.120.16</code></td>
-                                    <td>Public - Andheri</td>
-                                    <td>
-                                        <strong>Priya Sharma</strong>
-                                        <small class="text-muted d-block">CUS-2025-002</small>
-                                    </td>
-                                    <td><code>00:1A:2B:3C:4D:5F</code></td>
-                                    <td>Jan 4, 2025</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewIP('103.45.120.16')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-warning" onclick="releaseIP('103.45.120.16')">
-                                                <i class="bi bi-x-circle"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><code>103.45.121.25</code></td>
-                                    <td>Public - Bandra</td>
-                                    <td>
-                                        <strong>Amit Singh</strong>
-                                        <small class="text-muted d-block">CUS-2025-003</small>
-                                    </td>
-                                    <td><code>00:1A:2B:3C:4D:60</code></td>
-                                    <td>Jan 3, 2025</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewIP('103.45.121.25')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-warning" onclick="releaseIP('103.45.121.25')">
-                                                <i class="bi bi-x-circle"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><code>10.10.1.50</code></td>
-                                    <td>Private - Corporate</td>
-                                    <td>
-                                        <strong>TechCorp Ltd</strong>
-                                        <small class="text-muted d-block">CUS-2025-010</small>
-                                    </td>
-                                    <td><code>00:1A:2B:3C:4D:61</code></td>
-                                    <td>Jan 3, 2025</td>
-                                    <td><span class="badge bg-warning">Reserved</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewIP('10.10.1.50')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-warning" onclick="releaseIP('10.10.1.50')">
-                                                <i class="bi bi-x-circle"></i>
-                                            </button>
-                                        </div>
-                                    </td>
+                                    <td colspan="7" class="text-center p-4 text-muted">Loading allocations...</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="text-muted">Showing 1-4 of 2,847 allocations</div>
-                        <nav>
-                            <ul class="pagination pagination-sm mb-0">
-                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
             </div>
         </main>
-        
+
         <footer class="footer">
             <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
         </footer>
     </div>
-    
+
     <!-- Add IP Pool Modal -->
     <div class="modal fade" id="addPoolModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add IP Pool</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
+                <form id="addPoolForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add IP Pool</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Pool Name</label>
-                            <input type="text" class="form-control" placeholder="e.g., Public IP Pool - Powai" required>
+                            <input type="text" class="form-control" name="name"
+                                placeholder="e.g., Public IP Pool - Powai" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Network CIDR</label>
-                            <input type="text" class="form-control" placeholder="e.g., 103.45.122.0/24" required>
+                            <input type="text" class="form-control" name="cidr" placeholder="e.g., 103.45.122.0/24"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Gateway</label>
-                            <input type="text" class="form-control" placeholder="e.g., 103.45.122.1" required>
+                            <input type="text" class="form-control" name="gateway" placeholder="e.g., 103.45.122.1"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Pool Type</label>
-                            <select class="form-select" required>
+                            <select class="form-select" name="pool_type" required>
                                 <option value="">Select type</option>
                                 <option value="public">Public</option>
                                 <option value="private">Private</option>
@@ -500,114 +278,282 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" rows="2"></textarea>
+                            <textarea class="form-control" name="description" rows="2"></textarea>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-network" onclick="savePool()">Add Pool</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-network">Add Pool</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    
+
     <!-- Allocate IP Modal -->
     <div class="modal fade" id="allocateIPModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Allocate IP Address</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
+                <form id="allocateIPForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Allocate IP Address</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Select Pool</label>
-                            <select class="form-select" required>
+                            <select class="form-select" name="pool_id" required id="modalPoolSelect">
                                 <option value="">Choose IP pool</option>
-                                <option value="pool1">Public IP Pool - Andheri (67 available)</option>
-                                <option value="pool2">Public IP Pool - Bandra (114 available)</option>
-                                <option value="pool3">Private IP Pool - Corporate (63,080 available)</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Customer</label>
-                            <select class="form-select" required>
+                            <select class="form-select" name="customer_name" required id="modalCustomerSelect">
                                 <option value="">Select customer</option>
-                                <option value="cus1">Rajesh Kumar (CUS-2025-001)</option>
-                                <option value="cus2">Priya Sharma (CUS-2025-002)</option>
-                                <option value="cus3">Amit Singh (CUS-2025-003)</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">MAC Address</label>
-                            <input type="text" class="form-control" placeholder="00:1A:2B:3C:4D:5E" required>
+                            <input type="text" class="form-control" name="mac_address" placeholder="00:1A:2B:3C:4D:5E"
+                                required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Allocation Type</label>
-                            <select class="form-select" required>
-                                <option value="auto">Auto-assign (Recommended)</option>
-                                <option value="manual">Manual assignment</option>
-                            </select>
+                            <label class="form-label">IP Address (Manual)</label>
+                            <input type="text" class="form-control" name="ip_address"
+                                placeholder="Allow auto-assign if empty">
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-network" onclick="allocateIP()">Allocate</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-network">Allocate</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/auth.js"></script>
-    <script src="/assets/js/common.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/common.js"></script>
     <script>
         auth.protectPage(['network']);
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', async function () {
             const user = auth.getCurrentUser();
             if (user) {
                 document.getElementById('userName').textContent = user.name;
                 const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 document.querySelector('.user-avatar').textContent = initials;
             }
+
+            await loadIPPools();
+            await loadAllocations();
+            await loadCustomers();
+
+            document.getElementById('addPoolForm').addEventListener('submit', handleAddPool);
+            document.getElementById('allocateIPForm').addEventListener('submit', handleAllocateIP);
         });
-        
-        function viewPool(poolId) {
-            Toast.info(`Loading pool ${poolId} details...`, 2000);
-        }
-        
-        function savePool() {
-            Toast.info('Creating IP pool...', 1500);
-            setTimeout(() => {
-                Toast.success('IP pool created successfully!', 2000);
-                bootstrap.Modal.getInstance(document.getElementById('addPoolModal')).hide();
-            }, 1500);
-        }
-        
-        function allocateIP() {
-            Toast.info('Allocating IP address...', 1500);
-            setTimeout(() => {
-                Toast.success('IP allocated successfully!', 2000);
-                bootstrap.Modal.getInstance(document.getElementById('allocateIPModal')).hide();
-            }, 1500);
-        }
-        
-        function viewIP(ip) {
-            Toast.info(`Viewing details for ${ip}...`, 2000);
-        }
-        
-        function releaseIP(ip) {
-            if (confirm(`Are you sure you want to release ${ip}?`)) {
-                Toast.warning(`Releasing ${ip}...`, 1500);
-                setTimeout(() => {
-                    Toast.success('IP released successfully!', 2000);
-                }, 1500);
+
+        async function loadCustomers() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/sales/customers', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                const customers = await res.json();
+                const select = document.getElementById('modalCustomerSelect');
+                if (select) {
+                    select.innerHTML = '<option value="">Select customer</option>' +
+                        customers.map(c => `<option value="${c.name}">${c.name} (${c.customer_id})</option>`).join('');
+                }
+            } catch (e) {
+                console.error('Failed to load customers', e);
             }
+        }
+
+        async function loadIPPools() {
+            try {
+                const token = auth.token;
+                const res = await fetch('http://127.0.0.1:5000/api/network/ipam/pools', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const pools = await res.json();
+
+                // Update summary
+                let totalIPs = 0, usedIPs = 0;
+                pools.forEach(p => {
+                    totalIPs += p.total_ips;
+                    usedIPs += p.used_ips;
+                });
+
+                const h3s = document.querySelectorAll('h3');
+                if (h3s.length >= 4) {
+                    h3s[0].textContent = pools.length;
+                    h3s[1].textContent = totalIPs.toLocaleString();
+                    h3s[2].textContent = usedIPs.toLocaleString();
+                    h3s[3].textContent = (totalIPs - usedIPs).toLocaleString();
+                }
+
+                // Render Pools Cards
+                const container = document.getElementById('poolsContainer');
+                if (container) {
+                    container.innerHTML = pools.map(p => {
+                        const usage = Math.round((p.used_ips / p.total_ips) * 100);
+                        let statusColor = 'success';
+                        if (usage > 80) statusColor = 'danger';
+                        else if (usage > 50) statusColor = 'warning';
+
+                        return `
+                        <div class="col-md-6">
+                            <div class="ip-block ${p.pool_type === 'public' ? 'allocated' : (p.pool_type === 'private' ? 'reserved' : 'available')}" onclick="viewPool(${p.id})">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h5 class="mb-1">${p.name}</h5>
+                                        <p class="text-muted mb-0">${p.cidr}</p>
+                                    </div>
+                                    <span class="badge bg-${p.pool_type === 'public' ? 'primary' : 'secondary'} text-capitalize">${p.pool_type}</span>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-4">
+                                        <small class="text-muted">Total IPs</small>
+                                        <div class="fw-bold">${p.total_ips}</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <small class="text-muted">Allocated</small>
+                                        <div class="fw-bold text-success">${p.used_ips}</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <small class="text-muted">Available</small>
+                                        <div class="fw-bold text-info">${p.total_ips - p.used_ips}</div>
+                                    </div>
+                                </div>
+                                <div class="ip-utilization">
+                                    <div class="ip-utilization-bar bg-${statusColor}" style="width: ${usage}%;"></div>
+                                </div>
+                                <small class="text-muted">${usage}% utilized</small>
+                            </div>
+                        </div>`;
+                    }).join('');
+                }
+
+                // Populate modal select
+                const poolSelect = document.getElementById('modalPoolSelect');
+                if (poolSelect) {
+                    poolSelect.innerHTML = '<option value="">Choose IP pool</option>' +
+                        pools.map(p => `<option value="${p.id}">${p.name} (${p.total_ips - p.used_ips} available)</option>`).join('');
+                }
+
+            } catch (e) { console.error(e); }
+        }
+
+        async function loadAllocations() {
+            try {
+                const token = auth.token;
+                const res = await fetch('http://127.0.0.1:5000/api/network/ipam/allocations', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const allocs = await res.json();
+
+                const tbody = document.getElementById('allocationsTbody');
+                if (tbody) {
+                    if (allocs.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="7" class="text-center p-4">No allocations found</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = allocs.map(a => `
+                        <tr>
+                            <td><code>${a.ip_address}</code></td>
+                            <td>${a.pool_name || 'Pool ' + a.pool_id}</td>
+                            <td>
+                                <strong>${a.customer_name || 'N/A'}</strong>
+                            </td>
+                            <td><code>${a.mac_address || '-'}</code></td>
+                            <td>${new Date(a.assigned_at).toLocaleDateString()}</td>
+                            <td><span class="badge bg-${a.status === 'active' ? 'success' : 'secondary'}">${a.status}</span></td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-danger" onclick="releaseIP(${a.id}, '${a.ip_address}')" title="Release IP">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function handleAddPool(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/network/ipam/pools', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${auth.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    Toast.success('IP Pool added');
+                    bootstrap.Modal.getInstance(document.getElementById('addPoolModal')).hide();
+                    e.target.reset();
+                    loadIPPools();
+                } else {
+                    Toast.error('Failed to add pool');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function handleAllocateIP(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/network/ipam/allocations', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${auth.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    Toast.success('IP Allocated');
+                    bootstrap.Modal.getInstance(document.getElementById('allocateIPModal')).hide();
+                    e.target.reset();
+                    loadAllocations();
+                    loadIPPools();
+                } else {
+                    const err = await res.json();
+                    Toast.error(err.error || 'Failed to allocate');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function releaseIP(id, ip) {
+            Modal.confirm('Release IP', `Are you sure you want to release ${ip}?`, async () => {
+                try {
+                    const res = await fetch(`http://127.0.0.1:5000/api/network/ipam/allocations/${id}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${auth.token}` }
+                    });
+                    if (res.ok) {
+                        Toast.success('IP released');
+                        loadAllocations();
+                        loadIPPools();
+                    }
+                } catch (e) { console.error(e); }
+            });
+        }
+
+        function viewPool(id) {
+            Toast.info(`Pool ID: ${id}`);
         }
     </script>
 </body>
+
 </html>

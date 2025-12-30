@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance Dashboard - Joitex Fiber</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -12,12 +13,13 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
 </head>
+
 <body data-theme="light">
     <div class="sidebar-overlay"></div>
-    
+
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -29,7 +31,7 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <div class="nav-section-title">Main</div>
@@ -63,7 +65,7 @@
             </div>
         </nav>
     </aside>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
@@ -72,7 +74,7 @@
                 <button class="mobile-menu-toggle" id="mobileMenuToggle">
                     <i class="bi bi-list"></i>
                 </button>
-                
+
                 <nav aria-label="breadcrumb" class="breadcrumb-container d-none d-md-block">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="dashboard.html">Finance</a></li>
@@ -80,25 +82,26 @@
                     </ol>
                 </nav>
             </div>
-            
+
             <div class="header-right">
                 <div class="header-search d-none d-lg-block">
                     <i class="bi bi-search"></i>
                     <input type="text" class="form-control" placeholder="Search licenses...">
                 </div>
-                
+
                 <button class="header-action" id="themeToggle" data-bs-toggle="tooltip" title="Toggle Theme">
                     <i class="bi bi-moon"></i>
                 </button>
-                
+
                 <button class="header-action" data-bs-toggle="tooltip" title="Notifications">
                     <i class="bi bi-bell"></i>
                     <span class="notification-badge"></span>
                 </button>
-                
+
                 <div class="dropdown">
                     <div class="user-menu" data-bs-toggle="dropdown">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">FM</div>
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                            FM</div>
                         <div class="user-info d-none d-md-block">
                             <div class="user-name" id="userName">Finance Manager</div>
                             <div class="user-role">Finance</div>
@@ -108,13 +111,16 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-        
+
         <!-- Content -->
         <main class="content">
             <div class="content-header">
@@ -133,7 +139,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- KPI Cards -->
             <div class="kpi-grid">
                 <div class="kpi-card">
@@ -141,365 +147,187 @@
                         <div class="kpi-icon" style="background-color: rgba(34, 197, 94, 0.1); color: #22c55e;">
                             <i class="bi bi-key"></i>
                         </div>
-                        <div class="kpi-trend up">
-                            <i class="bi bi-arrow-up"></i>
-                            <span>3%</span>
-                        </div>
-                    </div>
-                    <div class="kpi-title">Active Licenses</div>
-                    <div class="kpi-value">42</div>
-                    <div class="kpi-footer">
-                        <i class="bi bi-info-circle me-1"></i>
-                        Across 8 categories
+                        <!-- Trend removed -->
                     </div>
                 </div>
-                
-                <div class="kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b;">
-                            <i class="bi bi-exclamation-triangle"></i>
-                        </div>
-                        <div class="kpi-trend">
-                            <i class="bi bi-exclamation-circle"></i>
-                        </div>
+                <div class="kpi-title">Active Licenses</div>
+                <div class="kpi-value">-</div>
+                <div class="kpi-footer">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Across 8 categories
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <div class="kpi-icon" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                        <i class="bi bi-exclamation-triangle"></i>
                     </div>
-                    <div class="kpi-title">Expiring (30 Days)</div>
-                    <div class="kpi-value">8</div>
-                    <div class="kpi-footer">
-                        <i class="bi bi-exclamation-triangle me-1"></i>
-                        Action required
+                    <!-- Trend removed -->
+                </div>
+            </div>
+            <div class="kpi-title">Expiring (30 Days)</div>
+            <div class="kpi-value">-</div>
+            <div class="kpi-footer">
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                Action required
+            </div>
+    </div>
+
+    <div class="kpi-card">
+        <div class="kpi-header">
+            <div class="kpi-icon" style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                <i class="bi bi-x-circle"></i>
+            </div>
+            <!-- Trend removed -->
+        </div>
+    </div>
+    <div class="kpi-title">Expired</div>
+    <div class="kpi-value">-</div>
+    <div class="kpi-footer">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        Expires soon
+    </div>
+    </div>
+
+    <div class="kpi-card">
+        <div class="kpi-header">
+            <div class="kpi-icon" style="background-color: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <i class="bi bi-currency-rupee"></i>
+            </div>
+            <!-- Trend removed -->
+        </div>
+    </div>
+    <div class="kpi-title">Monthly Spend</div>
+    <div class="kpi-value">-</div>
+    <div class="kpi-footer">
+        <i class="bi bi-info-circle me-1"></i>
+        Annual: -
+    </div>
+    </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Monthly Spend Trend</h3>
+                    <div class="chart-actions">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-secondary active">6M</button>
+                            <button class="btn btn-outline-secondary">1Y</button>
+                            <button class="btn btn-outline-secondary">All</button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444;">
-                            <i class="bi bi-x-circle"></i>
-                        </div>
-                        <div class="kpi-trend down">
-                            <i class="bi bi-arrow-down"></i>
-                            <span>2</span>
-                        </div>
-                    </div>
-                    <div class="kpi-title">Expired</div>
-                    <div class="kpi-value">3</div>
-                    <div class="kpi-footer">
-                        <i class="bi bi-exclamation-triangle me-1"></i>
-                        Renew immediately
-                    </div>
+                <canvas id="spendChart" height="80"></canvas>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Spend by Category</h3>
                 </div>
-                
-                <div class="kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background-color: rgba(59, 130, 246, 0.1); color: #3b82f6;">
-                            <i class="bi bi-currency-rupee"></i>
-                        </div>
-                        <div class="kpi-trend up">
-                            <i class="bi bi-arrow-up"></i>
-                            <span>5%</span>
-                        </div>
-                    </div>
-                    <div class="kpi-title">Monthly Spend</div>
-                    <div class="kpi-value">₹4.2L</div>
-                    <div class="kpi-footer">
-                        <i class="bi bi-info-circle me-1"></i>
-                        Annual: ₹50.4L
+                <canvas id="categoryChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Renewal Calendar -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Upcoming Renewals (Next 90 Days)</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3" id="renewalCardsContainer">
+                <div class="col-12 text-center p-3 text-muted">Loading renewals...</div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a href="renewals.html" class="text-decoration-none">View All Renewals <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- License Registry & Vendors -->
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">License Registry</h5>
+                    <a href="licenses.html" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Vendor</th>
+                                    <th>Expiry Date</th>
+                                    <th>Cost</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="licensesTbody">
+                                <tr>
+                                    <td colspan="6" class="text-center p-4">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            
-            <!-- Charts -->
-            <div class="row g-4 mb-4">
-                <div class="col-lg-8">
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Monthly Spend Trend</h3>
-                            <div class="chart-actions">
-                                <div class="btn-group btn-group-sm">
-                                    <button class="btn btn-outline-secondary active">6M</button>
-                                    <button class="btn btn-outline-secondary">1Y</button>
-                                    <button class="btn btn-outline-secondary">All</button>
-                                </div>
-                            </div>
-                        </div>
-                        <canvas id="spendChart" height="80"></canvas>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4">
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Spend by Category</h3>
-                        </div>
-                        <canvas id="categoryChart" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Renewal Calendar -->
-            <div class="card mb-4">
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card mb-3">
                 <div class="card-header">
-                    <h5 class="mb-0">Upcoming Renewals (Next 90 Days)</h5>
+                    <h6 class="mb-0">Top Vendors by Spend</h6>
                 </div>
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <div class="card border-danger">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <span class="badge bg-danger">7 Days</span>
-                                        <i class="bi bi-key fs-4 text-danger"></i>
-                                    </div>
-                                    <h6 class="mb-1">Network Monitoring Tool</h6>
-                                    <p class="text-muted small mb-2">Vendor: TechCorp Solutions</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-semibold">₹45,000/year</span>
-                                        <button class="btn btn-sm btn-danger" onclick="renewLicense('NMT-001')">
-                                            <i class="bi bi-arrow-clockwise"></i> Renew
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="card border-warning">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <span class="badge bg-warning">15 Days</span>
-                                        <i class="bi bi-key fs-4 text-warning"></i>
-                                    </div>
-                                    <h6 class="mb-1">Billing Software</h6>
-                                    <p class="text-muted small mb-2">Vendor: BillSoft Inc</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-semibold">₹85,000/year</span>
-                                        <button class="btn btn-sm btn-warning" onclick="renewLicense('BS-002')">
-                                            <i class="bi bi-arrow-clockwise"></i> Renew
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="card border-info">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <span class="badge bg-info">28 Days</span>
-                                        <i class="bi bi-key fs-4 text-info"></i>
-                                    </div>
-                                    <h6 class="mb-1">CRM Platform</h6>
-                                    <p class="text-muted small mb-2">Vendor: SalesPro</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-semibold">₹65,000/year</span>
-                                        <button class="btn btn-sm btn-info" onclick="renewLicense('CRM-003')">
-                                            <i class="bi bi-arrow-clockwise"></i> Renew
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-body" id="topVendorsContainer">
+                    <div class="text-center text-muted p-4">Loading vendors...</div>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="renewals.html" class="text-decoration-none">View All Renewals <i class="bi bi-arrow-right"></i></a>
+                    <a href="vendors.html" class="text-decoration-none">View All Vendors <i
+                            class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
-            
-            <!-- License Registry & Vendors -->
-            <div class="row g-4">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">License Registry</h5>
-                            <a href="licenses.html" class="btn btn-sm btn-outline-primary">View All</a>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Vendor</th>
-                                            <th>Expiry Date</th>
-                                            <th>Cost</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="fw-semibold">Network Monitoring Tool</div>
-                                                <small class="text-muted">License: NMT-2024-001</small>
-                                            </td>
-                                            <td>TechCorp Solutions</td>
-                                            <td>
-                                                <span class="text-danger fw-semibold">Jan 11, 2025</span>
-                                                <br><small class="text-muted">7 days left</small>
-                                            </td>
-                                            <td>₹45,000</td>
-                                            <td><span class="badge bg-danger">Expiring Soon</span></td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm">
-                                                    <button class="btn btn-outline-primary" onclick="viewLicense('NMT-001')">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-success" onclick="renewLicense('NMT-001')">
-                                                        <i class="bi bi-arrow-clockwise"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="fw-semibold">Billing Software</div>
-                                                <small class="text-muted">License: BS-2024-002</small>
-                                            </td>
-                                            <td>BillSoft Inc</td>
-                                            <td>
-                                                <span class="text-warning fw-semibold">Jan 19, 2025</span>
-                                                <br><small class="text-muted">15 days left</small>
-                                            </td>
-                                            <td>₹85,000</td>
-                                            <td><span class="badge bg-warning">Expiring Soon</span></td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm">
-                                                    <button class="btn btn-outline-primary" onclick="viewLicense('BS-002')">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-success" onclick="renewLicense('BS-002')">
-                                                        <i class="bi bi-arrow-clockwise"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="fw-semibold">CRM Platform</div>
-                                                <small class="text-muted">License: CRM-2024-003</small>
-                                            </td>
-                                            <td>SalesPro</td>
-                                            <td>
-                                                <span class="fw-semibold">Feb 1, 2025</span>
-                                                <br><small class="text-muted">28 days left</small>
-                                            </td>
-                                            <td>₹65,000</td>
-                                            <td><span class="badge bg-info">Active</span></td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm">
-                                                    <button class="btn btn-outline-primary" onclick="viewLicense('CRM-003')">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-success" onclick="renewLicense('CRM-003')">
-                                                        <i class="bi bi-arrow-clockwise"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="fw-semibold">Security Suite</div>
-                                                <small class="text-muted">License: SS-2024-004</small>
-                                            </td>
-                                            <td>SecureNet</td>
-                                            <td>
-                                                <span class="fw-semibold">Mar 15, 2025</span>
-                                                <br><small class="text-muted">70 days left</small>
-                                            </td>
-                                            <td>₹95,000</td>
-                                            <td><span class="badge bg-success">Active</span></td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm">
-                                                    <button class="btn btn-outline-primary" onclick="viewLicense('SS-004')">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">Quick Actions</h6>
                 </div>
-                
-                <div class="col-lg-4">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h6 class="mb-0">Top Vendors by Spend</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3 pb-3 border-bottom">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-semibold">TechCorp Solutions</span>
-                                    <span class="badge bg-primary">₹2.4L</span>
-                                </div>
-                                <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3 pb-3 border-bottom">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-semibold">BillSoft Inc</span>
-                                    <span class="badge bg-primary">₹1.8L</span>
-                                </div>
-                                <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar" style="width: 65%"></div>
-                                </div>
-                            </div>
-                            <div class="mb-3 pb-3 border-bottom">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-semibold">SecureNet</span>
-                                    <span class="badge bg-primary">₹1.5L</span>
-                                </div>
-                                <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar" style="width: 55%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="fw-semibold">SalesPro</span>
-                                    <span class="badge bg-primary">₹1.2L</span>
-                                </div>
-                                <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar" style="width: 45%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-center">
-                            <a href="vendors.html" class="text-decoration-none">View All Vendors <i class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h6 class="mb-0">Quick Actions</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-primary" onclick="sendReminders()">
-                                    <i class="bi bi-bell me-2"></i>Send Renewal Reminders
-                                </button>
-                                <button class="btn btn-outline-success" onclick="exportReport()">
-                                    <i class="bi bi-file-earmark-excel me-2"></i>Export Cost Report
-                                </button>
-                                <button class="btn btn-outline-info" onclick="viewCalendar()">
-                                    <i class="bi bi-calendar3 me-2"></i>View Renewal Calendar
-                                </button>
-                            </div>
-                        </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" onclick="sendReminders()">
+                            <i class="bi bi-bell me-2"></i>Send Renewal Reminders
+                        </button>
+                        <button class="btn btn-outline-success" onclick="exportReport()">
+                            <i class="bi bi-file-earmark-excel me-2"></i>Export Cost Report
+                        </button>
+                        <button class="btn btn-outline-info" onclick="viewCalendar()">
+                            <i class="bi bi-calendar3 me-2"></i>View Renewal Calendar
+                        </button>
                     </div>
                 </div>
             </div>
-        </main>
-        
-        <!-- Footer -->
-        <footer class="footer">
-            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
-        </footer>
+        </div>
     </div>
-    
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+    </footer>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
@@ -508,30 +336,156 @@
     <script src="../../assets/js/common.js"></script>
     <script>
         auth.protectPage(['finance']);
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', async function () {
             const user = auth.getCurrentUser();
             if (user) {
                 document.getElementById('userName').textContent = user.name;
                 const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 document.querySelector('.user-avatar').textContent = initials;
             }
-            
-            initSpendChart();
-            initCategoryChart();
+
+            await loadFinanceStats();
         });
-        
-        function initSpendChart() {
+
+        async function loadFinanceStats() {
+            try {
+                const token = auth.token;
+                const response = await fetch('http://127.0.0.1:5000/api/finance/stats', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch stats');
+
+                const data = await response.json();
+
+                // Update KPI Cards
+                document.querySelectorAll('.kpi-value')[0].textContent = data.licenses.active;
+                document.querySelectorAll('.kpi-value')[1].textContent = data.licenses.expiring_soon;
+                document.querySelectorAll('.kpi-value')[2].textContent = data.licenses.expired;
+                document.querySelectorAll('.kpi-value')[3].textContent = `₹${(data.financials.monthly_spend / 1000).toFixed(1)}k`;
+                document.querySelector('.kpi-footer .bi-info-circle').nextSibling.textContent = ` Annual: ₹${(data.financials.annual_spend / 100000).toFixed(2)}L`;
+
+                if (data.spend_chart) initSpendChart(data.spend_chart);
+                if (data.category_chart) initCategoryChart(data.category_chart);
+
+                // Fetch Licenses List
+                const licensesRes = await fetch('http://127.0.0.1:5000/api/finance/licenses?limit=5', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (licensesRes.ok) {
+                    const licenses = await licensesRes.json();
+                    renderLicensesTable(licenses.slice(0, 5));
+                    renderRenewalCards(licenses.filter(l => l.status === 'active').slice(0, 4));
+                }
+
+                // Fetch Vendors List
+                const vendorsRes = await fetch('http://127.0.0.1:5000/api/finance/vendors', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (vendorsRes.ok) {
+                    const vendors = await vendorsRes.json();
+                    renderTopVendors(vendors.sort((a, b) => b.monthly_cost - a.monthly_cost).slice(0, 4));
+                }
+
+            } catch (error) {
+                console.error(error);
+                Toast.error('Failed to load dashboard stats');
+            }
+        }
+
+        function renderLicensesTable(licenses) {
+            const tbody = document.getElementById('licensesTbody');
+            if (!tbody) return;
+
+            if (licenses.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4 text-muted">No licenses found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = licenses.map(l => `
+                <tr>
+                    <td><strong>${l.name}</strong><br><small class="text-muted">${l.license_number}</small></td>
+                    <td>${l.vendor_name || 'N/A'}</td>
+                    <td>${new Date(l.expiry_date).toLocaleDateString()}</td>
+                    <td>₹${l.annual_cost?.toLocaleString('en-IN')}</td>
+                    <td><span class="badge bg-${l.status === 'active' ? 'success' : 'danger'}">${l.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewLicense('${l.id}')"><i class="bi bi-eye"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderRenewalCards(licenses) {
+            const container = document.getElementById('renewalCardsContainer');
+            if (!container) return;
+
+            if (licenses.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center p-3 text-muted">No upcoming renewals</div>';
+                return;
+            }
+
+            container.innerHTML = licenses.map(l => {
+                const daysLeft = Math.ceil((new Date(l.expiry_date) - new Date()) / (1000 * 60 * 60 * 24));
+                const statusColor = daysLeft < 15 ? 'danger' : daysLeft < 30 ? 'warning' : 'info';
+
+                return `
+                    <div class="col-md-3">
+                        <div class="card h-100 border-${statusColor}">
+                            <div class="card-body p-3">
+                                <h6 class="mb-1">${l.name}</h6>
+                                <p class="mb-2 small text-muted">Expires: ${new Date(l.expiry_date).toLocaleDateString()}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-${statusColor}">${daysLeft} Days Left</span>
+                                    <button class="btn btn-sm btn-link p-0" onclick="renewLicense('${l.id}')">Renew</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderTopVendors(vendors) {
+            const container = document.getElementById('topVendorsContainer');
+            if (!container) return;
+
+            if (vendors.length === 0) {
+                container.innerHTML = '<div class="text-center text-muted p-4">No vendor data available</div>';
+                return;
+            }
+
+            container.innerHTML = vendors.map(v => `
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h6 class="mb-0">${v.name}</h6>
+                        <small class="text-muted">${v.category}</small>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold">₹${v.monthly_cost?.toLocaleString('en-IN')}</div>
+                        <small class="text-success small">Monthly</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function initSpendChart(chartData) {
             const ctx = document.getElementById('spendChart');
             if (!ctx) return;
-            
-            new Chart(ctx, {
+
+            if (window.spendChartInstance) window.spendChartInstance.destroy();
+
+            const labels = chartData?.labels || ['No Data'];
+            const data = chartData?.data || [0];
+
+            window.spendChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    labels: labels,
                     datasets: [{
                         label: 'Monthly Spend (₹)',
-                        data: [380000, 420000, 395000, 410000, 425000, 420000],
+                        data: data,
                         borderColor: 'rgba(245, 158, 11, 1)',
                         backgroundColor: 'rgba(245, 158, 11, 0.1)',
                         borderWidth: 2,
@@ -557,7 +511,7 @@
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                callback: value => '₹' + (value/1000) + 'K'
+                                callback: value => '₹' + (value / 1000) + 'K'
                             },
                             grid: { color: 'rgba(0, 0, 0, 0.05)' }
                         }
@@ -565,24 +519,30 @@
                 }
             });
         }
-        
-        function initCategoryChart() {
+
+        function initCategoryChart(chartData) {
             const ctx = document.getElementById('categoryChart');
             if (!ctx) return;
-            
-            new Chart(ctx, {
+
+            if (window.categoryChartInstance) window.categoryChartInstance.destroy();
+
+            const labels = chartData?.labels || ['No Data'];
+            const data = chartData?.data || [1];
+            const bgColors = chartData ? [
+                'rgba(245, 158, 11, 0.8)',
+                'rgba(59, 130, 246, 0.8)',
+                'rgba(147, 51, 234, 0.8)',
+                'rgba(239, 68, 68, 0.8)',
+                'rgba(34, 197, 94, 0.8)'
+            ] : ['rgba(200, 200, 200, 0.2)'];
+
+            window.categoryChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Software', 'Hardware', 'Cloud', 'Security', 'Support'],
+                    labels: labels,
                     datasets: [{
-                        data: [35, 25, 20, 15, 5],
-                        backgroundColor: [
-                            'rgba(245, 158, 11, 0.8)',
-                            'rgba(59, 130, 246, 0.8)',
-                            'rgba(147, 51, 234, 0.8)',
-                            'rgba(239, 68, 68, 0.8)',
-                            'rgba(34, 197, 94, 0.8)'
-                        ]
+                        data: data,
+                        backgroundColor: bgColors
                     }]
                 },
                 options: {
@@ -594,35 +554,36 @@
                 }
             });
         }
-        
+
         function renewLicense(id) {
             Toast.info(`Initiating renewal for ${id}...`, 2000);
             setTimeout(() => {
                 Toast.success('Renewal request created!', 2000);
             }, 2000);
         }
-        
+
         function viewLicense(id) {
             window.location.href = `licenses.html?id=${id}`;
         }
-        
+
         function sendReminders() {
             Toast.info('Sending renewal reminders...', 2000);
             setTimeout(() => {
                 Toast.success('Reminders sent successfully!', 2000);
             }, 2000);
         }
-        
+
         function exportReport() {
             Toast.info('Generating cost report...', 2000);
             setTimeout(() => {
                 Toast.success('Report exported successfully!', 2000);
             }, 2000);
         }
-        
+
         function viewCalendar() {
             window.location.href = 'renewals.html';
         }
     </script>
 </body>
+
 </html>

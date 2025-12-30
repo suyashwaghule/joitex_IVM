@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Internet Plans - Joitex Fiber</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
 </head>
+
 <body data-theme="light">
     <div class="sidebar-overlay"></div>
-    
+
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="dashboard.html" class="sidebar-logo">
@@ -23,30 +25,39 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <div class="nav-section-title">Main</div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a href="users.html" class="nav-link"><i class="bi bi-people"></i><span>User Management</span></a></li>
-                    <li class="nav-item"><a href="roles.html" class="nav-link"><i class="bi bi-shield-check"></i><span>Roles & Permissions</span></a></li>
-                    <li class="nav-item"><a href="plans.html" class="nav-link active"><i class="bi bi-speedometer"></i><span>Internet Plans</span></a></li>
-                    <li class="nav-item"><a href="olts.html" class="nav-link"><i class="bi bi-hdd-network"></i><span>OLT Catalog</span></a></li>
-                    <li class="nav-item"><a href="ip-pools.html" class="nav-link"><i class="bi bi-diagram-3"></i><span>IP Pools</span></a></li>
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i
+                                class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="users.html" class="nav-link"><i class="bi bi-people"></i><span>User
+                                Management</span></a></li>
+                    <li class="nav-item"><a href="roles.html" class="nav-link"><i
+                                class="bi bi-shield-check"></i><span>Roles & Permissions</span></a></li>
+                    <li class="nav-item"><a href="plans.html" class="nav-link active"><i
+                                class="bi bi-speedometer"></i><span>Internet Plans</span></a></li>
+                    <li class="nav-item"><a href="olts.html" class="nav-link"><i class="bi bi-hdd-network"></i><span>OLT
+                                Catalog</span></a></li>
+                    <li class="nav-item"><a href="ip-pools.html" class="nav-link"><i
+                                class="bi bi-diagram-3"></i><span>IP Pools</span></a></li>
                 </ul>
             </div>
             <div class="nav-section">
                 <div class="nav-section-title">System</div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="settings.html" class="nav-link"><i class="bi bi-gear"></i><span>Settings</span></a></li>
-                    <li class="nav-item"><a href="reports.html" class="nav-link"><i class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></a></li>
-                    <li class="nav-item"><a href="audits.html" class="nav-link"><i class="bi bi-clock-history"></i><span>Audit Logs</span></a></li>
+                    <li class="nav-item"><a href="settings.html" class="nav-link"><i
+                                class="bi bi-gear"></i><span>Settings</span></a></li>
+                    <li class="nav-item"><a href="reports.html" class="nav-link"><i
+                                class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></a></li>
+                    <li class="nav-item"><a href="audits.html" class="nav-link"><i
+                                class="bi bi-clock-history"></i><span>Audit Logs</span></a></li>
                 </ul>
             </div>
         </nav>
     </aside>
-    
+
     <div class="main-content">
         <header class="header">
             <div class="header-left">
@@ -63,7 +74,8 @@
                 <button class="header-action"><i class="bi bi-bell"></i></button>
                 <div class="dropdown">
                     <div class="user-menu" data-bs-toggle="dropdown">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);">AD</div>
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);">
+                            AD</div>
                         <div class="user-info d-none d-md-block">
                             <div class="user-name" id="userName">Admin User</div>
                             <div class="user-role">Administrator</div>
@@ -73,13 +85,16 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-        
+
         <main class="content">
             <div class="content-header">
                 <div class="d-flex justify-content-between align-items-center">
@@ -92,154 +107,38 @@
                     </button>
                 </div>
             </div>
-            
-            <div class="row g-4 mb-4">
+
+            <div class="row g-4 mb-4" id="statsContainer">
+                <!-- Stats will be loaded dynamically or kept static if API doesn't support plan stats yet -->
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Total Plans</p>
-                                    <h3 class="mb-0">12</h3>
+                                    <h3 class="mb-0" id="totalPlansCount">0</h3>
                                 </div>
                                 <i class="bi bi-speedometer fs-1 text-primary"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="text-muted mb-1">Active Plans</p>
-                                    <h3 class="mb-0">10</h3>
-                                </div>
-                                <i class="bi bi-check-circle fs-1 text-success"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="text-muted mb-1">Home Plans</p>
-                                    <h3 class="mb-0">8</h3>
-                                </div>
-                                <i class="bi bi-house fs-1 text-info"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="text-muted mb-1">Business Plans</p>
-                                    <h3 class="mb-0">4</h3>
-                                </div>
-                                <i class="bi bi-building fs-1 text-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">50 Mbps</h5>
-                                <span class="badge bg-success">Active</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center mb-3">
-                                <h2 class="mb-0">₹599</h2>
-                                <small class="text-muted">per month</small>
-                            </div>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>50 Mbps Speed</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Unlimited Data</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Free Router</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>24/7 Support</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Home Plan</li>
-                            </ul>
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-primary btn-sm" onclick="editPlan('PLAN-001')"><i class="bi bi-pencil me-2"></i>Edit</button>
-                                <button class="btn btn-outline-danger btn-sm" onclick="deletePlan('PLAN-001')"><i class="bi bi-trash me-2"></i>Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="card border-success">
-                        <div class="card-header bg-success text-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">100 Mbps</h5>
-                                <span class="badge bg-warning">Popular</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center mb-3">
-                                <h2 class="mb-0">₹899</h2>
-                                <small class="text-muted">per month</small>
-                            </div>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>100 Mbps Speed</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Unlimited Data</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Free Router</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Priority Support</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Home Plan</li>
-                            </ul>
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-primary btn-sm" onclick="editPlan('PLAN-002')"><i class="bi bi-pencil me-2"></i>Edit</button>
-                                <button class="btn btn-outline-danger btn-sm" onclick="deletePlan('PLAN-002')"><i class="bi bi-trash me-2"></i>Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header bg-warning text-dark">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">200 Mbps</h5>
-                                <span class="badge bg-success">Active</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center mb-3">
-                                <h2 class="mb-0">₹1,299</h2>
-                                <small class="text-muted">per month</small>
-                            </div>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>200 Mbps Speed</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Unlimited Data</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Free Router + ONT</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Premium Support</li>
-                                <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Business Plan</li>
-                            </ul>
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-primary btn-sm" onclick="editPlan('PLAN-003')"><i class="bi bi-pencil me-2"></i>Edit</button>
-                                <button class="btn btn-outline-danger btn-sm" onclick="deletePlan('PLAN-003')"><i class="bi bi-trash me-2"></i>Delete</button>
-                            </div>
-                        </div>
+
+            <div class="row g-4" id="plansContainer">
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
             </div>
         </main>
-        
+
         <footer class="footer">
             <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
         </footer>
     </div>
-    
+
     <div class="modal fade" id="addPlanModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -280,7 +179,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Features (one per line)</label>
-                            <textarea class="form-control" rows="4" placeholder="Free Router&#10;24/7 Support&#10;Unlimited Data"></textarea>
+                            <textarea class="form-control" rows="4"
+                                placeholder="Free Router&#10;24/7 Support&#10;Unlimited Data"></textarea>
                         </div>
                     </form>
                 </div>
@@ -291,38 +191,146 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/auth.js"></script>
-    <script src="/assets/js/common.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/common.js"></script>
     <script>
         auth.protectPage(['admin']);
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', async function () {
             const user = auth.getCurrentUser();
             if (user) {
                 document.getElementById('userName').textContent = user.name;
                 const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 document.querySelector('.user-avatar').textContent = initials;
             }
+
+            await loadPlans();
         });
-        
-        function editPlan(planId) {
-            Toast.info(`Editing plan ${planId}...`, 2000);
+
+        async function loadPlans() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/admin/plans', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                const plans = await res.json();
+                document.getElementById('totalPlansCount').textContent = plans.length;
+                renderPlans(plans);
+            } catch (e) {
+                console.error(e);
+                Toast.error('Failed to load plans');
+            }
         }
-        
+
+        function renderPlans(plans) {
+            const container = document.getElementById('plansContainer');
+            if (plans.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center text-muted">No plans found</div>';
+                return;
+            }
+
+            container.innerHTML = plans.map(p => {
+                const features = p.description ? p.description.split('\n') : [];
+                const featureList = features.map(f => `<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>${f}</li>`).join('');
+
+                return `
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">${p.speed_mbps} Mbps</h5>
+                                    <span class="badge bg-success">Active</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center mb-3">
+                                    <h3 class="mb-0">${p.name}</h3>
+                                    <h2 class="mb-0">₹${p.price_monthly}</h2>
+                                    <small class="text-muted">per month</small>
+                                </div>
+                                <ul class="list-unstyled">
+                                    ${featureList}
+                                    ${p.data_limit_gb > 0 ? `
+                                        <li class="mb-2">
+                                            <i class="bi bi-pie-chart text-info me-2"></i>${p.data_limit_gb} GB Limit
+                                        </li>` : `
+                                        <li class="mb-2">
+                                            <i class="bi bi-infinity text-success me-2"></i>Unlimited Data
+                                        </li>`}
+                                </ul>
+                                <div class="d-grid gap-2 mt-auto">
+                                    <button class="btn btn-outline-danger btn-sm" onclick="deletePlan(${p.id})">
+                                        <i class="bi bi-trash me-2"></i>Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        function editPlan(planId) {
+            // Placeholder: Implement edit if needed
+            Toast.info(`Edit functionality coming soon for ${planId}`, 2000);
+        }
+
         function deletePlan(planId) {
-            Modal.confirm('Delete Plan', 'Are you sure you want to delete this plan?', () => {
-                Toast.success(`Plan ${planId} deleted successfully!`, 2000);
+            Modal.confirm('Delete Plan', 'Are you sure you want to delete this plan?', async () => {
+                try {
+                    const res = await fetch(`http://127.0.0.1:5000/api/admin/plans/${planId}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${auth.token}` }
+                    });
+                    if (res.ok) {
+                        Toast.success(`Plan deleted successfully!`);
+                        loadPlans();
+                    } else {
+                        Toast.error('Failed to delete plan');
+                    }
+                } catch (e) { Toast.error('Error deleting plan'); }
             });
         }
-        
-        function savePlan() {
-            Toast.info('Creating plan...', 1500);
-            setTimeout(() => {
-                Toast.success('Plan created successfully!', 2000);
-                bootstrap.Modal.getInstance(document.getElementById('addPlanModal')).hide();
-            }, 1500);
+
+        async function savePlan() {
+            const form = document.getElementById('addPlanForm');
+            const inputs = form.querySelectorAll('input, select, textarea');
+
+            const name = inputs[0].value; // Name
+            const speed = inputs[1].value; // Speed
+            const price = inputs[2].value; // Price
+            const type = inputs[3].value; // Type (ignored by backend for now)
+            const dataLimit = inputs[4].value; // Unlimited/Limited
+            const features = inputs[5].value; // Features text
+
+            const payload = {
+                name,
+                speed,
+                price,
+                type,
+                data_limit: dataLimit,
+                features
+            };
+
+            Toast.info('Creating plan...', 1000);
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/admin/plans', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${auth.token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    Toast.success('Plan created successfully!');
+                    bootstrap.Modal.getInstance(document.getElementById('addPlanModal')).hide();
+                    loadPlans();
+                    form.reset();
+                } else {
+                    Toast.error('Failed to create plan');
+                }
+            } catch (e) { Toast.error('Error creating plan'); }
         }
     </script>
 </body>
+
 </html>

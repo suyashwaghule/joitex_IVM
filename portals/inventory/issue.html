@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Issue Items - Joitex Fiber</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
 </head>
+
 <body data-theme="light">
     <div class="sidebar-overlay"></div>
-    
+
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="dashboard.html" class="sidebar-logo">
@@ -21,23 +23,30 @@
             </a>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-chevron-left"></i></button>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <div class="nav-section-title">Inventory</div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a href="catalog.html" class="nav-link"><i class="bi bi-grid"></i><span>Catalog</span></a></li>
-                    <li class="nav-item"><a href="receive.html" class="nav-link"><i class="bi bi-box-arrow-in-down"></i><span>Receive Stock</span></a></li>
-                    <li class="nav-item"><a href="issue.html" class="nav-link active"><i class="bi bi-box-arrow-up"></i><span>Issue Items</span></a></li>
-                    <li class="nav-item"><a href="requests.html" class="nav-link"><i class="bi bi-clipboard-check"></i><span>Requests</span></a></li>
-                    <li class="nav-item"><a href="vendors.html" class="nav-link"><i class="bi bi-shop"></i><span>Vendors</span></a></li>
-                    <li class="nav-item"><a href="transactions.html" class="nav-link"><i class="bi bi-arrow-left-right"></i><span>Transactions</span></a></li>
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i
+                                class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link"><i
+                                class="bi bi-grid"></i><span>Catalog</span></a></li>
+                    <li class="nav-item"><a href="receive.html" class="nav-link"><i
+                                class="bi bi-box-arrow-in-down"></i><span>Receive Stock</span></a></li>
+                    <li class="nav-item"><a href="issue.html" class="nav-link active"><i
+                                class="bi bi-box-arrow-up"></i><span>Issue Items</span></a></li>
+                    <li class="nav-item"><a href="requests.html" class="nav-link"><i
+                                class="bi bi-clipboard-check"></i><span>Requests</span></a></li>
+                    <li class="nav-item"><a href="vendors.html" class="nav-link"><i
+                                class="bi bi-shop"></i><span>Vendors</span></a></li>
+                    <li class="nav-item"><a href="transactions.html" class="nav-link"><i
+                                class="bi bi-arrow-left-right"></i><span>Transactions</span></a></li>
                 </ul>
             </div>
         </nav>
     </aside>
-    
+
     <div class="main-content">
         <header class="header">
             <div class="header-left">
@@ -54,7 +63,8 @@
                 <button class="header-action"><i class="bi bi-bell"></i></button>
                 <div class="dropdown">
                     <div class="user-menu" data-bs-toggle="dropdown">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);">IM</div>
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);">
+                            IM</div>
                         <div class="user-info d-none d-md-block">
                             <div class="user-name" id="userName">Inventory Manager</div>
                             <div class="user-role">Inventory Manager</div>
@@ -64,19 +74,22 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-        
+
         <main class="content">
             <div class="content-header">
                 <h1 class="content-title">Issue Items to Engineers</h1>
                 <p class="content-subtitle">Allocate inventory for installation jobs</p>
             </div>
-            
+
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Issue Form</h5>
@@ -86,48 +99,35 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label">Engineer</label>
-                                <select class="form-select" required>
+                                <select class="form-select" name="engineer_name" id="engineerSelector" required>
                                     <option value="">Select engineer</option>
-                                    <option value="eng1">Ravi Kumar</option>
-                                    <option value="eng2">Suresh Reddy</option>
-                                    <option value="eng3">Amit Sharma</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Job ID (Optional)</label>
-                                <input type="text" class="form-control" placeholder="JOB-8901">
+                                <input type="text" class="form-control" name="job_id" placeholder="JOB-8901">
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Issue Date</label>
-                                <input type="date" class="form-control" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Expected Return Date</label>
-                                <input type="date" class="form-control">
+                            <div class="col-md-12">
+                                <label class="form-label">Purpose / Notes</label>
+                                <textarea class="form-control" name="notes" rows="2"
+                                    placeholder="Installation at customer location..." required></textarea>
                             </div>
                         </div>
-                        
+
                         <hr class="my-4">
-                        
+
                         <h6 class="mb-3">Items to Issue</h6>
                         <div id="itemsContainer">
                             <div class="row g-3 mb-3 align-items-end item-row">
-                                <div class="col-md-5">
+                                <div class="col-md-8">
                                     <label class="form-label">Item</label>
-                                    <select class="form-select" required>
+                                    <select class="form-select item-selector" required>
                                         <option value="">Select item</option>
-                                        <option value="ITM-001">Huawei ONT (Stock: 145)</option>
-                                        <option value="ITM-002">TP-Link Router (Stock: 28)</option>
-                                        <option value="ITM-004">Fiber Cable 50m (Stock: 85)</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Quantity</label>
-                                    <input type="number" class="form-control" min="1" required>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label">Serial Numbers</label>
-                                    <input type="text" class="form-control" placeholder="Optional">
+                                    <input type="number" class="form-control item-qty" min="1" required>
                                 </div>
                                 <div class="col-md-1">
                                     <button type="button" class="btn btn-danger w-100" onclick="removeItem(this)">
@@ -136,20 +136,13 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addItem()">
+
+                        <button type="button" class="btn btn-outline-primary mb-3" onclick="addItemRow()">
                             <i class="bi bi-plus-circle me-2"></i>Add Another Item
                         </button>
-                        
-                        <div class="row g-3">
-                            <div class="col-md-12">
-                                <label class="form-label">Purpose / Notes</label>
-                                <textarea class="form-control" rows="2" placeholder="Installation at customer location..." required></textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-4">
-                            <button type="button" class="btn btn-inventory" onclick="issueItems()">
+
+                        <div class="mt-4 border-top pt-4">
+                            <button type="submit" class="btn btn-inventory">
                                 <i class="bi bi-box-arrow-up me-2"></i>Issue Items
                             </button>
                             <button type="reset" class="btn btn-secondary">
@@ -159,7 +152,7 @@
                     </form>
                 </div>
             </div>
-            
+
             <div class="card mt-4">
                 <div class="card-header">
                     <h5 class="mb-0">Recent Issues</h5>
@@ -169,38 +162,17 @@
                         <table class="table table-hover mb-0">
                             <thead>
                                 <tr>
-                                    <th>Issue ID</th>
+                                    <th>Transaction ID</th>
                                     <th>Date</th>
-                                    <th>Engineer</th>
-                                    <th>Items</th>
-                                    <th>Status</th>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Reference (Job ID)</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="issuesTbody">
                                 <tr>
-                                    <td><span class="badge bg-secondary">ISS-001</span></td>
-                                    <td>Jan 04, 2025</td>
-                                    <td>Ravi Kumar</td>
-                                    <td>2 ONT, 2 Routers</td>
-                                    <td><span class="badge bg-warning">Issued</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="viewIssue('ISS-001')">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><span class="badge bg-secondary">ISS-002</span></td>
-                                    <td>Jan 03, 2025</td>
-                                    <td>Suresh Reddy</td>
-                                    <td>1 ONT, 1 Router</td>
-                                    <td><span class="badge bg-success">Returned</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="viewIssue('ISS-002')">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </td>
+                                    <td colspan="6" class="text-center p-4">Loading issues...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -208,53 +180,170 @@
                 </div>
             </div>
         </main>
-        
+
         <footer class="footer">
             <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
         </footer>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/auth.js"></script>
-    <script src="/assets/js/common.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/common.js"></script>
     <script>
         auth.protectPage(['inventory']);
-        document.addEventListener('DOMContentLoaded', function() {
+
+        let allItems = [];
+
+        document.addEventListener('DOMContentLoaded', async function () {
             const user = auth.getCurrentUser();
             if (user) {
                 document.getElementById('userName').textContent = user.name;
                 const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 document.querySelector('.user-avatar').textContent = initials;
             }
+
+            await loadInitialData();
+            await loadRecentIssues();
+
+            document.getElementById('issueForm').addEventListener('submit', handleIssueForm);
         });
-        
-        function addItem() {
+
+        async function loadInitialData() {
+            try {
+                const [itemsRes, engRes] = await Promise.all([
+                    fetch('http://127.0.0.1:5000/api/inventory/items', { headers: { 'Authorization': `Bearer ${auth.token}` } }),
+                    fetch('http://127.0.0.1:5000/api/inventory/engineers', { headers: { 'Authorization': `Bearer ${auth.token}` } })
+                ]);
+
+                allItems = await itemsRes.json();
+                const engineers = await engRes.json();
+
+                const engSelector = document.getElementById('engineerSelector');
+                engSelector.innerHTML = '<option value="">Select engineer</option>' +
+                    engineers.map(e => `<option value="${e.name}">${e.name}</option>`).join('');
+
+                updateItemSelectors();
+            } catch (e) { console.error(e); }
+        }
+
+        async function loadRecentIssues() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/inventory/transactions', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                const txs = await res.json();
+                const issues = txs.filter(t => t.transaction_type === 'OUT');
+                const tbody = document.getElementById('issuesTbody');
+                if (tbody) {
+                    if (issues.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="6" class="text-center p-3">No recent issues found</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = issues.map(i => `
+                        <tr>
+                            <td><span class="badge bg-secondary">#${i.id}</span></td>
+                            <td>${new Date(i.created_at).toLocaleDateString()}</td>
+                            <td>${i.item_name}</td>
+                            <td>${i.quantity}</td>
+                            <td>${i.reference || 'N/A'}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" onclick="Toast.info('Viewing details...')">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        function updateItemSelectors() {
+            const selectors = document.querySelectorAll('.item-selector');
+            const optionsHtml = '<option value="">Select item</option>' +
+                allItems.map(i => `<option value="${i.id}">${i.sku} - ${i.name} (Stock: ${i.quantity})</option>`).join('');
+
+            selectors.forEach(sel => {
+                const currentVal = sel.value;
+                sel.innerHTML = optionsHtml;
+                sel.value = currentVal;
+            });
+        }
+
+        function addItemRow() {
             const container = document.getElementById('itemsContainer');
-            const newRow = container.querySelector('.item-row').cloneNode(true);
+            const lastRow = container.querySelector('.item-row');
+            const newRow = lastRow.cloneNode(true);
             newRow.querySelectorAll('input, select').forEach(input => input.value = '');
             container.appendChild(newRow);
         }
-        
+
         function removeItem(btn) {
             const container = document.getElementById('itemsContainer');
             if (container.querySelectorAll('.item-row').length > 1) {
                 btn.closest('.item-row').remove();
             } else {
-                Toast.warning('At least one item is required', 2000);
+                Toast.warning('At least one item is required');
             }
         }
-        
-        function issueItems() {
-            Toast.info('Issuing items...', 1500);
-            setTimeout(() => {
-                Toast.success('Items issued successfully to engineer!', 2000);
-                document.getElementById('issueForm').reset();
-            }, 1500);
-        }
-        
-        function viewIssue(issueId) {
-            Toast.info(`Viewing issue ${issueId}...`, 2000);
+
+        async function handleIssueForm(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Issuing...';
+
+            const formData = new FormData(e.target);
+            const data = {
+                engineer_name: formData.get('engineer_name'),
+                job_id: formData.get('job_id'),
+                notes: formData.get('notes'),
+                items: []
+            };
+
+            const rows = document.querySelectorAll('.item-row');
+            rows.forEach(row => {
+                const itemId = row.querySelector('.item-selector').value;
+                const qty = row.querySelector('.item-qty').value;
+                if (itemId && qty) {
+                    data.items.push({
+                        item_id: parseInt(itemId),
+                        quantity: parseInt(qty)
+                    });
+                }
+            });
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/inventory/issue', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${auth.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    Toast.success('Items issued successfully');
+                    e.target.reset();
+                    // Keep only one row
+                    const container = document.getElementById('itemsContainer');
+                    while (container.querySelectorAll('.item-row').length > 1) {
+                        container.lastElementChild.remove();
+                    }
+                    loadRecentIssues();
+                } else {
+                    const err = await res.json();
+                    Toast.error(err.error || 'Failed to issue items');
+                }
+            } catch (e) {
+                console.error(e);
+                Toast.error('Network error occurred');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-box-arrow-up me-2"></i>Issue Items';
+            }
         }
     </script>
 </body>
+
 </html>

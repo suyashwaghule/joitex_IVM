@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status Board - Joitex Fiber</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <style>
         .kanban-board {
             display: flex;
@@ -19,12 +20,14 @@
             overflow-x: auto;
             padding-bottom: 1rem;
         }
+
         .kanban-column {
             flex: 0 0 300px;
             background: #f8f9fa;
             border-radius: 0.5rem;
             padding: 1rem;
         }
+
         .kanban-header {
             display: flex;
             justify-content: space-between;
@@ -33,27 +36,31 @@
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #dee2e6;
         }
+
         .kanban-card {
             background: white;
             border-radius: 0.5rem;
             padding: 1rem;
             margin-bottom: 0.75rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             cursor: move;
             transition: all 0.2s;
         }
+
         .kanban-card:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
         }
+
         .kanban-card.dragging {
             opacity: 0.5;
         }
     </style>
 </head>
+
 <body data-theme="light">
     <div class="sidebar-overlay"></div>
-    
+
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -65,7 +72,7 @@
                 <i class="bi bi-chevron-left"></i>
             </button>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <div class="nav-section-title">Main</div>
@@ -99,7 +106,7 @@
             </div>
         </nav>
     </aside>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
@@ -108,7 +115,7 @@
                 <button class="mobile-menu-toggle" id="mobileMenuToggle">
                     <i class="bi bi-list"></i>
                 </button>
-                
+
                 <nav aria-label="breadcrumb" class="breadcrumb-container d-none d-md-block">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="dashboard.html">Call Center</a></li>
@@ -116,19 +123,20 @@
                     </ol>
                 </nav>
             </div>
-            
+
             <div class="header-right">
                 <button class="header-action" id="themeToggle" data-bs-toggle="tooltip" title="Toggle Theme">
                     <i class="bi bi-moon"></i>
                 </button>
-                
+
                 <button class="header-action" data-bs-toggle="tooltip" title="Notifications">
                     <i class="bi bi-bell"></i>
                 </button>
-                
+
                 <div class="dropdown">
                     <div class="user-menu" data-bs-toggle="dropdown">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);">CC</div>
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);">
+                            CC</div>
                         <div class="user-info d-none d-md-block">
                             <div class="user-name" id="userName">Call Center Agent</div>
                             <div class="user-role">Call Center</div>
@@ -138,13 +146,16 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-        
+
         <!-- Content -->
         <main class="content">
             <div class="content-header">
@@ -163,7 +174,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Kanban Board -->
             <div class="kanban-board">
                 <!-- Pending Column -->
@@ -173,40 +184,10 @@
                         <span class="badge bg-warning">5</span>
                     </div>
                     <div class="kanban-cards" data-status="pending">
-                        <div class="kanban-card" draggable="true" data-id="INQ-2024-0234">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <span class="badge bg-secondary">#INQ-2024-0234</span>
-                                <span class="badge bg-info">Home</span>
-                            </div>
-                            <h6 class="mb-1">Rajesh Kumar</h6>
-                            <p class="text-muted small mb-2">+91 98765 43210</p>
-                            <p class="small mb-2">MG Road, Sector 5, Bangalore</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">5 min ago</small>
-                                <button class="btn btn-sm btn-outline-primary" onclick="viewInquiry('INQ-2024-0234')">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="kanban-card" draggable="true" data-id="INQ-2024-0231">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <span class="badge bg-secondary">#INQ-2024-0231</span>
-                                <span class="badge bg-warning">Business</span>
-                            </div>
-                            <h6 class="mb-1">Sneha Reddy</h6>
-                            <p class="text-muted small mb-2">+91 65432 10987</p>
-                            <p class="small mb-2">Indiranagar, Bangalore</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">1 hour ago</small>
-                                <button class="btn btn-sm btn-outline-primary" onclick="viewInquiry('INQ-2024-0231')">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <div class="text-center p-3 text-muted small">Loading...</div>
                     </div>
                 </div>
-                
+
                 <!-- Forwarded Column -->
                 <div class="kanban-column">
                     <div class="kanban-header">
@@ -214,24 +195,10 @@
                         <span class="badge bg-primary">4</span>
                     </div>
                     <div class="kanban-cards" data-status="forwarded">
-                        <div class="kanban-card" draggable="true" data-id="INQ-2024-0233">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <span class="badge bg-secondary">#INQ-2024-0233</span>
-                                <span class="badge bg-warning">Business</span>
-                            </div>
-                            <h6 class="mb-1">Priya Sharma</h6>
-                            <p class="text-muted small mb-2">+91 87654 32109</p>
-                            <p class="small mb-2">Whitefield, Bangalore</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">2 hours ago</small>
-                                <button class="btn btn-sm btn-outline-primary" onclick="viewInquiry('INQ-2024-0233')">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <div class="text-center p-3 text-muted small">Loading...</div>
                     </div>
                 </div>
-                
+
                 <!-- In Progress Column -->
                 <div class="kanban-column">
                     <div class="kanban-header">
@@ -239,24 +206,10 @@
                         <span class="badge bg-info">3</span>
                     </div>
                     <div class="kanban-cards" data-status="in-progress">
-                        <div class="kanban-card" draggable="true" data-id="INQ-2024-0230">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <span class="badge bg-secondary">#INQ-2024-0230</span>
-                                <span class="badge bg-info">Home</span>
-                            </div>
-                            <h6 class="mb-1">Vikram Singh</h6>
-                            <p class="text-muted small mb-2">+91 54321 09876</p>
-                            <p class="small mb-2">HSR Layout, Bangalore</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">5 hours ago</small>
-                                <button class="btn btn-sm btn-outline-primary" onclick="viewInquiry('INQ-2024-0230')">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <div class="text-center p-3 text-muted small">Loading...</div>
                     </div>
                 </div>
-                
+
                 <!-- Closed Column -->
                 <div class="kanban-column">
                     <div class="kanban-header">
@@ -264,112 +217,171 @@
                         <span class="badge bg-success">8</span>
                     </div>
                     <div class="kanban-cards" data-status="closed">
-                        <div class="kanban-card" draggable="true" data-id="INQ-2024-0232">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <span class="badge bg-secondary">#INQ-2024-0232</span>
-                                <span class="badge bg-info">Home</span>
-                            </div>
-                            <h6 class="mb-1">Amit Patel</h6>
-                            <p class="text-muted small mb-2">+91 76543 21098</p>
-                            <p class="small mb-2">Koramangala, Bangalore</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">1 day ago</small>
-                                <button class="btn btn-sm btn-outline-primary" onclick="viewInquiry('INQ-2024-0232')">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <div class="text-center p-3 text-muted small">Loading...</div>
                     </div>
                 </div>
             </div>
         </main>
-        
+
         <!-- Footer -->
         <footer class="footer">
             <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
         </footer>
     </div>
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-    <script src="/assets/js/auth.js"></script>
-    <script src="/assets/js/common.js"></script>
-    <script src="/assets/js/callcenter-dashboard.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script src="../../assets/js/callcenter-dashboard.js"></script>
     <script>
         auth.protectPage(['callcenter']);
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', function () {
             const user = auth.getCurrentUser();
             if (user) {
                 document.getElementById('userName').textContent = user.name;
                 const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 document.querySelector('.user-avatar').textContent = initials;
             }
-            
-            initDragAndDrop();
+
+            loadBoardData();
         });
-        
+
+        async function loadBoardData() {
+            try {
+                const token = auth.token;
+                const response = await fetch('http://127.0.0.1:5000/api/callcenter/inquiries', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const inquiries = await response.json();
+                renderBoard(inquiries);
+                initDragAndDrop();
+            } catch (err) {
+                console.error("Board load failed", err);
+                Toast.error("Could not load board data");
+            }
+        }
+
+        function renderBoard(inquiries) {
+            const columns = {
+                pending: document.querySelector('[data-status="pending"]'),
+                forwarded: document.querySelector('[data-status="forwarded"]'),
+                'in-progress': document.querySelector('[data-status="in-progress"]'),
+                closed: document.querySelector('[data-status="closed"]')
+            };
+
+            // Clear columns
+            Object.values(columns).forEach(col => col.innerHTML = '');
+
+            inquiries.forEach(inq => {
+                const status = inq.status === 'in_progress' ? 'in-progress' : inq.status;
+                const col = columns[status] || columns.pending;
+
+                const card = document.createElement('div');
+                card.className = 'kanban-card';
+                card.draggable = true;
+                card.dataset.id = inq.inquiry_number;
+                card.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-secondary">#${inq.inquiry_number}</span>
+                        <span class="badge bg-info">${inq.service_type}</span>
+                    </div>
+                    <h6 class="mb-1">${inq.customer_name}</h6>
+                    <p class="text-muted small mb-2">${inq.phone}</p>
+                    <p class="small mb-2">${inq.city}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">${new Date(inq.created_at).toLocaleDateString()}</small>
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewInquiry('${inq.inquiry_number}')">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                `;
+                col.appendChild(card);
+            });
+
+            updateBadgeCounts();
+        }
+
         function initDragAndDrop() {
             const cards = document.querySelectorAll('.kanban-card');
             const columns = document.querySelectorAll('.kanban-cards');
-            
+
             cards.forEach(card => {
                 card.addEventListener('dragstart', handleDragStart);
                 card.addEventListener('dragend', handleDragEnd);
             });
-            
+
             columns.forEach(column => {
                 column.addEventListener('dragover', handleDragOver);
                 column.addEventListener('drop', handleDrop);
             });
         }
-        
+
         let draggedCard = null;
-        
+
         function handleDragStart(e) {
             draggedCard = this;
             this.classList.add('dragging');
         }
-        
+
         function handleDragEnd(e) {
             this.classList.remove('dragging');
         }
-        
+
         function handleDragOver(e) {
             e.preventDefault();
         }
-        
-        function handleDrop(e) {
+
+        async function handleDrop(e) {
             e.preventDefault();
             if (draggedCard) {
-                const newStatus = this.dataset.status;
-                const inquiryId = draggedCard.dataset.id;
-                
-                this.appendChild(draggedCard);
-                
-                Toast.success(`Inquiry ${inquiryId} moved to ${newStatus}`, 2000);
-                
-                // Update badge counts
-                updateBadgeCounts();
+                const newStatus = this.dataset.status.replace('-', '_');
+                const inquiryNum = draggedCard.dataset.id;
+
+                try {
+                    const token = auth.token;
+                    const response = await fetch(`http://127.0.0.1:5000/api/callcenter/inquiries/num/${inquiryNum}/status`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ status: newStatus })
+                    });
+
+                    if (response.ok) {
+                        this.appendChild(draggedCard);
+                        Toast.success(`Inquiry ${inquiryNum} moved to ${newStatus}`);
+                        updateBadgeCounts();
+                    } else {
+                        Toast.error("Failed to update status");
+                    }
+                } catch (err) {
+                    Toast.error("Status update error");
+                }
             }
         }
-        
+
         function updateBadgeCounts() {
             const columns = document.querySelectorAll('.kanban-column');
             columns.forEach(column => {
                 const count = column.querySelectorAll('.kanban-card').length;
                 const badge = column.querySelector('.badge');
-                badge.textContent = count;
+                if (badge) badge.textContent = count;
             });
         }
-        
+
         function refreshBoard() {
-            Toast.info('Refreshing board...', 1500);
-            setTimeout(() => {
-                Toast.success('Board refreshed!', 2000);
-            }, 1500);
+            loadBoardData();
+        }
+
+        // Reuse viewInquiry from callcenter-dashboard.js if needed or implement simply
+        function viewInquiry(num) {
+            window.location.href = `my-inquiries.html?search=${num}`;
         }
     </script>
 </body>
+
 </html>

@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material Requests - Joitex Fiber</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
 </head>
+
 <body data-theme="light">
     <div class="sidebar-overlay"></div>
-    
+
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="dashboard.html" class="sidebar-logo">
@@ -21,23 +23,30 @@
             </a>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-chevron-left"></i></button>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <div class="nav-section-title">Inventory</div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a href="catalog.html" class="nav-link"><i class="bi bi-grid"></i><span>Catalog</span></a></li>
-                    <li class="nav-item"><a href="receive.html" class="nav-link"><i class="bi bi-box-arrow-in-down"></i><span>Receive Stock</span></a></li>
-                    <li class="nav-item"><a href="issue.html" class="nav-link"><i class="bi bi-box-arrow-up"></i><span>Issue Items</span></a></li>
-                    <li class="nav-item"><a href="requests.html" class="nav-link active"><i class="bi bi-clipboard-check"></i><span>Requests</span></a></li>
-                    <li class="nav-item"><a href="vendors.html" class="nav-link"><i class="bi bi-shop"></i><span>Vendors</span></a></li>
-                    <li class="nav-item"><a href="transactions.html" class="nav-link"><i class="bi bi-arrow-left-right"></i><span>Transactions</span></a></li>
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i
+                                class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link"><i
+                                class="bi bi-grid"></i><span>Catalog</span></a></li>
+                    <li class="nav-item"><a href="receive.html" class="nav-link"><i
+                                class="bi bi-box-arrow-in-down"></i><span>Receive Stock</span></a></li>
+                    <li class="nav-item"><a href="issue.html" class="nav-link"><i
+                                class="bi bi-box-arrow-up"></i><span>Issue Items</span></a></li>
+                    <li class="nav-item"><a href="requests.html" class="nav-link active"><i
+                                class="bi bi-clipboard-check"></i><span>Requests</span></a></li>
+                    <li class="nav-item"><a href="vendors.html" class="nav-link"><i
+                                class="bi bi-shop"></i><span>Vendors</span></a></li>
+                    <li class="nav-item"><a href="transactions.html" class="nav-link"><i
+                                class="bi bi-arrow-left-right"></i><span>Transactions</span></a></li>
                 </ul>
             </div>
         </nav>
     </aside>
-    
+
     <div class="main-content">
         <header class="header">
             <div class="header-left">
@@ -54,7 +63,8 @@
                 <button class="header-action"><i class="bi bi-bell"></i></button>
                 <div class="dropdown">
                     <div class="user-menu" data-bs-toggle="dropdown">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);">IM</div>
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);">
+                            IM</div>
                         <div class="user-info d-none d-md-block">
                             <div class="user-name" id="userName">Inventory Manager</div>
                             <div class="user-role">Inventory Manager</div>
@@ -64,19 +74,22 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-        
+
         <main class="content">
             <div class="content-header">
                 <h1 class="content-title">Material Requests</h1>
                 <p class="content-subtitle">Manage engineer material requests</p>
             </div>
-            
+
             <div class="row g-4 mb-4">
                 <div class="col-md-4">
                     <div class="card border-warning">
@@ -118,7 +131,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Pending Requests</h5>
@@ -186,39 +199,127 @@
                 </div>
             </div>
         </main>
-        
+
         <footer class="footer">
             <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
         </footer>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/auth.js"></script>
-    <script src="/assets/js/common.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/common.js"></script>
     <script>
         auth.protectPage(['inventory']);
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function () {
             const user = auth.getCurrentUser();
             if (user) {
                 document.getElementById('userName').textContent = user.name;
                 const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 document.querySelector('.user-avatar').textContent = initials;
             }
+
+            await loadRequests();
         });
-        
-        function approveRequest(reqId) {
-            Modal.confirm('Approve Request', 'Approve this material request and issue items?', () => {
-                Toast.success(`Request ${reqId} approved and items issued!`, 2000);
-                setTimeout(() => location.reload(), 2000);
+
+        async function loadRequests() {
+            try {
+                const token = auth.token;
+                const response = await fetch('http://127.0.0.1:5000/api/inventory/requests', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!response.ok) throw new Error("Failed to load requests");
+                const requests = await response.json();
+
+                // Update stats
+                const pending = requests.filter(r => r.status === 'pending');
+                const approved = requests.filter(r => r.status === 'approved'); // Logic for "Approved Today" requires date check, skipping for simplicity
+                const rejected = requests.filter(r => r.status === 'rejected');
+
+                document.querySelector('.text-warning.mb-0').textContent = pending.length;
+                document.querySelector('.text-success.mb-0').textContent = approved.length;
+                document.querySelector('.text-danger.mb-0').textContent = rejected.length;
+
+                renderRequestsTable(pending);
+
+            } catch (e) {
+                console.error(e);
+                Toast.error('Failed to load requests');
+            }
+        }
+
+        function renderRequestsTable(requests) {
+            const tbody = document.querySelector('tbody');
+            if (!tbody) return;
+
+            if (requests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center">No pending requests</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = requests.map(r => `
+                <tr class="${r.priority === 'urgent' ? 'table-warning' : ''}">
+                    <td><span class="badge bg-secondary">${r.request_number}</span></td>
+                    <td>${r.engineer_name}</td>
+                    <td>${r.job_id || '-'}</td>
+                    <td>
+                        ${r.items_requested.map(item => `
+                            <div>${item.qty || item.quantity || 0}x ${item.name || item.item_name || 'Item'}</div>
+                        `).join('')}
+                    </td>
+                    <td>${new Date(r.created_at).toLocaleDateString()}</td>
+                    <td><span class="badge bg-${r.priority === 'urgent' ? 'danger' : 'warning'}">${r.priority}</span></td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-success" onclick="approveRequest(${r.id}, '${r.request_number}')">
+                                <i class="bi bi-check"></i> Approve
+                            </button>
+                            <button class="btn btn-danger" onclick="rejectRequest(${r.id}, '${r.request_number}')">
+                                <i class="bi bi-x"></i> Reject
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+             `).join('');
+        }
+
+        function approveRequest(id, reqNum) {
+            Modal.confirm('Approve Request', 'Approve this material request and issue items?', async () => {
+                try {
+                    const token = auth.token;
+                    const res = await fetch(`http://127.0.0.1:5000/api/inventory/requests/${id}/approve`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!res.ok) throw new Error("Failed to approve");
+
+                    Toast.success(`Request ${reqNum} approved and items issued!`, 2000);
+                    loadRequests();
+                } catch (e) {
+                    console.error(e);
+                    Toast.error("Failed to approve request");
+                }
             });
         }
-        
-        function rejectRequest(reqId) {
-            Modal.confirm('Reject Request', 'Are you sure you want to reject this request?', () => {
-                Toast.warning(`Request ${reqId} rejected`, 2000);
-                setTimeout(() => location.reload(), 2000);
+
+        function rejectRequest(id, reqNum) {
+            Modal.confirm('Reject Request', 'Are you sure you want to reject this request?', async () => {
+                try {
+                    const token = auth.token;
+                    const res = await fetch(`http://127.0.0.1:5000/api/inventory/requests/${id}/reject`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!res.ok) throw new Error("Failed to reject");
+
+                    Toast.warning(`Request ${reqNum} rejected`, 2000);
+                    loadRequests();
+                } catch (e) {
+                    console.error(e);
+                    Toast.error("Failed to reject request");
+                }
             });
         }
     </script>
 </body>
+
 </html>

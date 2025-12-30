@@ -2,7 +2,7 @@
    Login Page JavaScript
    ======================================== */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Check if already logged in - redirect to portal selection
     if (auth.isAuthenticated()) {
         window.location.href = getNavigationPath('select-portal.html');
@@ -19,17 +19,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorMessage = document.getElementById('errorMessage');
 
     // Toggle password visibility
-    togglePasswordBtn.addEventListener('click', function() {
+    togglePasswordBtn.addEventListener('click', function () {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
-        
+
         const icon = this.querySelector('i');
         icon.classList.toggle('bi-eye');
         icon.classList.toggle('bi-eye-slash');
     });
 
     // Handle form submission
-    loginForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         // Clear previous errors
@@ -61,36 +61,37 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Signing in...';
 
-        // Simulate API delay
-        setTimeout(() => {
-            // Attempt login
-            const result = auth.login(email, password, remember);
+        // Attempt login
+        const result = await auth.login(email, password, remember);
 
-            if (result.success) {
-                // Success - redirect to dashboard
-                submitBtn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Success!';
-                submitBtn.classList.remove('btn-primary');
-                submitBtn.classList.add('btn-success');
+        if (result.success) {
+            // Success - redirect to dashboard
+            submitBtn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Success!';
+            submitBtn.classList.remove('btn-primary');
+            submitBtn.classList.add('btn-success');
 
-                setTimeout(() => {
-                    window.location.href = result.redirectUrl;
-                }, 500);
-            } else {
-                // Error - show message
-                showError(result.message);
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
+            setTimeout(() => {
+                window.location.href = result.redirectUrl;
+            }, 500);
+        } else {
+            // Error - show message
+            showError(result.message);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+
+            if (result.message.toLowerCase().includes('email')) {
                 emailInput.classList.add('is-invalid');
+            } else {
                 passwordInput.classList.add('is-invalid');
             }
-        }, 800);
+        }
     });
 
     // Show error message
     function showError(message) {
         errorMessage.textContent = message;
         loginError.classList.remove('d-none');
-        
+
         // Auto-hide after 5 seconds
         setTimeout(() => {
             loginError.classList.add('d-none');
@@ -98,12 +99,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Clear error on input
-    emailInput.addEventListener('input', function() {
+    emailInput.addEventListener('input', function () {
         this.classList.remove('is-invalid');
         loginError.classList.add('d-none');
     });
 
-    passwordInput.addEventListener('input', function() {
+    passwordInput.addEventListener('input', function () {
         this.classList.remove('is-invalid');
         loginError.classList.add('d-none');
     });
@@ -126,14 +127,14 @@ function fillDemo(role) {
     if (credentials) {
         document.getElementById('email').value = credentials.email;
         document.getElementById('password').value = credentials.password;
-        
+
         // Add visual feedback
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
-        
+
         emailInput.classList.add('is-valid');
         passwordInput.classList.add('is-valid');
-        
+
         setTimeout(() => {
             emailInput.classList.remove('is-valid');
             passwordInput.classList.remove('is-valid');

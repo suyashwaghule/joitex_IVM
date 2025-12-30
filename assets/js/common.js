@@ -12,7 +12,7 @@ const ThemeManager = {
     setTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('joitex_theme', theme);
-        
+
         // Update toggle button icon if exists
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
@@ -42,13 +42,16 @@ const SidebarManager = {
         const isCollapsed = localStorage.getItem('sidebar_collapsed') === 'true';
         if (isCollapsed && window.innerWidth > 1024) {
             sidebar?.classList.add('collapsed');
+            this.updateToggleIcon(true);
         }
 
         // Desktop toggle
         sidebarToggle?.addEventListener('click', () => {
-            sidebar?.classList.toggle('collapsed');
-            const collapsed = sidebar?.classList.contains('collapsed');
+            if (!sidebar) return;
+            sidebar.classList.toggle('collapsed');
+            const collapsed = sidebar.classList.contains('collapsed');
             localStorage.setItem('sidebar_collapsed', collapsed);
+            this.updateToggleIcon(collapsed);
         });
 
         // Mobile toggle
@@ -72,6 +75,30 @@ const SidebarManager = {
                 });
             });
         }
+
+        // Auto-set active link
+        this.setActiveLink();
+    },
+
+    setActiveLink() {
+        const currentPath = window.location.pathname;
+        const fileName = currentPath.split('/').pop() || 'dashboard.html';
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === fileName || (fileName === '' && href === 'dashboard.html')) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    },
+
+    updateToggleIcon(isCollapsed) {
+        const icon = document.querySelector('#sidebarToggle i');
+        if (icon) {
+            icon.className = isCollapsed ? 'bi bi-chevron-right' : 'bi bi-chevron-left';
+        }
     }
 };
 
@@ -79,20 +106,20 @@ const SidebarManager = {
 const Toast = {
     show(message, type = 'info', duration = 3000) {
         const toastContainer = this.getContainer();
-        
+
         const toast = document.createElement('div');
         toast.className = `toast align-items-center text-white bg-${type} border-0`;
         toast.setAttribute('role', 'alert');
         toast.setAttribute('aria-live', 'assertive');
         toast.setAttribute('aria-atomic', 'true');
-        
+
         const icons = {
             success: 'bi-check-circle-fill',
             error: 'bi-exclamation-circle-fill',
             warning: 'bi-exclamation-triangle-fill',
             info: 'bi-info-circle-fill'
         };
-        
+
         toast.innerHTML = `
             <div class="d-flex">
                 <div class="toast-body">
@@ -102,12 +129,12 @@ const Toast = {
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
         `;
-        
+
         toastContainer.appendChild(toast);
-        
+
         const bsToast = new bootstrap.Toast(toast, { delay: duration });
         bsToast.show();
-        
+
         toast.addEventListener('hidden.bs.toast', () => {
             toast.remove();
         });
@@ -150,7 +177,7 @@ const Modal = {
         modal.className = 'modal fade';
         modal.id = modalId;
         modal.setAttribute('tabindex', '-1');
-        
+
         modal.innerHTML = `
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -168,21 +195,21 @@ const Modal = {
                 </div>
             </div>
         `;
-        
+
         document.body.appendChild(modal);
-        
+
         const bsModal = new bootstrap.Modal(modal);
-        
+
         modal.querySelector('#confirmBtn').addEventListener('click', () => {
             if (onConfirm) onConfirm();
             bsModal.hide();
         });
-        
+
         modal.addEventListener('hidden.bs.modal', () => {
             if (onCancel) onCancel();
             modal.remove();
         });
-        
+
         bsModal.show();
     }
 };
@@ -230,7 +257,7 @@ const DataTable = {
         headers.forEach(header => {
             header.style.cursor = 'pointer';
             header.innerHTML += ' <i class="bi bi-arrow-down-up ms-1"></i>';
-            
+
             header.addEventListener('click', () => {
                 this.sort(table, header);
             });
@@ -289,7 +316,7 @@ const DataTable = {
 const DateFormatter = {
     format(date, format = 'short') {
         const d = new Date(date);
-        
+
         const formats = {
             short: { month: 'short', day: 'numeric', year: 'numeric' },
             long: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
@@ -374,7 +401,7 @@ const Storage = {
 };
 
 // Initialize common features
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     ThemeManager.init();
     SidebarManager.init();
 

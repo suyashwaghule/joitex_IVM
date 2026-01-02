@@ -101,7 +101,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Total Vendors</p>
-                                    <h3 class="mb-0">18</h3>
+                                    <h3 class="mb-0" id="totalVendorsCount">0</h3>
                                 </div>
                                 <div class="stat-icon"
                                     style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
@@ -117,7 +117,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Monthly Costs</p>
-                                    <h3 class="mb-0">₹8.5L</h3>
+                                    <h3 class="mb-0" id="monthlyCostsTotal">₹0</h3>
                                 </div>
                                 <div class="stat-icon bg-danger">
                                     <i class="bi bi-currency-rupee"></i>
@@ -132,7 +132,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Pending Payments</p>
-                                    <h3 class="mb-0 text-warning">₹3.2L</h3>
+                                    <h3 class="mb-0 text-warning" id="pendingPaymentsTotal">₹0</h3>
                                 </div>
                                 <div class="stat-icon bg-warning">
                                     <i class="bi bi-exclamation-triangle"></i>
@@ -147,7 +147,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Annual Spend</p>
-                                    <h3 class="mb-0">₹102L</h3>
+                                    <h3 class="mb-0" id="annualSpendTotal">₹0</h3>
                                 </div>
                                 <div class="stat-icon bg-info">
                                     <i class="bi bi-graph-up"></i>
@@ -230,140 +230,10 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="vendorsTableBody">
                                 <tr>
-                                    <td>
-                                        <strong>Microsoft Corporation</strong>
-                                        <small class="text-muted d-block">Office 365 & Azure</small>
-                                    </td>
-                                    <td>Software</td>
-                                    <td>Rajesh Kumar</td>
-                                    <td>+91 22 1234 5678</td>
-                                    <td>₹2,40,000</td>
-                                    <td>Net 30</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewVendor('VEN-001')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-secondary" onclick="editVendor('VEN-001')">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn btn-outline-info" onclick="viewInvoices('VEN-001')">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-warning">
-                                    <td>
-                                        <strong>Bharti Airtel</strong>
-                                        <small class="text-muted d-block">Bandwidth Provider</small>
-                                    </td>
-                                    <td>Telecom</td>
-                                    <td>Priya Sharma</td>
-                                    <td>+91 22 2345 6789</td>
-                                    <td>₹4,50,000</td>
-                                    <td>Net 15</td>
-                                    <td><span class="badge bg-warning">Pending Payment</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewVendor('VEN-002')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-warning" onclick="processPayment('VEN-002')">
-                                                <i class="bi bi-credit-card"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>SolarWinds Inc.</strong>
-                                        <small class="text-muted d-block">Network Monitoring</small>
-                                    </td>
-                                    <td>Software</td>
-                                    <td>Amit Singh</td>
-                                    <td>+91 80 3456 7890</td>
-                                    <td>₹1,80,000</td>
-                                    <td>Net 30</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewVendor('VEN-003')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-secondary" onclick="editVendor('VEN-003')">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Huawei Technologies</strong>
-                                        <small class="text-muted d-block">OLT Equipment</small>
-                                    </td>
-                                    <td>Equipment</td>
-                                    <td>Suresh Reddy</td>
-                                    <td>+91 40 4567 8901</td>
-                                    <td>₹0</td>
-                                    <td>COD</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewVendor('VEN-004')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-secondary" onclick="editVendor('VEN-004')">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>AWS India</strong>
-                                        <small class="text-muted d-block">Cloud Services</small>
-                                    </td>
-                                    <td>Infrastructure</td>
-                                    <td>Vikram Patel</td>
-                                    <td>+91 80 5678 9012</td>
-                                    <td>₹1,20,000</td>
-                                    <td>Net 30</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewVendor('VEN-005')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-secondary" onclick="editVendor('VEN-005')">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Zoho Corporation</strong>
-                                        <small class="text-muted d-block">Billing Software</small>
-                                    </td>
-                                    <td>Software</td>
-                                    <td>Neha Gupta</td>
-                                    <td>+91 44 6789 0123</td>
-                                    <td>₹1,20,000</td>
-                                    <td>Net 30</td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-outline-primary" onclick="viewVendor('VEN-006')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <button class="btn btn-outline-secondary" onclick="editVendor('VEN-006')">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                        </div>
+                                    <td colspan="8" class="text-center p-4 text-muted">
+                                        No vendors found
                                     </td>
                                 </tr>
                             </tbody>
@@ -372,14 +242,11 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="text-muted">Showing 1-6 of 18 vendors</div>
+                        <div class="text-muted" id="vendorsPaginationText">Loading...</div>
                         <nav>
                             <ul class="pagination pagination-sm mb-0">
                                 <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -547,6 +414,7 @@
                     }]
                 },
                 options: {
+                    animation: false,
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
@@ -567,6 +435,7 @@
                     }]
                 },
                 options: {
+                    animation: false,
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {

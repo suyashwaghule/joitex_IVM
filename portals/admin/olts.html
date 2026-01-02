@@ -200,14 +200,11 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div>Showing 1 to 3 of 48 entries</div>
+                        <div id="oltPaginationText">Loading...</div>
                         <nav>
                             <ul class="pagination pagination-sm mb-0">
                                 <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -374,8 +371,8 @@
                 </tr>
             `).join('');
 
-            // Update pagination text mock
-            document.querySelector('.card-footer div').innerHTML = `Showing ${olts.length} entries`;
+            // Update pagination text
+            document.getElementById('oltPaginationText').innerHTML = `Showing ${olts.length} entries`;
         }
 
         function getUtilColor(util) {

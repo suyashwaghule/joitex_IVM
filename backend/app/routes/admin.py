@@ -124,6 +124,33 @@ def delete_user(id):
     db.session.commit()
     return jsonify({'message': 'User deleted'})
 
+@bp.route('/users/<int:id>/portals', methods=['PATCH'])
+@jwt_required()
+def update_user_portals(id):
+    """Update portal access for a user"""
+    user = User.query.get_or_404(id)
+    data = request.json
+    
+    if 'portals' not in data:
+        return jsonify({'error': 'Portals list required'}), 400
+    
+    # Validate portals
+    valid_portals = ['admin', 'callcenter', 'sales', 'salesexec', 'engineer', 'inventory', 'network', 'finance']
+    portals = data['portals']
+    
+    for portal in portals:
+        if portal not in valid_portals:
+            return jsonify({'error': f'Invalid portal: {portal}'}), 400
+    
+    # Update user portals
+    user.portals = portals
+    db.session.commit()
+    
+    return jsonify({
+        'message': 'Portal access updated successfully',
+        'user': user.to_dict()
+    })
+
 @bp.route('/stats', methods=['GET'])
 @jwt_required()
 def get_stats():

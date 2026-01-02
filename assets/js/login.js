@@ -113,14 +113,14 @@ document.addEventListener('DOMContentLoaded', function () {
 // Demo account quick fill
 function fillDemo(role) {
     const demoCredentials = {
-        admin: { email: 'admin@joitex.com', password: 'admin123' },
-        callcenter: { email: 'callcenter@joitex.com', password: 'call123' },
-        sales: { email: 'sales@joitex.com', password: 'sales123' },
-        salesexec: { email: 'salesexec@joitex.com', password: 'exec123' },
-        engineer: { email: 'engineer@joitex.com', password: 'eng123' },
-        inventory: { email: 'inventory@joitex.com', password: 'inv123' },
-        network: { email: 'network@joitex.com', password: 'net123' },
-        finance: { email: 'finance@joitex.com', password: 'fin123' }
+        admin: { email: 'admin@gmail.com', password: '123456789' },
+        callcenter: { email: 'callcenter@gmail.com', password: '123456789' },
+        sales: { email: 'sales@gmail.com', password: '123456789' },
+        salesexec: { email: 'salesexec@gmail.com', password: '123456789' },
+        engineer: { email: 'engineer@gmail.com', password: '123456789' },
+        inventory: { email: 'inventory@gmail.com', password: '123456789' },
+        network: { email: 'network@gmail.com', password: '123456789' },
+        finance: { email: 'finance@gmail.com', password: '123456789' }
     };
 
     const credentials = demoCredentials[role];

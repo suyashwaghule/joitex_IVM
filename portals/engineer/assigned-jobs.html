@@ -36,15 +36,6 @@
             border-left-color: #3b82f6;
             background: linear-gradient(90deg, #eff6ff 0%, white 100%);
         }
-
-        .map-container {
-            height: 300px;
-            background: #f3f4f6;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
     </style>
 </head>
 
@@ -123,9 +114,7 @@
                         <p class="content-subtitle">View and manage your installation jobs</p>
                     </div>
                     <div class="btn-group">
-                        <button class="btn btn-engineer" onclick="viewMap()">
-                            <i class="bi bi-map me-2"></i>Map View
-                        </button>
+
                         <button class="btn btn-outline-engineer" onclick="refreshJobs()">
                             <i class="bi bi-arrow-clockwise me-2"></i>Refresh
                         </button>
@@ -291,12 +280,7 @@
                             <label class="text-muted">Special Instructions</label>
                             <p id="jobInstructions">Customer prefers morning installation. Building has lift access.</p>
                         </div>
-                        <div class="col-12">
-                            <div class="map-container">
-                                <i class="bi bi-map" style="font-size: 3rem; color: #9ca3af;"></i>
-                                <p class="text-muted ms-3">Map integration coming soon</p>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -475,9 +459,7 @@
             window.location.href = `tel:${phone}`;
         }
 
-        function viewMap() {
-            Toast.info('Opening map view...', 2000);
-        }
+
 
         function refreshJobs() {
             loadJobs();

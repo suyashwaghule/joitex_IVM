@@ -165,6 +165,7 @@ function initPipelineChart(chartData) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            animation: false,
             plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -207,6 +208,7 @@ function initConversionChart(chartData) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            animation: false,
             plugins: {
                 legend: { position: 'bottom', labels: { usePointStyle: true, padding: 15 } }
             }

@@ -91,6 +91,35 @@ def update_status(id):
         
     return jsonify({'success': True, 'message': 'Status updated'})
 
+    return jsonify({'success': True, 'message': 'Status updated'})
+
+@bp.route('/inquiries/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_inquiry(id):
+    inquiry = Inquiry.query.get_or_404(id)
+    data = request.get_json()
+    
+    # Update fields allowed
+    if 'customerName' in data: inquiry.customer_name = data['customerName']
+    if 'phone' in data: inquiry.phone = data['phone']
+    if 'email' in data: inquiry.email = data['email']
+    if 'serviceType' in data: inquiry.service_type = data['serviceType']
+    if 'address' in data: inquiry.address = data['address']
+    if 'city' in data: inquiry.city = data['city']
+    if 'pincode' in data: inquiry.pincode = data['pincode']
+    if 'notes' in data: inquiry.notes = data['notes']
+    
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Inquiry updated'})
+
+@bp.route('/inquiries/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_inquiry(id):
+    inquiry = Inquiry.query.get_or_404(id)
+    db.session.delete(inquiry)
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Inquiry deleted'})
+
 @bp.route('/stats', methods=['GET'])
 @jwt_required()
 def get_stats():
@@ -106,6 +135,6 @@ def get_stats():
         'closed': closed,
         'chart_data': {
             'labels': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            'data': [15, 22, 18, 25, 30, 12, 10] # Mocked trend
+            'data': [0, 0, 0, 0, 0, 0, 0]
         }
     })

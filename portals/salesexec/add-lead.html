@@ -34,10 +34,8 @@
                                 class="bi bi-plus-circle"></i><span>Add Lead</span></a></li>
                     <li class="nav-item"><a href="my-leads.html" class="nav-link"><i
                                 class="bi bi-person-lines-fill"></i><span>My Leads</span></a></li>
-                    <li class="nav-item"><a href="follow-ups.html" class="nav-link"><i
-                                class="bi bi-calendar-check"></i><span>Follow-ups</span></a></li>
-                    <li class="nav-item"><a href="conversions.html" class="nav-link"><i
-                                class="bi bi-trophy"></i><span>Conversions</span></a></li>
+
+
                 </ul>
             </div>
         </nav>
@@ -137,11 +135,7 @@
                                             <option value="call">Inbound Call</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Follow-up Date</label>
-                                        <input type="datetime-local" class="form-control" name="follow_up_date"
-                                            id="followUpDate">
-                                    </div>
+
                                     <div class="col-12">
                                         <label class="form-label">Initial Notes</label>
                                         <textarea class="form-control" name="notes" rows="2"
@@ -181,11 +175,7 @@
                 document.querySelector('.user-avatar').textContent = initials;
             }
 
-            // Set default follow-up to tomorrow
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(10, 0, 0, 0);
-            document.getElementById('followUpDate').value = tomorrow.toISOString().slice(0, 16);
+
 
             await loadPlans();
             document.getElementById('addLeadForm').addEventListener('submit', handleAddLead);

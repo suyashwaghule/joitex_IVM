@@ -270,10 +270,11 @@
             const urlParams = new URLSearchParams(window.location.search);
             const leadId = urlParams.get('lead');
             if (leadId) {
-                // Open modal and pre-fill
-                const modal = new bootstrap.Modal(document.getElementById('scheduleModal'));
-                modal.show();
-                // We'd normally fetch lead details here or have the dropdown ready
+                // Open modal and pre-fill with delay to ensure DOM readiness and avoid focus/aria race conditions
+                setTimeout(() => {
+                    const modal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+                    modal.show();
+                }, 100);
             }
 
             loadInstallations();

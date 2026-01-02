@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Settings - Joitex Fiber</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/dashboard.css">
 </head>
+
 <body data-theme="light">
     <div class="sidebar-overlay"></div>
-    
+
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="dashboard.html" class="sidebar-logo">
@@ -21,30 +23,39 @@
             </a>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-chevron-left"></i></button>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <div class="nav-section-title">Main</div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a href="users.html" class="nav-link"><i class="bi bi-people"></i><span>User Management</span></a></li>
-                    <li class="nav-item"><a href="roles.html" class="nav-link"><i class="bi bi-shield-check"></i><span>Roles & Permissions</span></a></li>
-                    <li class="nav-item"><a href="plans.html" class="nav-link"><i class="bi bi-speedometer"></i><span>Internet Plans</span></a></li>
-                    <li class="nav-item"><a href="olts.html" class="nav-link"><i class="bi bi-hdd-network"></i><span>OLT Catalog</span></a></li>
-                    <li class="nav-item"><a href="ip-pools.html" class="nav-link"><i class="bi bi-diagram-3"></i><span>IP Pools</span></a></li>
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link"><i
+                                class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="users.html" class="nav-link"><i class="bi bi-people"></i><span>User
+                                Management</span></a></li>
+                    <li class="nav-item"><a href="roles.html" class="nav-link"><i
+                                class="bi bi-shield-check"></i><span>Roles & Permissions</span></a></li>
+                    <li class="nav-item"><a href="plans.html" class="nav-link"><i
+                                class="bi bi-speedometer"></i><span>Internet Plans</span></a></li>
+                    <li class="nav-item"><a href="olts.html" class="nav-link"><i class="bi bi-hdd-network"></i><span>OLT
+                                Catalog</span></a></li>
+                    <li class="nav-item"><a href="ip-pools.html" class="nav-link"><i
+                                class="bi bi-diagram-3"></i><span>IP Pools</span></a></li>
                 </ul>
             </div>
             <div class="nav-section">
                 <div class="nav-section-title">System</div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="settings.html" class="nav-link active"><i class="bi bi-gear"></i><span>Settings</span></a></li>
-                    <li class="nav-item"><a href="reports.html" class="nav-link"><i class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></a></li>
-                    <li class="nav-item"><a href="audits.html" class="nav-link"><i class="bi bi-clock-history"></i><span>Audit Logs</span></a></li>
+                    <li class="nav-item"><a href="settings.html" class="nav-link active"><i
+                                class="bi bi-gear"></i><span>Settings</span></a></li>
+                    <li class="nav-item"><a href="reports.html" class="nav-link"><i
+                                class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></a></li>
+                    <li class="nav-item"><a href="audits.html" class="nav-link"><i
+                                class="bi bi-clock-history"></i><span>Audit Logs</span></a></li>
                 </ul>
             </div>
         </nav>
     </aside>
-    
+
     <div class="main-content">
         <header class="header">
             <div class="header-left">
@@ -61,7 +72,8 @@
                 <button class="header-action"><i class="bi bi-bell"></i></button>
                 <div class="dropdown">
                     <div class="user-menu" data-bs-toggle="dropdown">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);">AD</div>
+                        <div class="user-avatar" style="background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);">
+                            AD</div>
                         <div class="user-info d-none d-md-block">
                             <div class="user-name" id="userName">Admin User</div>
                             <div class="user-role">Administrator</div>
@@ -71,25 +83,29 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i
+                                    class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-        
+
         <main class="content">
             <div class="content-header">
                 <h1 class="content-title">System Settings</h1>
                 <p class="content-subtitle">Configure system-wide settings and preferences</p>
             </div>
-            
+
             <div class="row g-4">
                 <div class="col-lg-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="list-group list-group-flush">
-                                <a href="#general" class="list-group-item list-group-item-action active" data-bs-toggle="pill">
+                                <a href="#general" class="list-group-item list-group-item-action active"
+                                    data-bs-toggle="pill">
                                     <i class="bi bi-gear me-2"></i>General
                                 </a>
                                 <a href="#company" class="list-group-item list-group-item-action" data-bs-toggle="pill">
@@ -101,10 +117,12 @@
                                 <a href="#sms" class="list-group-item list-group-item-action" data-bs-toggle="pill">
                                     <i class="bi bi-phone me-2"></i>SMS Gateway
                                 </a>
-                                <a href="#notifications" class="list-group-item list-group-item-action" data-bs-toggle="pill">
+                                <a href="#notifications" class="list-group-item list-group-item-action"
+                                    data-bs-toggle="pill">
                                     <i class="bi bi-bell me-2"></i>Notifications
                                 </a>
-                                <a href="#security" class="list-group-item list-group-item-action" data-bs-toggle="pill">
+                                <a href="#security" class="list-group-item list-group-item-action"
+                                    data-bs-toggle="pill">
                                     <i class="bi bi-shield-lock me-2"></i>Security
                                 </a>
                                 <a href="#backup" class="list-group-item list-group-item-action" data-bs-toggle="pill">
@@ -114,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-9">
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="general">
@@ -126,7 +144,7 @@
                                     <form>
                                         <div class="mb-3">
                                             <label class="form-label">System Name</label>
-                                            <input type="text" class="form-control" value="Joitex Fiber ISP Management">
+                                            <input type="text" class="form-control" placeholder="System Name">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">System Version</label>
@@ -169,7 +187,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane fade" id="company">
                             <div class="card">
                                 <div class="card-header">
@@ -179,30 +197,31 @@
                                     <form>
                                         <div class="mb-3">
                                             <label class="form-label">Company Name</label>
-                                            <input type="text" class="form-control" value="Joitex Fiber Networks Pvt Ltd">
+                                            <input type="text" class="form-control" placeholder="Company Name">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Address</label>
-                                            <textarea class="form-control" rows="3">123, MG Road, Bangalore, Karnataka - 560001</textarea>
+                                            <textarea class="form-control" rows="3"
+                                                placeholder="Company Address"></textarea>
                                         </div>
                                         <div class="row g-3 mb-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">Phone</label>
-                                                <input type="text" class="form-control" value="+91 80 1234 5678">
+                                                <input type="text" class="form-control" placeholder="Phone Number">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" value="info@joitex.com">
+                                                <input type="email" class="form-control" placeholder="Email Address">
                                             </div>
                                         </div>
                                         <div class="row g-3 mb-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">GST Number</label>
-                                                <input type="text" class="form-control" value="29ABCDE1234F1Z5">
+                                                <input type="text" class="form-control" placeholder="GST Number">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">PAN Number</label>
-                                                <input type="text" class="form-control" value="ABCDE1234F">
+                                                <input type="text" class="form-control" placeholder="PAN Number">
                                             </div>
                                         </div>
                                         <div class="mb-3">
@@ -216,7 +235,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane fade" id="email">
                             <div class="card">
                                 <div class="card-header">
@@ -231,7 +250,7 @@
                                         <div class="row g-3 mb-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">SMTP Port</label>
-                                                <input type="number" class="form-control" value="587">
+                                                <input type="number" class="form-control" placeholder="587">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Encryption</label>
@@ -244,7 +263,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Username</label>
-                                            <input type="text" class="form-control" placeholder="noreply@joitex.com">
+                                            <input type="text" class="form-control" placeholder="smtp_user">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Password</label>
@@ -252,7 +271,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">From Name</label>
-                                            <input type="text" class="form-control" value="Joitex Fiber">
+                                            <input type="text" class="form-control" placeholder="Sender Name">
                                         </div>
                                         <div class="d-flex gap-2">
                                             <button type="button" class="btn btn-outline-primary" onclick="testEmail()">
@@ -266,7 +285,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane fade" id="sms">
                             <div class="card">
                                 <div class="card-header">
@@ -313,7 +332,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane fade" id="notifications">
                             <div class="card">
                                 <div class="card-header">
@@ -323,11 +342,13 @@
                                     <h6 class="mb-3">Email Notifications</h6>
                                     <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="notifyNewInquiry" checked>
-                                        <label class="form-check-label" for="notifyNewInquiry">New Inquiry Created</label>
+                                        <label class="form-check-label" for="notifyNewInquiry">New Inquiry
+                                            Created</label>
                                     </div>
                                     <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="notifyInstallation" checked>
-                                        <label class="form-check-label" for="notifyInstallation">Installation Completed</label>
+                                        <label class="form-check-label" for="notifyInstallation">Installation
+                                            Completed</label>
                                     </div>
                                     <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="notifyLowStock" checked>
@@ -337,7 +358,7 @@
                                         <input class="form-check-input" type="checkbox" id="notifyOLTDown" checked>
                                         <label class="form-check-label" for="notifyOLTDown">OLT Down Alert</label>
                                     </div>
-                                    
+
                                     <h6 class="mb-3">SMS Notifications</h6>
                                     <div class="form-check form-switch mb-2">
                                         <input class="form-check-input" type="checkbox" id="smsCustomer" checked>
@@ -351,14 +372,14 @@
                                         <input class="form-check-input" type="checkbox" id="smsPayment">
                                         <label class="form-check-label" for="smsPayment">Payment Reminders</label>
                                     </div>
-                                    
+
                                     <button type="button" class="btn btn-admin" onclick="saveSettings('notifications')">
                                         <i class="bi bi-check-circle me-2"></i>Save Changes
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane fade" id="security">
                             <div class="card">
                                 <div class="card-header">
@@ -375,8 +396,10 @@
                                             <input type="number" class="form-control" value="8">
                                         </div>
                                         <div class="form-check form-switch mb-2">
-                                            <input class="form-check-input" type="checkbox" id="requireUppercase" checked>
-                                            <label class="form-check-label" for="requireUppercase">Require Uppercase Letters</label>
+                                            <input class="form-check-input" type="checkbox" id="requireUppercase"
+                                                checked>
+                                            <label class="form-check-label" for="requireUppercase">Require Uppercase
+                                                Letters</label>
                                         </div>
                                         <div class="form-check form-switch mb-2">
                                             <input class="form-check-input" type="checkbox" id="requireNumbers" checked>
@@ -384,15 +407,18 @@
                                         </div>
                                         <div class="form-check form-switch mb-2">
                                             <input class="form-check-input" type="checkbox" id="requireSpecial" checked>
-                                            <label class="form-check-label" for="requireSpecial">Require Special Characters</label>
+                                            <label class="form-check-label" for="requireSpecial">Require Special
+                                                Characters</label>
                                         </div>
                                         <div class="form-check form-switch mb-2">
                                             <input class="form-check-input" type="checkbox" id="enable2FA">
-                                            <label class="form-check-label" for="enable2FA">Enable Two-Factor Authentication</label>
+                                            <label class="form-check-label" for="enable2FA">Enable Two-Factor
+                                                Authentication</label>
                                         </div>
                                         <div class="form-check form-switch mb-3">
                                             <input class="form-check-input" type="checkbox" id="loginAttempts" checked>
-                                            <label class="form-check-label" for="loginAttempts">Lock Account After 5 Failed Attempts</label>
+                                            <label class="form-check-label" for="loginAttempts">Lock Account After 5
+                                                Failed Attempts</label>
                                         </div>
                                         <button type="button" class="btn btn-admin" onclick="saveSettings('security')">
                                             <i class="bi bi-check-circle me-2"></i>Save Changes
@@ -401,7 +427,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="tab-pane fade" id="backup">
                             <div class="card">
                                 <div class="card-header">
@@ -410,9 +436,9 @@
                                 <div class="card-body">
                                     <div class="alert alert-info">
                                         <i class="bi bi-info-circle me-2"></i>
-                                        Last backup: January 4, 2025 at 02:00 AM
+                                        No backups available
                                     </div>
-                                    
+
                                     <h6 class="mb-3">Automatic Backup</h6>
                                     <div class="form-check form-switch mb-3">
                                         <input class="form-check-input" type="checkbox" id="autoBackup" checked>
@@ -430,17 +456,18 @@
                                         <label class="form-label">Backup Time</label>
                                         <input type="time" class="form-control" value="02:00">
                                     </div>
-                                    
+
                                     <h6 class="mb-3">Manual Backup</h6>
                                     <div class="d-flex gap-2 mb-4">
                                         <button type="button" class="btn btn-primary" onclick="createBackup()">
                                             <i class="bi bi-cloud-arrow-up me-2"></i>Create Backup Now
                                         </button>
-                                        <button type="button" class="btn btn-outline-primary" onclick="downloadBackup()">
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="downloadBackup()">
                                             <i class="bi bi-download me-2"></i>Download Latest Backup
                                         </button>
                                     </div>
-                                    
+
                                     <h6 class="mb-3">Restore</h6>
                                     <div class="mb-3">
                                         <label class="form-label">Upload Backup File</label>
@@ -456,18 +483,18 @@
                 </div>
             </div>
         </main>
-        
+
         <footer class="footer">
             <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
         </footer>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/auth.js"></script>
     <script src="../../assets/js/common.js"></script>
     <script>
         auth.protectPage(['admin']);
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const user = auth.getCurrentUser();
             if (user) {
                 document.getElementById('userName').textContent = user.name;
@@ -475,42 +502,42 @@
                 document.querySelector('.user-avatar').textContent = initials;
             }
         });
-        
+
         function saveSettings(section) {
             Toast.info(`Saving ${section} settings...`, 1500);
             setTimeout(() => {
                 Toast.success('Settings saved successfully!', 2000);
             }, 1500);
         }
-        
+
         function testEmail() {
             Toast.info('Sending test email...', 2000);
             setTimeout(() => {
                 Toast.success('Test email sent successfully!', 2000);
             }, 2000);
         }
-        
+
         function testSMS() {
             Toast.info('Sending test SMS...', 2000);
             setTimeout(() => {
                 Toast.success('Test SMS sent successfully!', 2000);
             }, 2000);
         }
-        
+
         function createBackup() {
             Toast.info('Creating backup...', 2000);
             setTimeout(() => {
                 Toast.success('Backup created successfully!', 2000);
             }, 2000);
         }
-        
+
         function downloadBackup() {
             Toast.info('Downloading backup...', 2000);
             setTimeout(() => {
                 Toast.success('Backup downloaded successfully!', 2000);
             }, 2000);
         }
-        
+
         function restoreBackup() {
             Modal.confirm('Restore Backup', 'Are you sure you want to restore from this backup? This will overwrite current data.', () => {
                 Toast.info('Restoring backup...', 3000);
@@ -521,4 +548,5 @@
         }
     </script>
 </body>
+
 </html>

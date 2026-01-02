@@ -37,43 +37,36 @@ def get_stats():
             "pending_installs": pending_installs,
             "low_stock": low_stock,
             "olts_online": olt_display,
-            "licenses_expiring": 8 # Mocked
+            "licenses_expiring": 0
         },
         "leads_chart": {
             "labels": ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             "datasets": [
-                {"label": 'New Inquiries', "data": [12, 19, 15, 17, 14, 21, 18], "backgroundColor": 'rgba(25, 118, 210, 0.8)'},
-                {"label": 'Feasible', "data": [8, 14, 11, 13, 10, 16, 14], "backgroundColor": 'rgba(13, 148, 136, 0.8)'},
-                {"label": 'In Progress', "data": [5, 9, 7, 8, 6, 11, 9], "backgroundColor": 'rgba(249, 115, 22, 0.8)'},
-                {"label": 'Installed', "data": [3, 6, 5, 6, 4, 8, 7], "backgroundColor": 'rgba(34, 197, 94, 0.8)'}
+                {"label": 'New Inquiries', "data": [0, 0, 0, 0, 0, 0, 0], "backgroundColor": 'rgba(25, 118, 210, 0.8)'},
+                {"label": 'Feasible', "data": [0, 0, 0, 0, 0, 0, 0], "backgroundColor": 'rgba(13, 148, 136, 0.8)'},
+                {"label": 'In Progress', "data": [0, 0, 0, 0, 0, 0, 0], "backgroundColor": 'rgba(249, 115, 22, 0.8)'},
+                {"label": 'Installed', "data": [0, 0, 0, 0, 0, 0, 0], "backgroundColor": 'rgba(34, 197, 94, 0.8)'}
             ]
         },
         "olt_chart": {
             "labels": ['Online', 'Offline', 'Maintenance'],
             "data": [online_olts, offline_olts, maint_olts]
         },
-        "recent_activity": [
-            {"initials": "JD", "title": "John Doe", "description": "Activated new customer L-2025-0012", "time_ago": "5m ago"},
-            {"initials": "SM", "title": "Sales Manager", "description": "Approved feasibility for inquiry INQ-8821", "time_ago": "12m ago"},
-            {"initials": "AE", "title": "Ashok Engineer", "description": "Completed installation at Block B-12", "time_ago": "45m ago"}
-        ],
-        "system_alerts": [
-            {"type": "critical", "title": "OLT Offline", "description": "OLT-Surat-01 is unreachable", "time_ago": "2m ago"},
-            {"type": "warning", "title": "Low Stock", "description": "ONT (Dual Band) stock below 10 units", "time_ago": "1h ago"}
-        ]
+        "recent_activity": [],
+        "system_alerts": []
     })
 
 @bp.route('/charts/leads', methods=['GET'])
 @jwt_required()
 def get_leads_chart():
-    # Mock data for chart - replace with aggregation later
+    # Return empty data structure (mock removed)
     return jsonify({
         "labels": ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         "datasets": [
-            {"label": 'New Inquiries', "data": [12, 19, 15, 17, 14, 21, 18]},
-            {"label": 'Feasible', "data": [8, 14, 11, 13, 10, 16, 14]},
-            {"label": 'In Progress', "data": [5, 9, 7, 8, 6, 11, 9]},
-            {"label": 'Installed', "data": [3, 6, 5, 6, 4, 8, 7]}
+            {"label": 'New Inquiries', "data": [0, 0, 0, 0, 0, 0, 0]},
+            {"label": 'Feasible', "data": [0, 0, 0, 0, 0, 0, 0]},
+            {"label": 'In Progress', "data": [0, 0, 0, 0, 0, 0, 0]},
+            {"label": 'Installed', "data": [0, 0, 0, 0, 0, 0, 0]}
         ]
     })
 

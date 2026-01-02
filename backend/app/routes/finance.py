@@ -30,8 +30,8 @@ def get_stats():
 
     # Spend Trend (Mocked)
     spend_chart = {
-        'labels': ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        'data': [145000, 152000, 148000, 155000, 162000, monthly_spend]
+        'labels': [],
+        'data': []
     }
 
     # Category Spend (Group by category)

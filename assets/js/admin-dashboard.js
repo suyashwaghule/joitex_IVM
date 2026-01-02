@@ -32,6 +32,7 @@ function initLeadsChart(chartData) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            animation: false,
             plugins: {
                 legend: {
                     position: 'bottom',
@@ -88,6 +89,7 @@ function initOLTChart(chartData) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            animation: false,
             plugins: {
                 legend: {
                     position: 'bottom',

@@ -54,18 +54,8 @@
                             <span>My Leads</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="follow-ups.html" class="nav-link">
-                            <i class="bi bi-calendar-check"></i>
-                            <span>Follow-ups</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="conversions.html" class="nav-link">
-                            <i class="bi bi-trophy"></i>
-                            <span>Conversions</span>
-                        </a>
-                    </li>
+
+
                 </ul>
             </div>
         </nav>
@@ -152,35 +142,9 @@
                     <div class="kpi-value" id="kpiLeadsOpen">-</div>
                 </div>
 
-                <div class="kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b;">
-                            <i class="bi bi-calendar-check"></i>
-                        </div>
-                    </div>
-                    <div class="kpi-title">Follow-ups Today</div>
-                    <div class="kpi-value" id="kpiFollowups">-</div>
-                </div>
 
-                <div class="kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background-color: rgba(34, 197, 94, 0.1); color: #22c55e;">
-                            <i class="bi bi-check-circle"></i>
-                        </div>
-                    </div>
-                    <div class="kpi-title">Converted (MTD)</div>
-                    <div class="kpi-value" id="kpiConverted">-</div>
-                </div>
 
-                <div class="kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon" style="background-color: rgba(59, 130, 246, 0.1); color: #3b82f6;">
-                            <i class="bi bi-graph-up"></i>
-                        </div>
-                    </div>
-                    <div class="kpi-title">Conversion Rate</div>
-                    <div class="kpi-value" id="kpiConversionRate">-%</div>
-                </div>
+
             </div>
 
             <!-- Chart -->
@@ -190,7 +154,7 @@
                         <div class="chart-header">
                             <h3 class="chart-title">Personal Pipeline</h3>
                         </div>
-                        <canvas id="pipelineChart" height="80"></canvas>
+                        <canvas id="pipelineChart" height="250"></canvas>
                     </div>
                 </div>
             </div>
@@ -253,9 +217,8 @@
                 const kpi = data.kpi || {};
 
                 document.getElementById('kpiLeadsOpen').textContent = kpi.my_leads_open || '0';
-                document.getElementById('kpiFollowups').textContent = kpi.follow_ups || '0';
-                document.getElementById('kpiConverted').textContent = kpi.converted_mtd || '0';
-                document.getElementById('kpiConversionRate').textContent = (kpi.conversion_rate || '0') + '%';
+
+
 
                 if (data.pipeline_chart) {
                     initPipelineChart(data.pipeline_chart);
@@ -318,6 +281,7 @@
                 type: 'bar',
                 data: chartData,
                 options: {
+                    animation: false,
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {

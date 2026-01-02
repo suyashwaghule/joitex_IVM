@@ -1,47 +1,84 @@
-/* Portal Switcher: injects a control to jump back to the portal selection page */
+/* Floating Action Buttons: Switch Portal & Logout */
 (function () {
   function goSelect() {
-    const target = typeof getNavigationPath === 'function' ? getNavigationPath('select-portal.html') : `${window.location.origin}/select-portal.html`;
-    // simple fade-out
-    document.body.classList.add('opacity-80');
-    setTimeout(() => window.location.href = target, 120);
+    let target = 'select-portal.html';
+    const path = window.location.pathname;
+
+    // Determine relative path based on depth
+    if (path.includes('/portals/') && path.split('/portals/')[1].includes('/')) {
+      // e.g. /portals/admin/dashboard.html -> level 2
+      target = '../../select-portal.html';
+    } else if (path.includes('/select-portal.html') || path.endsWith('/index.html') || path.endsWith('/')) {
+      return; // Don't show on selection or login page
+    }
+
+    window.location.href = target;
   }
 
-  // Ensure auth session
-  if (!window.auth) return;
-  if (!auth.isAuthenticated && !auth.currentUser) return;
+  function doLogout() {
+    if (window.auth) {
+      window.auth.logout();
+    } else {
+      // Fallback logout navigation
+      let target = 'index.html';
+      const path = window.location.pathname;
+      if (path.includes('/portals/') && path.split('/portals/')[1].includes('/')) {
+        target = '../../index.html';
+      }
+      window.location.href = target;
+    }
+  }
 
-  // Try to inject into an existing header; fallback to floating button
-  function injectIntoHeader() {
-    const header = document.querySelector('header, .header, #header, nav, .topbar');
-    if (!header) return false;
+  function createFloatingButtons() {
+    // Prevent duplicates
+    if (document.getElementById('floating-actions')) return;
+
+    // Don't show on login/select pages
+    const path = window.location.pathname;
+    if (path.endsWith('index.html') || path.endsWith('login.html') || path.endsWith('select-portal.html')) return;
 
     const container = document.createElement('div');
-    container.className = 'portal-switcher';
+    container.id = 'floating-actions';
+    container.style.position = 'fixed';
+    container.style.bottom = '30px';
+    container.style.right = '30px';
+    container.style.zIndex = '10000';
+    container.style.display = 'flex';
+    container.style.gap = '10px';
+    container.style.flexDirection = 'column'; // Vertical stack for FABs usually looks better, or row? User said "easy access". Vertical is common.
 
-    const btn = document.createElement('button');
-    btn.textContent = 'Switch Portal';
-    btn.className = 'ml-2 px-3 py-1.5 rounded-md text-sm border border-gray-200 hover:bg-gray-100 transition dark:border-gray-700 dark:hover:bg-gray-800';
-    btn.addEventListener('click', goSelect);
+    // Style
+    const btnStyle = "padding: 0.6rem 1.2rem; border-radius: 50px; border: none; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s;";
 
-    container.appendChild(btn);
+    // Switch Portal Button
+    const switchBtn = document.createElement('button');
+    switchBtn.className = 'btn btn-primary';
+    switchBtn.style.cssText = btnStyle + " background-color: #4f46e5; color: white;";
+    switchBtn.innerHTML = '<i class="bi bi-grid-fill"></i> Switch Portal';
+    switchBtn.onclick = goSelect;
+    switchBtn.onmouseover = () => switchBtn.style.transform = 'translateY(-2px)';
+    switchBtn.onmouseout = () => switchBtn.style.transform = 'translateY(0)';
 
-    // Place at end of header
-    header.appendChild(container);
-    return true;
+    // Logout Button
+    const logoutBtn = document.createElement('button');
+    logoutBtn.className = 'btn btn-danger';
+    // Use a distinct color, e.g. red/danger
+    logoutBtn.style.cssText = btnStyle + " background-color: #dc2626; color: white;";
+    logoutBtn.innerHTML = '<i class="bi bi-box-arrow-right"></i> Logout';
+    logoutBtn.onclick = doLogout;
+    logoutBtn.onmouseover = () => logoutBtn.style.transform = 'translateY(-2px)';
+    logoutBtn.onmouseout = () => logoutBtn.style.transform = 'translateY(0)';
+
+    container.appendChild(switchBtn);
+    container.appendChild(logoutBtn);
+
+    document.body.appendChild(container);
   }
 
-  function injectFloating() {
-    const btn = document.createElement('button');
-    btn.textContent = 'Switch Portal';
-    btn.style.position = 'fixed';
-    btn.style.right = '16px';
-    btn.style.bottom = '16px';
-    btn.style.zIndex = '1000';
-    btn.className = 'px-3 py-2 rounded-md text-sm shadow-md bg-gray-900 text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900';
-    btn.addEventListener('click', goSelect);
-    document.body.appendChild(btn);
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', createFloatingButtons);
+  } else {
+    createFloatingButtons();
   }
-
-  if (!injectIntoHeader()) injectFloating();
 })();

@@ -53,7 +53,7 @@ class IPPool(db.Model):
             'name': self.name,
             'cidr': self.cidr,
             'gateway': self.gateway,
-            'type': self.type,
+            'pool_type': self.type,
             'total_ips': self.total_ips,
             'used_ips': self.used_ips, # Could be calculated from allocations len but storing for fast access is fine 
             'utilization': round((self.used_ips / self.total_ips * 100) if self.total_ips > 0 else 0, 1),

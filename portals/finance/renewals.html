@@ -178,68 +178,10 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="table-danger">
-                                    <td>
-                                        <strong>Microsoft Office 365</strong>
-                                        <small class="text-muted d-block">MS-365-2024-789</small>
-                                    </td>
-                                    <td>Microsoft</td>
-                                    <td>Jan 28, 2025</td>
-                                    <td><span class="badge bg-danger">24 days</span></td>
-                                    <td>₹2,40,000</td>
-                                    <td><span class="badge bg-warning">In Progress</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-danger" onclick="initiateRenewal('REN-001')">
-                                                <i class="bi bi-arrow-clockwise me-1"></i>Renew
-                                            </button>
-                                            <button class="btn btn-outline-primary" onclick="viewDetails('REN-001')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-danger">
-                                    <td>
-                                        <strong>Right of Way Permit</strong>
-                                        <small class="text-muted d-block">ROW-AND-2024-123</small>
-                                    </td>
-                                    <td>BMC Mumbai</td>
-                                    <td>Jan 9, 2025</td>
-                                    <td><span class="badge bg-danger">5 days</span></td>
-                                    <td>₹50,000</td>
-                                    <td><span class="badge bg-danger">Pending</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-danger" onclick="initiateRenewal('REN-002')">
-                                                <i class="bi bi-arrow-clockwise me-1"></i>Renew
-                                            </button>
-                                            <button class="btn btn-outline-primary" onclick="viewDetails('REN-002')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-danger">
-                                    <td>
-                                        <strong>SSL Certificate</strong>
-                                        <small class="text-muted d-block">SSL-2024-WEB-001</small>
-                                    </td>
-                                    <td>DigiCert</td>
-                                    <td>Jan 15, 2025</td>
-                                    <td><span class="badge bg-danger">11 days</span></td>
-                                    <td>₹25,000</td>
-                                    <td><span class="badge bg-danger">Pending</span></td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-danger" onclick="initiateRenewal('REN-003')">
-                                                <i class="bi bi-arrow-clockwise me-1"></i>Renew
-                                            </button>
-                                            <button class="btn btn-outline-primary" onclick="viewDetails('REN-003')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                        </div>
+                            <tbody id="urgentRenewalsBody">
+                                <tr>
+                                    <td colspan="7" class="text-center p-4 text-muted">
+                                        No urgent renewals at this time
                                     </td>
                                 </tr>
                             </tbody>

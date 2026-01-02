@@ -20,28 +20,9 @@ def get_stats():
         Lead.status.notin_(['installed', 'cancelled'])
     ).count()
     
-    # Follow-ups Today (Real logic: leads with follow_up_date today or earlier and not installed/cancelled)
-    now = datetime.utcnow()
-    today_end = now.replace(hour=23, minute=59, second=59)
-    follow_ups = Lead.query.filter(
-        Lead.assigned_to == current_user_id,
-        Lead.status.notin_(['installed', 'cancelled']),
-        Lead.follow_up_date <= today_end
-    ).count()
+
     
-    # Converted (MTD)
-    today = datetime.utcnow()
-    month_start = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    converted_mtd = Lead.query.filter(
-        Lead.assigned_to == current_user_id,
-        Lead.status == 'installed',
-        Lead.updated_at >= month_start
-    ).count()
-    
-    # Conversion Rate (Mocked calculation)
-    total_leads = Lead.query.filter_by(assigned_to=current_user_id).count()
-    total_converted = Lead.query.filter_by(assigned_to=current_user_id, status='installed').count()
-    conversion_rate = round((total_converted / total_leads * 100) if total_leads > 0 else 0, 1)
+
 
     # Pipeline Chart (Last 4 weeks)
     labels = []
@@ -58,28 +39,21 @@ def get_stats():
             Lead.created_at <= end
         ).count()
         
-        c_count = Lead.query.filter(
-            Lead.assigned_to == current_user_id,
-            Lead.status == 'installed',
-            Lead.updated_at >= start,
-            Lead.updated_at <= end
-        ).count()
-        
         new_data.append(n_count)
-        conv_data.append(c_count)
+        
+
 
     return jsonify({
         'kpi': {
             'my_leads_open': my_leads_open,
-            'follow_ups': follow_ups,
-            'converted_mtd': converted_mtd,
-            'conversion_rate': conversion_rate
+
+
         },
         'pipeline_chart': {
             'labels': labels,
             'datasets': [
                 {'label': 'New Leads', 'data': new_data, 'backgroundColor': 'rgba(99, 102, 241, 0.8)'},
-                {'label': 'Converted', 'data': conv_data, 'backgroundColor': 'rgba(34, 197, 94, 0.8)'}
+
             ]
         }
     })
@@ -125,7 +99,7 @@ def create_lead():
         status='new',
         source=data.get('source', 'sales_exec'),
         assigned_to=current_user_id,
-        follow_up_date=datetime.fromisoformat(data['follow_up_date']) if data.get('follow_up_date') else None,
+
         notes=data.get('notes')
     )
     
@@ -154,8 +128,7 @@ def update_lead(id):
         lead.plan_interest = data['plan_interest']
     if 'address' in data:
         lead.address = data['address']
-    if 'follow_up_date' in data:
-        lead.follow_up_date = datetime.fromisoformat(data['follow_up_date']) if data['follow_up_date'] else None
+
     if 'notes' in data:
         lead.notes = data['notes']
         

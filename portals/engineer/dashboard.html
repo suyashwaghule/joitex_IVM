@@ -209,39 +209,9 @@
 
             <!-- Map and Jobs -->
             <div class="row g-4 mb-4">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Today's Job Locations</h5>
-                            <div class="btn-group btn-group-sm">
-                                <button class="btn btn-outline-secondary active">
-                                    <i class="bi bi-map"></i> Map
-                                </button>
-                                <button class="btn btn-outline-secondary">
-                                    <i class="bi bi-list"></i> List
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <div
-                                style="height: 400px; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); position: relative; overflow: hidden;">
-                                <!-- Simulated Map -->
-                                <div
-                                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
-                                    <i class="bi bi-geo-alt-fill"
-                                        style="font-size: 4rem; color: #f97316; opacity: 0.3;"></i>
-                                    <p class="text-muted mt-3">Interactive map would be displayed here<br><small>(Google
-                                            Maps / Leaflet integration)</small></p>
-                                </div>
 
-                                <!-- Map Markers -->
-                                <div id="mapMarkersContainer"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0">Device Allocation</h5>
@@ -369,7 +339,7 @@
                     </td>
                     <td>
                         <small>${job.address}, ${job.city}</small><br>
-                        <a href="#" class="text-decoration-none small"><i class="bi bi-map me-1"></i>View Map</a>
+
                     </td>
                     <td><span class="badge bg-info">${job.job_type}</span></td>
                     <td><span class="badge badge-open">${job.status}</span></td>
@@ -419,6 +389,7 @@
                     }]
                 },
                 options: {
+                    animation: false,
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {

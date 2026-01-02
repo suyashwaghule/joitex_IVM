@@ -290,7 +290,7 @@
                                 </div>
                             </div>
                         </div>
-                        <canvas id="uptimeChart" height="80"></canvas>
+                        <canvas id="uptimeChart" height="250"></canvas>
                     </div>
                 </div>
 
@@ -299,7 +299,7 @@
                         <div class="chart-header">
                             <h3 class="chart-title">Outage Distribution</h3>
                         </div>
-                        <canvas id="outageChart" height="200"></canvas>
+                        <canvas id="outageChart" height="250"></canvas>
                     </div>
                 </div>
             </div>
@@ -550,6 +550,7 @@
                     }]
                 },
                 options: {
+                    animation: false,
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {
@@ -595,6 +596,7 @@
                     }]
                 },
                 options: {
+                    animation: false,
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {

@@ -175,7 +175,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Active Roles</p>
-                                    <h3 class="mb-0">8</h3>
+                                    <h3 class="mb-0" id="activeRolesCount">0</h3>
                                 </div>
                                 <i class="bi bi-check-circle fs-1 text-success"></i>
                             </div>
@@ -188,7 +188,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Permissions</p>
-                                    <h3 class="mb-0">45</h3>
+                                    <h3 class="mb-0" id="permissionsCount">0</h3>
                                 </div>
                                 <i class="bi bi-key fs-1 text-warning"></i>
                             </div>
@@ -201,7 +201,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <p class="text-muted mb-1">Custom Roles</p>
-                                    <h3 class="mb-0">0</h3>
+                                    <h3 class="mb-0" id="customRolesCount">0</h3>
                                 </div>
                                 <i class="bi bi-plus-circle fs-1 text-info"></i>
                             </div>
@@ -320,32 +320,21 @@
                 });
                 const roles = await res.json();
 
+                // Update KPI cards
                 document.getElementById('totalRolesCount').textContent = roles.length;
+                document.getElementById('activeRolesCount').textContent = roles.length; // All roles are active
 
-                // Active roles (all)
-                document.querySelectorAll('.kpi-value, h3.mb-0')[1].textContent = roles.length; // Index 1 is active (assuming checking DOM structure)
-                // Actually better to use selectors if possible, but structure shows h3.mb-0 is used.
-                // Let's refactor the HTML slightly to add IDs to the cards to make it robust, but for now I'll use textContent update logic based on position logic or text content.
-                // Or I can add IDs in a previous step? No, I'll just use the assumption or try to be specific.
-                // The cards are: Total Roles, Active Roles, Permissions, Custom Roles.
+                // Count unique permissions across all roles
+                const allPerms = new Set();
+                roles.forEach(r => {
+                    if (Array.isArray(r.permissions)) {
+                        r.permissions.forEach(p => allPerms.add(p));
+                    }
+                });
+                document.getElementById('permissionsCount').textContent = allPerms.size;
 
-                const stats = document.querySelectorAll('.card-body h3');
-                if (stats.length >= 4) {
-                    stats[0].textContent = roles.length; // Total
-                    stats[1].textContent = roles.length; // Active (all active for now)
-
-                    // Permissions (Unique count across all roles)
-                    const allPerms = new Set();
-                    roles.forEach(r => {
-                        if (Array.isArray(r.permissions)) {
-                            r.permissions.forEach(p => allPerms.add(p));
-                        }
-                    });
-                    stats[2].textContent = allPerms.size;
-
-                    // Custom Roles
-                    stats[3].textContent = roles.filter(r => !r.is_system).length;
-                }
+                // Count custom (non-system) roles
+                document.getElementById('customRolesCount').textContent = roles.filter(r => !r.is_system).length;
 
                 renderRoles(roles);
             } catch (e) {
@@ -429,7 +418,7 @@
             const desc = document.querySelector('#addRoleForm textarea').value;
             const color = document.querySelector('#addRoleForm input[type="color"]').value;
 
-            // Mock permissions collection
+            // Collect selected permissions
             const perms = [];
             document.querySelectorAll('#addRoleForm input[type="checkbox"]:checked').forEach(c => {
                 perms.push(c.nextElementSibling.textContent);

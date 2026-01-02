@@ -214,6 +214,9 @@
                 const res = await fetch('http://127.0.0.1:5000/api/admin/plans', {
                     headers: { 'Authorization': `Bearer ${auth.token}` }
                 });
+
+                if (!await auth.checkResponse(res)) return;
+
                 const plans = await res.json();
                 document.getElementById('totalPlansCount').textContent = plans.length;
                 renderPlans(plans);
@@ -225,7 +228,7 @@
 
         function renderPlans(plans) {
             const container = document.getElementById('plansContainer');
-            if (plans.length === 0) {
+            if (!Array.isArray(plans) || plans.length === 0) {
                 container.innerHTML = '<div class="col-12 text-center text-muted">No plans found</div>';
                 return;
             }
@@ -282,6 +285,9 @@
                         method: 'DELETE',
                         headers: { 'Authorization': `Bearer ${auth.token}` }
                     });
+
+                    if (!await auth.checkResponse(res)) return;
+
                     if (res.ok) {
                         Toast.success(`Plan deleted successfully!`);
                         loadPlans();
@@ -320,13 +326,16 @@
                     body: JSON.stringify(payload)
                 });
 
+                if (!await auth.checkResponse(res)) return;
+
                 if (res.ok) {
                     Toast.success('Plan created successfully!');
                     bootstrap.Modal.getInstance(document.getElementById('addPlanModal')).hide();
                     loadPlans();
                     form.reset();
                 } else {
-                    Toast.error('Failed to create plan');
+                    const data = await res.json();
+                    Toast.error(data.error || 'Failed to create plan');
                 }
             } catch (e) { Toast.error('Error creating plan'); }
         }

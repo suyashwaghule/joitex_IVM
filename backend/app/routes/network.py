@@ -99,11 +99,52 @@ def get_olts():
     olts = NetworkDevice.query.filter_by(device_type='olt').all()
     return jsonify([o.to_dict() for o in olts])
 
+@network_bp.route('/olts', methods=['POST'])
+@jwt_required()
+def create_olt():
+    data = request.json
+    olt = NetworkDevice(
+        name=data.get('name'),
+        ip_address=data.get('ip_address'),
+        location=data.get('location'),
+        device_type='olt',
+        total_ports=data.get('total_ports', 8),
+        active_ports=0,
+        status='online'
+    )
+    db.session.add(olt)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+    return jsonify(olt.to_dict()), 201
+
 @network_bp.route('/olts/<int:id>', methods=['GET'])
 @jwt_required()
 def get_olt(id):
     olt = NetworkDevice.query.get_or_404(id)
     return jsonify(olt.to_dict())
+
+@network_bp.route('/olts/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_olt(id):
+    olt = NetworkDevice.query.get_or_404(id)
+    data = request.json
+    if 'name' in data: olt.name = data['name']
+    if 'ip_address' in data: olt.ip_address = data['ip_address']
+    if 'location' in data: olt.location = data['location']
+    if 'total_ports' in data: olt.total_ports = int(data['total_ports'])
+    db.session.commit()
+    return jsonify(olt.to_dict())
+
+@network_bp.route('/olts/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_olt(id):
+    olt = NetworkDevice.query.get_or_404(id)
+    db.session.delete(olt)
+    db.session.commit()
+    return jsonify({'message': 'OLT deleted'})
 
 # --- IPAM ---
 @network_bp.route('/ipam/pools', methods=['GET'])
@@ -111,6 +152,12 @@ def get_olt(id):
 def get_pools():
     pools = IPPool.query.all()
     return jsonify([p.to_dict() for p in pools])
+
+@network_bp.route('/ipam/pools/<int:id>', methods=['GET'])
+@jwt_required()
+def get_pool(id):
+    pool = IPPool.query.get_or_404(id)
+    return jsonify(pool.to_dict())
 
 @network_bp.route('/ipam/allocations', methods=['GET'])
 @jwt_required()
@@ -155,7 +202,7 @@ def create_pool():
         name=data.get('name'),
         cidr=data.get('cidr'),
         gateway=data.get('gateway'),
-        pool_type=data.get('pool_type', 'public'),
+        type=data.get('pool_type', 'public'),
         total_ips=data.get('total_ips', 256),
         used_ips=0,
         description=data.get('description', '')
@@ -163,6 +210,26 @@ def create_pool():
     db.session.add(pool)
     db.session.commit()
     return jsonify(pool.to_dict()), 201
+
+@network_bp.route('/ipam/pools/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_pool(id):
+    pool = IPPool.query.get_or_404(id)
+    data = request.json
+    if 'name' in data: pool.name = data['name']
+    if 'gateway' in data: pool.gateway = data['gateway']
+    if 'description' in data: pool.description = data['description']
+    if 'pool_type' in data: pool.type = data['pool_type']
+    db.session.commit()
+    return jsonify(pool.to_dict())
+
+@network_bp.route('/ipam/pools/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_pool(id):
+    pool = IPPool.query.get_or_404(id)
+    db.session.delete(pool)
+    db.session.commit()
+    return jsonify({'message': 'Pool deleted'})
 
 @network_bp.route('/ipam/allocations/<int:id>', methods=['DELETE'])
 @jwt_required()

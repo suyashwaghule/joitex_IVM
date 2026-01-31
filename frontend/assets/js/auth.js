@@ -2,74 +2,9 @@
    Authentication & Authorization Module
    ======================================== */
 
-// Demo user credentials with portal access
-// Secure Demo Credentials - Only available in development
-const DEMO_USERS = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? {
-    admin: {
-        email: 'admin@joitex.com',
-        password: 'admin123',
-        role: 'admin',
-        name: 'Admin User',
-        permissions: ['all'],
-        portals: ['admin', 'callcenter', 'sales', 'salesexec', 'engineer', 'inventory', 'network', 'finance']
-    },
-    callcenter: {
-        email: 'callcenter@joitex.com',
-        password: 'call123',
-        role: 'callcenter',
-        name: 'Call Center Agent',
-        permissions: ['inquiries.create', 'inquiries.read', 'inquiries.update'],
-        portals: ['callcenter', 'sales']
-    },
-    sales: {
-        email: 'sales@joitex.com',
-        password: 'sales123',
-        role: 'sales',
-        name: 'Sales Manager',
-        permissions: ['inquiries.read', 'leads.all', 'activation.all'],
-        portals: ['sales', 'callcenter']
-    },
-    salesexec: {
-        email: 'salesexec@joitex.com',
-        password: 'exec123',
-        role: 'salesexec',
-        name: 'Sales Executive',
-        permissions: ['leads.create', 'leads.read', 'leads.update'],
-        portals: ['salesexec', 'sales']
-    },
-    engineer: {
-        email: 'engineer@joitex.com',
-        password: 'eng123',
-        role: 'engineer',
-        name: 'Field Engineer',
-        permissions: ['jobs.read', 'jobs.update', 'devices.all'],
-        portals: ['engineer', 'inventory']
-    },
-    inventory: {
-        email: 'inventory@joitex.com',
-        password: 'inv123',
-        role: 'inventory',
-        name: 'Inventory Manager',
-        permissions: ['inventory.all', 'vendors.all'],
-        portals: ['inventory', 'engineer']
-    },
-    network: {
-        email: 'network@joitex.com',
-        password: 'net123',
-        role: 'network',
-        name: 'Network Admin',
-        permissions: ['olts.all', 'ipam.all', 'monitoring.all'],
-        portals: ['network', 'engineer']
-    },
-    finance: {
-        email: 'finance@joitex.com',
-        password: 'fin123',
-        role: 'finance',
-        name: 'Finance Manager',
-        permissions: ['licenses.all', 'billing.read', 'reports.financial'],
-        portals: ['finance', 'sales']
-    }
-} : {};
+// Note: All users are managed through the database.
+// Use the Admin portal to create and manage users.
+// Default admin: admin@joitex.com / admin123 (change in production!)
 
 // Get project base path (for subdirectory hosting support)
 function getBasePath() {

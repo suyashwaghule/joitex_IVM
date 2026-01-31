@@ -84,17 +84,19 @@ A comprehensive web-based management system for fiber internet service providers
 |--------|-------------|
 | `python seed.py` | Reset database and create admin user |
 | `python seed.py --no-drop` | Add seed data without dropping tables |
-| `python seed.py --demo` | Create all demo users for testing |
 | `python update_schema.py` | Apply schema migrations (add new columns) |
 | `python update_schema.py --show` | Display current database schema |
 
-### Demo Credentials (Development Only)
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@joitex.com | admin123 |
-| Network | network@joitex.com | net123 |
-| Engineer | engineer@joitex.com | eng123 |
-| Inventory | inventory@joitex.com | inv123 |
+### Default Admin Credentials
+
+| Email | Password |
+|-------|----------|
+| admin@joitex.com | admin123 |
+
+> ⚠️ **Important**: Change the admin password immediately after first login in production!
+
+All other users should be created through the **Admin Portal → User Management**.
+
 
 ## Production Deployment
 

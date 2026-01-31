@@ -89,11 +89,18 @@ function getBasePath() {
 
 // Get API Base URL dynamically
 function getApiBaseUrl() {
+    // If we have a global config, use it
+    if (window.config && window.config.apiBaseUrl) {
+        return window.config.apiBaseUrl;
+    }
+
+    // Auto-detect localhost
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         return 'http://127.0.0.1:5000';
     }
-    // Production API URL
-    return 'https://joitex.el.r.appspot.com';
+
+    // Default Production URL (Update this when deploying)
+    return 'https://api.yourdomain.com';
 }
 
 // Get the correct path for navigation
@@ -127,6 +134,7 @@ const ROLE_CONFIG = {
 class Auth {
     constructor() {
         this.currentUser = null;
+        this.apiBaseUrl = getApiBaseUrl(); // Expose for other scripts
         this.loadSession();
     }
 

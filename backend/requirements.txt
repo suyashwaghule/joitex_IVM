@@ -1,8 +1,17 @@
-flask
-flask-sqlalchemy
-flask-cors
-flask-jwt-extended
-mysql-connector-python
-python-dotenv
-bcrypt
-flask-limiter
+# Core Framework
+Flask>=2.3.0
+Flask-SQLAlchemy>=3.0.0
+Flask-CORS>=4.0.0
+Flask-JWT-Extended>=4.5.0
+Flask-Limiter>=3.5.0
+
+# Database Drivers
+mysql-connector-python>=8.0.0
+psycopg2-binary>=2.9.0
+
+# Auth & Security
+bcrypt>=4.0.0
+python-dotenv>=1.0.0
+
+# Production Server
+gunicorn>=21.0.0

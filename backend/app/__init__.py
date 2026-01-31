@@ -5,14 +5,18 @@ from flask_jwt_extended import JWTManager
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import os
-from .config import Config
+from .config import get_config
 
 db = SQLAlchemy()
 jwt = JWTManager()
 limiter = Limiter(key_func=get_remote_address)
 
-def create_app(config_class=Config):
+def create_app(config_class=None):
     app = Flask(__name__)
+    
+    # Use provided config or auto-detect from environment
+    if config_class is None:
+        config_class = get_config()
     app.config.from_object(config_class)
 
     # Initialize extensions
@@ -21,8 +25,8 @@ def create_app(config_class=Config):
     limiter.init_app(app)
     
     # CORS Configuration
-    allowed_origins = os.environ.get('ALLOWED_ORIGINS', '*').split(',')
-    CORS(app, resources={r"/api/*": {"origins": allowed_origins}})
+    cors_origins = getattr(config_class, 'CORS_ORIGINS', '*')
+    CORS(app, resources={r"/api/*": {"origins": cors_origins}})
 
     # Register blueprints
     # Register blueprints

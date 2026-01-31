@@ -1,5 +1,39 @@
+# Python
 venv/
 __pycache__/
 *.pyc
-*.db
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Environment
 .env
+.env.local
+.env.production
+
+# Database
+*.db
+*.sqlite3
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if any frontend build tools are added)
+node_modules/

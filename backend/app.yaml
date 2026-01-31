@@ -7,9 +7,13 @@ instance_class: F1
 automatic_scaling:
   min_instances: 0
   max_instances: 2
-  target_cpu_utilization: 0.65
 
 env_variables:
   FLASK_ENV: "production"
-  SQLALCHEMY_DATABASE_URI: "sqlite:///app.db"
-  # Set these via: gcloud app deploy --set-env-vars="SECRET_KEY=xxx,JWT_SECRET_KEY=xxx"
+  DB_USER: joitex_user
+  DB_PASSWORD: Joitex_database@123
+  DB_NAME: joitex_db
+  DB_SOCKET: /cloudsql/joitex:asia-south1:joitex-mysql
+
+beta_settings:
+  cloud_sql_instances: joitex:asia-south1:joitex-mysql

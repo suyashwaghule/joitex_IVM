@@ -17,25 +17,52 @@ class Config:
 
 
 class DevelopmentConfig(Config):
-    """Development configuration"""
+    """Development configuration - Local MySQL or SQLite"""
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'sqlite:///app.db'
-    CORS_ORIGINS = "*"  # Allow all origins in development
+    
+    # Check if MySQL env vars are set, otherwise use SQLite
+    DB_USER = os.environ.get("DB_USER")
+    DB_PASSWORD = os.environ.get("DB_PASSWORD")
+    DB_NAME = os.environ.get("DB_NAME")
+    DB_HOST = os.environ.get("DB_HOST", "localhost")
+    
+    if DB_USER and DB_PASSWORD and DB_NAME:
+        # Local MySQL
+        SQLALCHEMY_DATABASE_URI = (
+            f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+        )
+    else:
+        # Fallback to SQLite for quick local dev
+        SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'sqlite:///app.db'
+    
+    CORS_ORIGINS = "*"
 
 
 class ProductionConfig(Config):
-    """Production configuration"""
+    """Production configuration - Cloud SQL MySQL"""
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
-    CORS_ORIGINS = os.environ.get('CORS_ORIGINS', '').split(',')
+    
+    # Cloud SQL Configuration
+    DB_USER = os.environ.get("DB_USER")
+    DB_PASSWORD = os.environ.get("DB_PASSWORD")
+    DB_NAME = os.environ.get("DB_NAME")
+    DB_SOCKET = os.environ.get("DB_SOCKET")
+    
+    # Build connection string for Cloud SQL via Unix Socket
+    if DB_USER and DB_PASSWORD and DB_NAME and DB_SOCKET:
+        SQLALCHEMY_DATABASE_URI = (
+            f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@/"
+            f"{DB_NAME}?unix_socket={DB_SOCKET}"
+        )
+    else:
+        raise ValueError("Production requires DB_USER, DB_PASSWORD, DB_NAME, and DB_SOCKET environment variables")
+    
+    CORS_ORIGINS = os.environ.get('CORS_ORIGINS', 'https://joitex.el.r.appspot.com').split(',')
     
     # Security headers
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
-    
-    # Stricter rate limits for production
-    RATELIMIT_DEFAULT = "100 per day, 20 per hour"
 
 
 class TestingConfig(Config):

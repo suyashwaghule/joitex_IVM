@@ -60,14 +60,33 @@ A comprehensive web-based management system for fiber internet service providers
    # Edit .env with your settings
    ```
 
-4. **Run the development server**
+4. **Initialize the database**
+   ```bash
+   # Create tables and admin user
+   python seed.py
+   
+   # Or with demo users for testing
+   python seed.py --demo
+   ```
+
+5. **Run the development server**
    ```bash
    python run.py
    ```
 
-5. **Access the application**
+6. **Access the application**
    - Frontend: Open `frontend/index.html` in your browser
    - API: http://localhost:5000
+
+### Database Management
+
+| Script | Description |
+|--------|-------------|
+| `python seed.py` | Reset database and create admin user |
+| `python seed.py --no-drop` | Add seed data without dropping tables |
+| `python seed.py --demo` | Create all demo users for testing |
+| `python update_schema.py` | Apply schema migrations (add new columns) |
+| `python update_schema.py --show` | Display current database schema |
 
 ### Demo Credentials (Development Only)
 | Role | Email | Password |
@@ -136,7 +155,10 @@ joitex-fiber/
 │   │   ├── models*.py       # Database models
 │   │   └── routes/          # API endpoints
 │   ├── run.py               # Entry point
+│   ├── seed.py              # Database seeding
+│   ├── update_schema.py     # Schema migrations
 │   ├── Procfile             # Production server config
+│   ├── .env.example         # Environment template
 │   └── requirements.txt     # Python dependencies
 │
 └── frontend/
@@ -145,6 +167,9 @@ joitex-fiber/
     ├── assets/
     │   ├── css/             # Stylesheets
     │   └── js/              # JavaScript modules
+    │       ├── auth.js      # Authentication
+    │       ├── config.js    # App configuration
+    │       └── ...
     └── portals/             # Portal-specific pages
         ├── admin/
         ├── network/

@@ -11,8 +11,5 @@ automatic_scaling:
 
 env_variables:
   FLASK_ENV: "production"
-  # IMPORTANT: Set these in Google Cloud Console -> App Engine -> Settings
-  # Or use: gcloud app deploy --set-env-vars="SECRET_KEY=xxx,JWT_SECRET_KEY=xxx"
-  # SECRET_KEY: "your-secret-key"
-  # JWT_SECRET_KEY: "your-jwt-secret-key"
-  # SQLALCHEMY_DATABASE_URI: "postgresql://user:pass@/dbname?host=/cloudsql/PROJECT:REGION:INSTANCE"
+  SQLALCHEMY_DATABASE_URI: "sqlite:///app.db"
+  # Set these via: gcloud app deploy --set-env-vars="SECRET_KEY=xxx,JWT_SECRET_KEY=xxx"

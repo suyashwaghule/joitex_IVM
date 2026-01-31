@@ -2,9 +2,8 @@
    Authentication & Authorization Module
    ======================================== */
 
-// Note: All users are managed through the database.
-// Use the Admin portal to create and manage users.
-// Default admin: admin@joitex.com / admin123 (change in production!)
+// All users are managed through the database.
+// Use the Admin Portal to create and manage users.
 
 // Get project base path (for subdirectory hosting support)
 function getBasePath() {

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLT Details - Joitex Fiber</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <style>
+        .port-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .port-card {
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            text-align: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .port-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .port-active {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border-color: #15803d;
+        }
+
+        .port-inactive {
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+            color: #6b7280;
+            border-color: #9ca3af;
+        }
+
+        .port-error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border-color: #b91c1c;
+        }
+
+        .signal-strength {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+            margin-top: 0.25rem;
+        }
+
+        .signal-bar {
+            width: 3px;
+            height: 12px;
+            background: #d1d5db;
+            border-radius: 1px;
+        }
+
+        .signal-bar.active {
+            background: #22c55e;
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar"></aside>
+
+    <div class="main-content">
+        <header class="header"></header>
+
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">OLT Details</h1>
+                        <p class="content-subtitle">Detailed view of OLT performance and port status</p>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-network me-2" data-bs-toggle="modal" data-bs-target="#addOLTModal">
+                            <i class="bi bi-plus-circle me-2"></i>Add OLT
+                        </button>
+                        <button class="btn btn-warning me-2 text-white" onclick="editCurrentOLT()">
+                            <i class="bi bi-pencil me-2"></i>Edit
+                        </button>
+                        <button class="btn btn-danger me-2" onclick="deleteCurrentOLT()">
+                            <i class="bi bi-trash me-2"></i>Delete
+                        </button>
+                        <button class="btn btn-secondary" onclick="refreshOLT()">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OLT Selector -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-4">
+                            <label class="form-label">Select OLT</label>
+                            <select class="form-select" id="oltSelector" onchange="loadOLTDetails()">
+                                <option value="">Loading OLTs...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="d-flex gap-3" id="oltQuickInfo">
+                                <!-- Info populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs mb-4" id="oltTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview"
+                        type="button" role="tab">Overview</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="logs-tab" data-bs-toggle="tab" data-bs-target="#logs" type="button"
+                        role="tab" onclick="loadOLTLogs()">System Logs</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="oltTabContent">
+                <!-- Overview Tab -->
+                <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                    <!-- OLT Stats -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="text-muted mb-1">Total Ports</p>
+                                            <h3 class="mb-0" id="totalPorts">0</h3>
+                                        </div>
+                                        <div class="stat-icon bg-primary">
+                                            <i class="bi bi-hdd-network"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="text-muted mb-1">Active Ports</p>
+                                            <h3 class="mb-0 text-success" id="activePortsCount">0</h3>
+                                        </div>
+                                        <div class="stat-icon bg-success">
+                                            <i class="bi bi-check-circle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="text-muted mb-1">Available Ports</p>
+                                            <h3 class="mb-0 text-info" id="availablePorts">0</h3>
+                                        </div>
+                                        <div class="stat-icon bg-info">
+                                            <i class="bi bi-circle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="text-muted mb-1">Uptime</p>
+                                            <h3 class="mb-0 text-primary" id="oltUptime">0d</h3>
+                                        </div>
+                                        <div class="stat-icon bg-primary">
+                                            <i class="bi bi-clock-history"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Port Status Grid -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Physical Port Grid</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="port-grid" id="portGrid">
+                                <!-- Ports will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Connections Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Current Allocations/Connections</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>IP Address</th>
+                                            <th>Customer</th>
+                                            <th>MAC Address</th>
+                                            <th>Date Assigned</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="connectionsTbody">
+                                        <tr>
+                                            <td colspan="6" class="text-center p-4">Loading connections...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logs Tab -->
+                <div class="tab-pane fade" id="logs" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Device Logs</h5>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="loadOLTLogs()">
+                                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+                            </button>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 180px;">Timestamp</th>
+                                            <th style="width: 100px;">Type</th>
+                                            <th>Message</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="logsTbody">
+                                        <tr>
+                                            <td colspan="3" class="text-center p-4 text-muted">Select an OLT to view
+                                                logs</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+
+    <!-- Add OLT Modal -->
+    <div class="modal fade" id="addOLTModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="addOLTForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add New OLT</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">OLT Name</label>
+                            <input type="text" class="form-control" name="name" required placeholder="e.g. OLT-North-1">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">IP Address</label>
+                            <input type="text" class="form-control" name="ip_address" required
+                                placeholder="192.168.1.10">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-control" name="location" required
+                                placeholder="Data Center A">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Total Ports</label>
+                            <input type="number" class="form-control" name="total_ports" value="8" min="1" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-network">Add OLT</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit OLT Modal -->
+    <div class="modal fade" id="editOLTModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="editOLTForm">
+                    <input type="hidden" name="id" id="editOLTId">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit OLT</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">OLT Name</label>
+                            <input type="text" class="form-control" name="name" id="editOLTName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">IP Address</label>
+                            <input type="text" class="form-control" name="ip_address" id="editOLTIP" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-control" name="location" id="editOLTLocation" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Total Ports</label>
+                            <input type="number" class="form-control" name="total_ports" id="editOLTPorts" min="1"
+                                required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-network">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['network']);
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            Layout.render('network');
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+
+            await initOLTPage();
+
+            document.getElementById('addOLTForm').addEventListener('submit', handleAddOLT);
+            document.getElementById('editOLTForm').addEventListener('submit', handleEditOLT);
+        });
+
+        async function editCurrentOLT() {
+            const id = document.getElementById('oltSelector').value;
+            if (!id) return Toast.info('Please select an OLT first');
+
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/network/olts/${id}`, {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                if (res.ok) {
+                    const olt = await res.json();
+                    document.getElementById('editOLTId').value = olt.id;
+                    document.getElementById('editOLTName').value = olt.name;
+                    document.getElementById('editOLTIP').value = olt.ip_address;
+                    document.getElementById('editOLTLocation').value = olt.location;
+                    document.getElementById('editOLTPorts').value = olt.total_ports;
+
+                    const modal = new bootstrap.Modal(document.getElementById('editOLTModal'));
+                    modal.show();
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function handleEditOLT(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            const id = data.id;
+
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/network/olts/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${auth.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    Toast.success('OLT Updated');
+                    bootstrap.Modal.getInstance(document.getElementById('editOLTModal')).hide();
+                    initOLTPage();
+                } else {
+                    Toast.error('Update failed');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function deleteCurrentOLT() {
+            const id = document.getElementById('oltSelector').value;
+            if (!id) return Toast.info('Please select an OLT first');
+
+            if (confirm('Delete current OLT? This cannot be undone.')) {
+                try {
+                    const res = await fetch(`http://127.0.0.1:5000/api/network/olts/${id}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${auth.token}` }
+                    });
+                    if (res.ok) {
+                        Toast.success('OLT Deleted');
+                        document.getElementById('oltSelector').value = '';
+                        initOLTPage();
+                    }
+                } catch (e) { console.error(e); }
+            }
+        }
+
+        async function handleAddOLT(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/network/olts', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${auth.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (!await auth.checkResponse(res)) return;
+
+                if (res.ok) {
+                    Toast.success('OLT Added Successfully');
+                    bootstrap.Modal.getInstance(document.getElementById('addOLTModal')).hide();
+                    e.target.reset();
+                    initOLTPage();
+                } else {
+                    const err = await res.json();
+                    Toast.error(err.error || 'Failed to add OLT');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function initOLTPage() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/network/olts', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                if (!await auth.checkResponse(res)) return;
+
+                const olts = await res.json();
+                const selector = document.getElementById('oltSelector');
+                selector.innerHTML = olts.map(o => `<option value="${o.id}">${o.name} - ${o.location}</option>`).join('');
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const oltId = urlParams.get('id');
+                if (oltId) {
+                    selector.value = oltId;
+                }
+
+                loadOLTDetails();
+            } catch (e) { console.error(e); }
+        }
+
+        async function loadOLTDetails() {
+            const oltId = document.getElementById('oltSelector').value;
+            if (!oltId) return;
+
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/network/olts/${oltId}`, {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                if (!await auth.checkResponse(res)) return;
+
+                const olt = await res.json();
+
+                // Update Info
+                document.getElementById('oltQuickInfo').innerHTML = `
+                    <div class="flex-fill">
+                        <small class="text-muted">Status</small>
+                        <div><span class="badge bg-${olt.status === 'online' ? 'success' : 'danger'} text-capitalize">${olt.status}</span></div>
+                    </div>
+                    <div class="flex-fill">
+                        <small class="text-muted">IP Address</small>
+                        <div class="fw-bold">${olt.ip_address}</div>
+                    </div>
+                    <div class="flex-fill">
+                        <small class="text-muted">Chassis Type</small>
+                        <div class="fw-bold">${olt.model || 'Unknown'}</div>
+                    </div>
+                `;
+
+                document.getElementById('totalPorts').textContent = olt.total_ports || '-';
+                document.getElementById('activePortsCount').textContent = olt.active_ports || '-';
+                if (olt.total_ports !== undefined && olt.active_ports !== undefined) {
+                    document.getElementById('availablePorts').textContent = olt.total_ports - olt.active_ports;
+                } else {
+                    document.getElementById('availablePorts').textContent = '-';
+                }
+                document.getElementById('oltUptime').textContent = olt.uptime_days ? olt.uptime_days + 'd' : '-';
+
+                generatePortGrid(olt.total_ports || 0, olt.ports || []);
+                loadConnections();
+
+            } catch (e) { console.error(e); }
+        }
+
+        async function loadConnections() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/network/ipam/allocations', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                if (!await auth.checkResponse(res)) return;
+
+                const allocs = await res.json();
+                const tbody = document.getElementById('connectionsTbody');
+                if (tbody) {
+                    if (allocs.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="6" class="text-center p-4">No active connections found</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = allocs.map(a => `
+                        <tr>
+                            <td><code>${a.ip_address}</code></td>
+                            <td>
+                                <strong>${a.customer_name || 'N/A'}</strong>
+                            </td>
+                            <td><code>${a.mac_address || '-'}</code></td>
+                            <td>${new Date(a.assigned_at).toLocaleDateString()}</td>
+                            <td><span class="badge bg-${a.status === 'active' ? 'success' : 'secondary'}">${a.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" onclick="Toast.info('Viewing connection details...')">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        function generatePortGrid(total, specificPorts) {
+            const portGrid = document.getElementById('portGrid');
+            portGrid.innerHTML = '';
+
+            if (total === 0) {
+                portGrid.innerHTML = '<div class="text-muted col-12 text-center p-3">No port information available</div>';
+                return;
+            }
+
+            for (let i = 1; i <= total; i++) {
+                const portCard = document.createElement('div');
+                let statusClass = 'port-inactive'; // Default grey
+
+                if (specificPorts && specificPorts.length > 0) {
+                    const port = specificPorts.find(p => p.port_number === i);
+                    if (port && port.status === 'active') statusClass = 'port-active';
+                    else if (port && port.status === 'error') statusClass = 'port-error';
+                }
+
+                portCard.className = 'port-card ' + statusClass;
+                portCard.innerHTML = `<div>${i}</div>`;
+                portCard.onclick = () => Toast.info(`Port ${i} selected`);
+                portGrid.appendChild(portCard);
+            }
+        }
+
+        function refreshOLT() {
+            Toast.info('Refreshing OLT details...');
+            loadOLTDetails();
+            const activeTab = document.querySelector('.nav-link.active').id;
+            if (activeTab === 'logs-tab') {
+                loadOLTLogs();
+            }
+        }
+
+        async function loadOLTLogs() {
+            const oltId = document.getElementById('oltSelector').value;
+            if (!oltId) return;
+
+            const tbody = document.getElementById('logsTbody');
+            tbody.innerHTML = '<tr><td colspan="3" class="text-center p-4">Loading logs...</td></tr>';
+
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/network/olts/${oltId}/logs`, {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                if (!await auth.checkResponse(res)) return;
+
+                const logs = await res.json();
+
+                if (logs.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" class="text-center p-4 text-muted">No logs found for this device</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = logs.map(log => `
+                    <tr>
+                        <td class="text-muted small">${new Date(log.created_at).toLocaleString()}</td>
+                        <td><span class="badge bg-${getLogBadge(log.log_type)}">${log.log_type}</span></td>
+                        <td>${log.message}</td>
+                    </tr>
+                `).join('');
+
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center p-4 text-danger">Failed to load logs</td></tr>';
+            }
+        }
+
+        function getLogBadge(type) {
+            switch (type) {
+                case 'error': return 'danger';
+                case 'warning': return 'warning';
+                case 'system': return 'secondary';
+                default: return 'info';
+            }
+        }
+    </script>
+</body>
+
+</html>

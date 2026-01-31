@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Leads - Joitex Fiber</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar"></aside>
+
+    <div class="main-content">
+        <header class="header"></header>
+
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">My Leads</h1>
+                        <p class="content-subtitle">Manage your personal leads</p>
+                    </div>
+                    <a href="add-lead.html" class="btn btn-salesexec">
+                        <i class="bi bi-plus-circle me-2"></i>Add New Lead
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Total Leads</p>
+                                    <h3 class="mb-0">-</h3>
+                                </div>
+                                <i class="bi bi-person-lines-fill fs-1 text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Open</p>
+                                    <h3 class="mb-0">-</h3>
+                                </div>
+                                <i class="bi bi-hourglass-split fs-1 text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Lost</p>
+                                    <h3 class="mb-0">-</h3>
+                                </div>
+                                <i class="bi bi-x-circle fs-1 text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">All Leads</h5>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-primary active">All</button>
+                            <button class="btn btn-outline-primary">Open</button>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Lead ID</th>
+                                    <th>Customer</th>
+                                    <th>Contact</th>
+                                    <th>Location</th>
+                                    <th>Plan Interest</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leadsTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center p-4">Loading leads...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+
+    <div class="modal fade" id="addLeadModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="addLeadForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add New Lead</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Customer Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" name="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-control" name="address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Plan Interest</label>
+                            <select class="form-select" name="plan_interest" required>
+                                <option value="">Select plan</option>
+                                <option value="50 Mbps">50 Mbps</option>
+                                <option value="100 Mbps">100 Mbps</option>
+                                <option value="200 Mbps">200 Mbps</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Source</label>
+                            <select class="form-select" name="source" required>
+                                <option value="self">Self-sourced</option>
+                                <option value="referral">Referral</option>
+                                <option value="website">Website</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-salesexec">Add Lead</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['salesexec']);
+        document.addEventListener('DOMContentLoaded', function () {
+            Layout.render('salesexec');
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+            loadLeads();
+            document.getElementById('addLeadForm').addEventListener('submit', handleAddLead);
+        });
+
+        async function loadLeads() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/salesexec/leads', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                const leads = await res.json();
+
+                const tbody = document.getElementById('leadsTableBody');
+                if (leads.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center p-4">No leads found. Add one to get started!</td></tr>';
+                } else {
+                    tbody.innerHTML = leads.map(l => `
+                        <tr>
+                            <td><span class="badge bg-secondary">${l.lead_number}</span></td>
+                            <td>
+                                <strong>${l.name}</strong>
+                                <div class="small text-muted">${l.source || 'Manual'}</div>
+                            </td>
+                            <td>
+                                <div>${l.phone}</div>
+                                <div class="small text-muted">${l.email || '-'}</div>
+                            </td>
+                            <td>${l.address || '-'}</td>
+                            <td><span class="badge bg-info">${l.plan_interest || 'Pending'}</span></td>
+                            <td><span class="badge bg-${getStatusBadge(l.status)}">${l.status}</span></td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="viewLead('${l.lead_number}')">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function handleAddLead(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/salesexec/leads', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${auth.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    Toast.success('Lead added successfully!');
+                    bootstrap.Modal.getInstance(document.getElementById('addLeadModal')).hide();
+                    e.target.reset();
+                    loadLeads();
+                } else {
+                    Toast.error('Failed to add lead');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        function getStatusBadge(status) {
+            switch (status) {
+                case 'new': return 'primary';
+                case 'feasibility': return 'warning';
+                case 'installed': return 'success';
+                case 'cancelled': return 'danger';
+                default: return 'secondary';
+            }
+        }
+
+        function viewLead(leadId) {
+            Toast.info(`Viewing details for ${leadId}`);
+        }
+    </script>
+</body>
+
+</html>

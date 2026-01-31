@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Requests - Engineer Portal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar"></aside>
+
+    <div class="main-content">
+        <header class="header"></header>
+
+        <main class="content">
+            <div class="content-header">
+                <div>
+                    <h1 class="content-title">Service Requests</h1>
+                    <p class="content-subtitle">Report and track maintenance issues</p>
+                </div>
+                <!-- Create Button -->
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTicketModal">
+                    <i class="bi bi-plus-lg me-2"></i>New Request
+                </button>
+            </div>
+
+            <!-- Tickets List -->
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="ticketsTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Ticket #</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center p-5 text-muted">Loading tickets...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Create Ticket Modal -->
+    <div class="modal fade" id="createTicketModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Service Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createTicketForm">
+                        <div class="mb-3">
+                            <label class="form-label">Title/Subject</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Category</label>
+                                <select class="form-select" name="category">
+                                    <option value="hardware">Hardware Fault</option>
+                                    <option value="network">Network/Signal</option>
+                                    <option value="software">Software/App</option>
+                                    <option value="vehicle">Vehicle</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Priority</label>
+                                <select class="form-select" name="priority">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="4" required
+                                placeholder="Describe the issue..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitTicket()">Submit Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/common.js"></script>
+
+    <script>
+        auth.protectPage(['engineer']);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Layout.render('engineer');
+            loadTickets();
+        });
+
+        async function loadTickets() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/engineer/service-tickets', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+
+                if (!await auth.checkResponse(res)) return;
+
+                const tickets = await res.json();
+                renderTable(tickets);
+            } catch (e) {
+                console.error(e);
+                Toast.error('Failed to load tickets');
+            }
+        }
+
+        function renderTable(tickets) {
+            const tbody = document.querySelector('#ticketsTable tbody');
+            if (tickets.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center p-5 text-muted">No tickets found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = tickets.map(t => `
+                <tr>
+                    <td><span class="font-monospace">${t.ticket_number}</span></td>
+                    <td class="fw-medium">${t.title}</td>
+                    <td><span class="badge bg-secondary">${t.category}</span></td>
+                    <td>${getPriorityBadge(t.priority)}</td>
+                    <td>${getStatusBadge(t.status)}</td>
+                    <td class="text-muted small">${new Date(t.created_at).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        function getPriorityBadge(p) {
+            const map = { high: 'danger', critical: 'danger', medium: 'warning', low: 'success' };
+            return `<span class="badge bg-${map[p] || 'secondary'}">${p.toUpperCase()}</span>`;
+        }
+
+        function getStatusBadge(s) {
+            const map = { open: 'primary', in_progress: 'info', resolved: 'success', closed: 'secondary' };
+            return `<span class="badge bg-${map[s] || 'secondary'}">${s.replace('_', ' ').toUpperCase()}</span>`;
+        }
+
+        async function submitTicket() {
+            const form = document.getElementById('createTicketForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/engineer/service-tickets', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${auth.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!await auth.checkResponse(res)) return;
+
+                if (res.ok) {
+                    Toast.success('Ticket created successfully');
+                    bootstrap.Modal.getInstance(document.getElementById('createTicketModal')).hide();
+                    form.reset();
+                    loadTickets();
+                } else {
+                    Toast.error('Failed to create ticket');
+                }
+            } catch (e) {
+                console.error(e);
+                Toast.error('Network error');
+            }
+        }
+    </script>
+</body>
+
+</html>

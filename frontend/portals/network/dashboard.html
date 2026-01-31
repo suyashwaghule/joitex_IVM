@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Admin Dashboard - Joitex Fiber</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <style>
+        .olt-status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .olt-card {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .olt-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .olt-card.online {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #22c55e;
+        }
+
+        .olt-card.offline {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #ef4444;
+        }
+
+        .olt-card.maintenance {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #f59e0b;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar"></aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header"></header>
+
+        <!-- Content -->
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">Network Operations Center</h1>
+                        <p class="content-subtitle">Real-time monitoring and network management</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-success">Auto-refresh: ON</span>
+                        <span class="text-muted small">Last updated: <span id="lastUpdate">Just now</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(34, 197, 94, 0.1); color: #22c55e;">
+                            <i class="bi bi-check-circle pulse"></i>
+                        </div>
+                        <div class="kpi-trend up">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>2%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-title">OLTs Online</div>
+                    <div class="kpi-value">-</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        -
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                            <i class="bi bi-x-circle pulse"></i>
+                        </div>
+                        <div class="kpi-trend">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-title">OLTs Offline</div>
+                    <div class="kpi-value">-</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        Requires attention
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+                        <div class="kpi-trend up">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>5</span>
+                        </div>
+                    </div>
+                    <div class="kpi-title">Alerts Today</div>
+                    <div class="kpi-value">-</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        -
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(147, 51, 234, 0.1); color: #9333ea;">
+                            <i class="bi bi-diagram-3"></i>
+                        </div>
+                        <div class="kpi-trend">
+                            <i class="bi bi-info-circle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-title">IP Utilization</div>
+                    <div class="kpi-value">-</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        -
+                    </div>
+                </div>
+            </div>
+
+            <!-- OLT Status Grid -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">OLT Status Overview</h5>
+                    <div class="d-flex gap-3">
+                        <span><span class="badge bg-success">●</span> Online (-)</span>
+                        <span><span class="badge bg-danger">●</span> Offline (-)</span>
+                        <span><span class="badge bg-warning">●</span> Maintenance (-)</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="olt-status-grid" id="oltGrid">
+                        <!-- OLTs will be dynamically loaded -->
+                        <div class="text-center w-100 p-4 text-muted">Loading OLT status...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Network Uptime (Last 7 Days)</h3>
+                            <div class="chart-actions">
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-secondary active">7D</button>
+                                    <button class="btn btn-outline-secondary">30D</button>
+                                    <button class="btn btn-outline-secondary">90D</button>
+                                </div>
+                            </div>
+                        </div>
+                        <canvas id="uptimeChart" height="250"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Outage Distribution</h3>
+                        </div>
+                        <canvas id="outageChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Alerts & IP Pools -->
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Active Alerts</h5>
+                            <span class="badge bg-danger">-</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush" id="activeAlertsList">
+                                <div class="list-group-item">
+                                    <div class="text-center p-3 text-muted">Loading alerts...</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="downtime.html" class="text-decoration-none">View All Alerts <i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">IP Pool Status</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Pool Name</th>
+                                            <th>Type</th>
+                                            <th>Total</th>
+                                            <th>Used</th>
+                                            <th>Utilization</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ipPoolsTbody">
+                                        <!-- Will be dynamically loaded -->
+                                        <tr>
+                                            <td colspan="5" class="text-center p-3">Loading pools...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="ip-management.html" class="text-decoration-none">View IP Management <i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/portal-switcher.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script src="../../assets/js/network-dashboard.js"></script>
+    <script>
+        auth.protectPage(['network']);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Layout.render('network');
+        });
+    </script>
+</body>
+
+</html>

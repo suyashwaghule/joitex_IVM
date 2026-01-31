@@ -12,6 +12,10 @@ class User(db.Model):
     permissions_json = db.Column(db.Text) 
     portals_json = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_login = db.Column(db.DateTime)
+    last_logout = db.Column(db.DateTime)
+    last_seen = db.Column(db.DateTime)
+    is_active = db.Column(db.Boolean, default=True)
 
     @property
     def permissions(self):
@@ -36,7 +40,12 @@ class User(db.Model):
             'name': self.name,
             'role': self.role,
             'permissions': self.permissions,
-            'portals': self.portals
+            'portals': self.portals,
+            'last_login': self.last_login.isoformat() if self.last_login else None,
+            'last_logout': self.last_logout.isoformat() if self.last_logout else None,
+            'last_seen': self.last_seen.isoformat() if self.last_seen else None,
+            'is_active': self.is_active,
+            'created_at': self.created_at.isoformat()
         }
 
 class Role(db.Model):
@@ -143,3 +152,22 @@ class Product(db.Model):
     stock_level = db.Column(db.Integer, default=0)
     min_threshold = db.Column(db.Integer, default=10)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class UserLog(db.Model):
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    action = db.Column(db.String(50), nullable=False) # login, logout, update, create, delete
+    details = db.Column(db.Text) # JSON string or text description
+    ip_address = db.Column(db.String(50))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'action': self.action,
+            'details': self.details,
+            'ip_address': self.ip_address,
+            'timestamp': self.timestamp.isoformat()
+        }

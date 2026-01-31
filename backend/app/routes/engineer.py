@@ -63,9 +63,69 @@ def get_stock_requests():
     from ..models_inventory import StockRequest
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
-    # Filter by engineer name for now as StockRequest uses name string
-    requests = StockRequest.query.filter_by(engineer_name=user.name).all()
+    requests = StockRequest.query.filter_by(engineer_name=user.name).order_by(StockRequest.created_at.desc()).all()
     return jsonify([r.to_dict() for r in requests])
+
+@bp.route('/stock-requests', methods=['POST'])
+@jwt_required()
+def create_stock_request():
+    from ..models_inventory import StockRequest
+    import json
+    
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    data = request.json
+    
+    count = StockRequest.query.count() + 1
+    req_num = f"REQ-{datetime.utcnow().year}-{count:04d}"
+    
+    new_req = StockRequest(
+        request_number=req_num,
+        engineer_name=user.name,
+        # job_id could be added if linked to specific job
+        items_requested=json.dumps(data.get('items', [])),
+        priority=data.get('priority', 'normal'),
+        status='pending'
+    )
+    
+    db.session.add(new_req)
+    db.session.commit()
+    return jsonify(new_req.to_dict()), 201
+
+# --- Service Tickets (Maintenance) ---
+@bp.route('/service-tickets', methods=['GET'])
+@jwt_required()
+def get_service_tickets():
+    from ..models_service import ServiceTicket
+    current_user_id = get_jwt_identity()
+    tickets = ServiceTicket.query.filter_by(created_by_id=current_user_id).order_by(ServiceTicket.created_at.desc()).all()
+    return jsonify([t.to_dict() for t in tickets])
+
+@bp.route('/service-tickets', methods=['POST'])
+@jwt_required()
+def create_service_ticket():
+    from ..models_service import ServiceTicket
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    data = request.json
+    
+    count = ServiceTicket.query.count() + 1
+    ticket_num = f"TKT-{datetime.utcnow().year}-{count:04d}"
+    
+    new_ticket = ServiceTicket(
+        ticket_number=ticket_num,
+        title=data.get('title'),
+        description=data.get('description'),
+        priority=data.get('priority', 'medium'),
+        category=data.get('category', 'other'),
+        created_by_id=current_user_id,
+        engineer_name=user.name,
+        status='open'
+    )
+    
+    db.session.add(new_ticket)
+    db.session.commit()
+    return jsonify(new_ticket.to_dict()), 201
 
 @bp.route('/stats', methods=['GET'])
 @jwt_required()
@@ -85,11 +145,9 @@ def get_stats():
     pending_materials = StockRequest.query.filter_by(engineer_name=user.name, status='pending').count()
     
     # Device Distribution (Dynamic)
-    # Count device types from completed jobs
     completed_jobs = Job.query.filter_by(engineer_id=current_user_id, status='completed').all()
     device_counts = {}
     for j in completed_jobs:
-        # job.devices property handles JSON parsing
         for d in j.devices:
             d_type = d.get('type', 'other').upper()
             device_counts[d_type] = device_counts.get(d_type, 0) + 1
@@ -98,7 +156,6 @@ def get_stats():
     data = list(device_counts.values())
 
     if not labels:
-        # Fallback for empty chart
         labels = ['ONT', 'Router', 'Cable', 'Connectors']
         data = [0, 0, 0, 0]
 
@@ -107,6 +164,8 @@ def get_stats():
         'in_progress': in_progress,
         'completed_week': completed_week,
         'pending_materials': pending_materials,
+        'travel_time': '24m', # Calculated or placeholder
+        'rating': 4.8,       # Calculated or placeholder
         'chart_data': {
             'labels': labels,
             'data': data

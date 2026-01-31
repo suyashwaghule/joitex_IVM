@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Board - Joitex Fiber</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <style>
+        /* Status Filter Cards */
+        .status-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .filter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .filter-card.active {
+            border-color: var(--primary);
+            background: linear-gradient(145deg, var(--bg-primary), var(--bg-tertiary));
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .filter-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .filter-count {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+        }
+
+        /* Inquiry Grid */
+        .inquiry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .inquiry-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .inquiry-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+
+        .card-header-custom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .status-select {
+            border: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            background-color: transparent;
+            /* Default fallback */
+            border: 1px solid var(--border-color);
+        }
+
+        /* Status colors for card accents */
+        .status-indicator {
+            width: 100%;
+            height: 4px;
+            border-radius: 4px 4px 0 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <!-- Layout handled by JS -->
+    <aside class="sidebar"></aside>
+
+    <div class="main-content">
+        <header class="header"></header>
+
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">Status Board</h1>
+                        <p class="content-subtitle">Manage inquiries visually</p>
+                    </div>
+                    <div>
+                        <a href="create-inquiry.html" class="btn btn-callcenter">
+                            <i class="bi bi-plus-lg me-2"></i>New Inquiry
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Cards (Creative "Stats" approach) -->
+            <div class="status-filters" id="statusFilters">
+                <!-- Injected via JS -->
+                <div class="filter-card active" onclick="filterBy('all')">
+                    <div class="filter-icon text-secondary"><i class="bi bi-grid"></i></div>
+                    <div>
+                        <div class="filter-count" id="count-all">0</div>
+                        <div class="filter-label">All Inquiries</div>
+                    </div>
+                </div>
+                <!-- Other cards will be dynamic or hardcoded? Let's hardcode structure for ease -->
+                <div class="filter-card" onclick="filterBy('pending')">
+                    <div class="filter-icon text-warning"><i class="bi bi-hourglass-split"></i></div>
+                    <div>
+                        <div class="filter-count" id="count-pending">0</div>
+                        <div class="filter-label">Pending</div>
+                    </div>
+                </div>
+                <div class="filter-card" onclick="filterBy('forwarded')">
+                    <div class="filter-icon text-primary"><i class="bi bi-arrow-right-circle"></i></div>
+                    <div>
+                        <div class="filter-count" id="count-forwarded">0</div>
+                        <div class="filter-label">Forwarded</div>
+                    </div>
+                </div>
+                <div class="filter-card" onclick="filterBy('in_progress')">
+                    <div class="filter-icon text-info"><i class="bi bi-gear-wide-connected"></i></div>
+                    <div>
+                        <div class="filter-count" id="count-in-progress">0</div>
+                        <div class="filter-label">In Progress</div>
+                    </div>
+                </div>
+                <div class="filter-card" onclick="filterBy('closed')">
+                    <div class="filter-icon text-success"><i class="bi bi-check-circle-fill"></i></div>
+                    <div>
+                        <div class="filter-count" id="count-closed">0</div>
+                        <div class="filter-label">Closed</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Grid -->
+            <div class="inquiry-grid" id="inquiryGrid">
+                <div class="text-center p-5 w-100 grid-column-full">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['callcenter']);
+
+        let allInquiries = [];
+        let currentFilter = 'all';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            Layout.render('callcenter');
+            await loadData();
+        });
+
+        async function loadData() {
+            try {
+                // Mock data fallback if API fails (for demo purposes if backend isn't ready)
+                // Using real API path
+                const res = await fetch('http://127.0.0.1:5000/api/callcenter/inquiries', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+
+                if (res.ok) {
+                    allInquiries = await res.json();
+                } else {
+                    // Fallback/Empty
+                    allInquiries = [];
+                }
+
+                updateStats();
+                renderGrid();
+            } catch (e) {
+                console.error(e);
+                Toast.error('Failed to load inquiries');
+            }
+        }
+
+        function updateStats() {
+            const counts = {
+                all: allInquiries.length,
+                pending: allInquiries.filter(i => i.status === 'pending').length,
+                forwarded: allInquiries.filter(i => i.status === 'forwarded').length,
+                in_progress: allInquiries.filter(i => i.status === 'in_progress').length,
+                closed: allInquiries.filter(i => i.status === 'closed').length
+            };
+
+            document.getElementById('count-all').textContent = counts.all;
+            document.getElementById('count-pending').textContent = counts.pending;
+            document.getElementById('count-forwarded').textContent = counts.forwarded;
+            document.getElementById('count-in-progress').textContent = counts.in_progress;
+            document.getElementById('count-closed').textContent = counts.closed;
+        }
+
+        function filterBy(status) {
+            currentFilter = status;
+
+            // Update active state
+            document.querySelectorAll('.filter-card').forEach(c => c.classList.remove('active'));
+            // Find the card that was clicked - simpler to just look for the onclick attr or rely on event
+            // But since we have specific ones:
+            // Let's iterate and match simply
+            // Actually, we can just use the event target's closest .filter-card if we passed 'this'
+            // For now, re-render is cheap
+
+            // Let's create a mapping or just manually highlight based on index if we knew it
+            // Hacky but works: find by ID if we added IDs to cards, but we didn't.
+            // Let's just set the active class on the element that matches the status
+            const cards = document.querySelectorAll('.filter-card');
+            if (status === 'all') cards[0].classList.add('active');
+            if (status === 'pending') cards[1].classList.add('active');
+            if (status === 'forwarded') cards[2].classList.add('active');
+            if (status === 'in_progress') cards[3].classList.add('active');
+            if (status === 'closed') cards[4].classList.add('active');
+
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('inquiryGrid');
+            grid.innerHTML = '';
+
+            const filtered = currentFilter === 'all'
+                ? allInquiries
+                : allInquiries.filter(i => i.status === currentFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-5 text-muted" style="grid-column: 1/-1;">
+                        <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                        No inquiries found in this status.
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(inq => {
+                const card = document.createElement('div');
+                card.className = 'inquiry-card position-relative';
+
+                // Color mapping
+                const colors = {
+                    pending: 'warning',
+                    forwarded: 'primary',
+                    in_progress: 'info',
+                    closed: 'success'
+                };
+                const color = colors[inq.status] || 'secondary';
+
+                card.innerHTML = `
+                    <div class="status-indicator bg-${color}"></div>
+                    <div class="card-header-custom">
+                        <span class="badge bg-light text-dark border">#${inq.inquiry_number}</span>
+                        
+                        <div class="dropdown">
+                            <button class="status-select text-${color} border-${color} dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                ${formatStatus(inq.status)}
+                            </button>
+                            <ul class="dropdown-menu shadow-sm">
+                                <li><a class="dropdown-item" href="#" onclick="updateStatus('${inq.inquiry_number}', 'pending')">Pending</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="updateStatus('${inq.inquiry_number}', 'forwarded')">Forwarded</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="updateStatus('${inq.inquiry_number}', 'in_progress')">In Progress</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-success" href="#" onclick="updateStatus('${inq.inquiry_number}', 'closed')">Closed</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h5 class="fw-bold mb-1 text-truncate">${inq.customer_name}</h5>
+                    <p class="text-secondary small mb-3"><i class="bi bi-geo-alt me-1"></i>${inq.city}</p>
+                    
+                    <div class="d-flex align-items-center justify-content-between pt-3 border-top">
+                        <div class="d-flex align-items-center gap-2">
+                             <span class="badge bg-secondary-subtle text-dark border">${inq.service_type}</span>
+                        </div>
+                        <a href="my-inquiries.html?search=${inq.inquiry_number}" class="btn btn-sm btn-light text-primary">
+                            Details <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        async function updateStatus(id, newStatus) {
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/callcenter/inquiries/num/${id}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${auth.token}`
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                if (res.ok) {
+                    Toast.success(`Inquiry #${id} updated to ${formatStatus(newStatus)}`);
+                    // Update local data and re-render
+                    const idx = allInquiries.findIndex(i => i.inquiry_number == id);
+                    if (idx !== -1) {
+                        allInquiries[idx].status = newStatus;
+                        updateStats();
+                        renderGrid();
+                    }
+                } else {
+                    Toast.error('Failed to update status');
+                }
+            } catch (e) {
+                console.error(e);
+                Toast.error('Error updating status');
+            }
+        }
+
+        function formatStatus(s) {
+            return s.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
+    </script>
+</body>
+
+</html>

@@ -119,3 +119,23 @@ class NetworkIncident(db.Model):
             'duration': duration,
             'affected_count': self.affected_count
         }
+
+class DeviceLog(db.Model):
+    __tablename__ = 'device_logs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    device_id = db.Column(db.Integer, db.ForeignKey('network_devices.id'), nullable=False)
+    log_type = db.Column(db.String(50), default='info') # info, warning, error, system
+    message = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    device = db.relationship('NetworkDevice', backref=db.backref('logs', lazy=True, cascade="all, delete-orphan"))
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'device_id': self.device_id,
+            'log_type': self.log_type,
+            'message': self.message,
+            'created_at': self.created_at.isoformat()
+        }

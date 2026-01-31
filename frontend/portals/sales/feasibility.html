@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feasibility Queue - Joitex Fiber</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar"></aside>
+
+    <div class="main-content">
+        <header class="header"></header>
+
+        <main class="content">
+            <div class="content-header">
+                <h1 class="content-title">Feasibility Queue</h1>
+                <p class="content-subtitle">Review and approve feasibility checks</p>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Pending Review</p>
+                                    <h3 class="mb-0">-</h3>
+                                </div>
+                                <i class="bi bi-hourglass-split fs-1 text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Feasible</p>
+                                    <h3 class="mb-0">-</h3>
+                                </div>
+                                <i class="bi bi-check-circle fs-1 text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Not Feasible</p>
+                                    <h3 class="mb-0">-</h3>
+                                </div>
+                                <i class="bi bi-x-circle fs-1 text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Pending Feasibility Checks</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Inquiry ID</th>
+                                    <th>Customer</th>
+                                    <th>Location</th>
+                                    <th>Plan</th>
+                                    <th>Nearest OLT</th>
+                                    <th>Distance</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" class="text-center p-5 text-muted">
+                                        <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                                        </div>
+                                        Loading feasibility requests...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['sales']);
+        document.addEventListener('DOMContentLoaded', function () {
+            Layout.render('sales');
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+            loadFeasibilityQueue();
+        });
+
+        async function loadFeasibilityQueue() {
+            try {
+                const token = auth.token;
+                const response = await fetch('http://127.0.0.1:5000/api/sales/feasibility', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const items = await response.json();
+                    renderQueue(items);
+                    updateStats(items);
+                }
+            } catch (error) {
+                console.error('Error loading feasibility queue:', error);
+            }
+        }
+
+        function renderQueue(items) {
+            const tbody = document.querySelector('table tbody');
+            if (items.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No pending feasibility checks</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = items.map(item => `
+                <tr>
+                    <td><span class="badge bg-secondary">${item.id}</span></td>
+                    <td>
+                        <strong>${item.name}</strong>
+                    </td>
+                    <td>${item.address || 'N/A'}</td>
+                    <td><span class="badge bg-info">Fiber Plan</span></td>
+                    <td>OLT-SECTOR-01</td>
+                    <td><span class="badge bg-success">~400m</span></td>
+                    <td>Recent</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-success" onclick="markFeasible('${item.id}')">
+                                <i class="bi bi-check"></i> Feasible
+                            </button>
+                            <button class="btn btn-danger" onclick="markNotFeasible('${item.id}')">
+                                <i class="bi bi-x"></i> Not Feasible
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats(items) {
+            const h3s = document.querySelectorAll('.card-body h3');
+            if (h3s.length >= 1) h3s[0].textContent = items.length;
+        }
+
+        async function markFeasible(id) {
+            Modal.confirm('Mark as Feasible', `Confirm that ${id} is feasible?`, async () => {
+                const token = auth.token;
+                const res = await fetch(`http://127.0.0.1:5000/api/sales/feasibility/${id}/approve`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    Toast.success(`${id} marked as feasible!`);
+                    loadFeasibilityQueue();
+                }
+            });
+        }
+
+        async function markNotFeasible(id) {
+            Modal.confirm('Mark as Not Feasible', `Reject ${id}?`, async () => {
+                const token = auth.token;
+                const res = await fetch(`http://127.0.0.1:5000/api/sales/feasibility/${id}/reject`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    Toast.warning(`${id} rejected`);
+                    loadFeasibilityQueue();
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

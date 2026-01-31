@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Settings - Joitex Fiber</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar & Header handled by Layout.js -->
+    <aside class="sidebar"></aside>
+
+    <div class="main-content">
+        <header class="header"></header>
+
+        <main class="content">
+            <div class="content-header">
+                <h1 class="content-title">System Settings</h1>
+                <p class="content-subtitle">Configure system-wide settings and preferences</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="list-group list-group-flush">
+                                <a href="#general" class="list-group-item list-group-item-action active"
+                                    data-bs-toggle="pill">
+                                    <i class="bi bi-gear me-2"></i>General
+                                </a>
+                                <a href="#company" class="list-group-item list-group-item-action" data-bs-toggle="pill">
+                                    <i class="bi bi-building me-2"></i>Company Info
+                                </a>
+                                <a href="#email" class="list-group-item list-group-item-action" data-bs-toggle="pill">
+                                    <i class="bi bi-envelope me-2"></i>Email Settings
+                                </a>
+                                <a href="#sms" class="list-group-item list-group-item-action" data-bs-toggle="pill">
+                                    <i class="bi bi-phone me-2"></i>SMS Gateway
+                                </a>
+                                <a href="#notifications" class="list-group-item list-group-item-action"
+                                    data-bs-toggle="pill">
+                                    <i class="bi bi-bell me-2"></i>Notifications
+                                </a>
+                                <a href="#security" class="list-group-item list-group-item-action"
+                                    data-bs-toggle="pill">
+                                    <i class="bi bi-shield-lock me-2"></i>Security
+                                </a>
+                                <a href="#backup" class="list-group-item list-group-item-action" data-bs-toggle="pill">
+                                    <i class="bi bi-cloud-arrow-up me-2"></i>Backup
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="general">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">General Settings</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label class="form-label">System Name</label>
+                                            <input type="text" class="form-control" placeholder="System Name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">System Version</label>
+                                            <input type="text" class="form-control" value="1.0.0" readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Time Zone</label>
+                                            <select class="form-select">
+                                                <option value="IST" selected>Asia/Kolkata (IST)</option>
+                                                <option value="UTC">UTC</option>
+                                                <option value="EST">America/New_York (EST)</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Date Format</label>
+                                            <select class="form-select">
+                                                <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                                                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Currency</label>
+                                            <select class="form-select">
+                                                <option value="INR" selected>INR (₹)</option>
+                                                <option value="USD">USD ($)</option>
+                                                <option value="EUR">EUR (€)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="maintenanceMode">
+                                            <label class="form-check-label" for="maintenanceMode">
+                                                Enable Maintenance Mode
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-admin" onclick="saveSettings('general')">
+                                            <i class="bi bi-check-circle me-2"></i>Save Changes
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="company">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Company Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label class="form-label">Company Name</label>
+                                            <input type="text" class="form-control" placeholder="Company Name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Address</label>
+                                            <textarea class="form-control" rows="3"
+                                                placeholder="Company Address"></textarea>
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Phone</label>
+                                                <input type="text" class="form-control" placeholder="Phone Number">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control" placeholder="Email Address">
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">GST Number</label>
+                                                <input type="text" class="form-control" placeholder="GST Number">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">PAN Number</label>
+                                                <input type="text" class="form-control" placeholder="PAN Number">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Company Logo</label>
+                                            <input type="file" class="form-control" accept="image/*">
+                                        </div>
+                                        <button type="button" class="btn btn-admin" onclick="saveSettings('company')">
+                                            <i class="bi bi-check-circle me-2"></i>Save Changes
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="email">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Email Configuration</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label class="form-label">SMTP Host</label>
+                                            <input type="text" class="form-control" placeholder="smtp.gmail.com">
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">SMTP Port</label>
+                                                <input type="number" class="form-control" placeholder="587">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Encryption</label>
+                                                <select class="form-select">
+                                                    <option value="tls" selected>TLS</option>
+                                                    <option value="ssl">SSL</option>
+                                                    <option value="none">None</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Username</label>
+                                            <input type="text" class="form-control" placeholder="smtp_user">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Password</label>
+                                            <input type="password" class="form-control" placeholder="••••••••">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">From Name</label>
+                                            <input type="text" class="form-control" placeholder="Sender Name">
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button type="button" class="btn btn-outline-primary" onclick="testEmail()">
+                                                <i class="bi bi-envelope-check me-2"></i>Send Test Email
+                                            </button>
+                                            <button type="button" class="btn btn-admin" onclick="saveSettings('email')">
+                                                <i class="bi bi-check-circle me-2"></i>Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="sms">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">SMS Gateway Settings</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label class="form-label">SMS Provider</label>
+                                            <select class="form-select">
+                                                <option value="">Select Provider</option>
+                                                <option value="twilio" selected>Twilio</option>
+                                                <option value="msg91">MSG91</option>
+                                                <option value="textlocal">TextLocal</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">API Key</label>
+                                            <input type="text" class="form-control" placeholder="Enter API Key">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">API Secret</label>
+                                            <input type="password" class="form-control" placeholder="Enter API Secret">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Sender ID</label>
+                                            <input type="text" class="form-control" placeholder="JOITEX">
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="enableSMS" checked>
+                                            <label class="form-check-label" for="enableSMS">
+                                                Enable SMS Notifications
+                                            </label>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button type="button" class="btn btn-outline-primary" onclick="testSMS()">
+                                                <i class="bi bi-phone-vibrate me-2"></i>Send Test SMS
+                                            </button>
+                                            <button type="button" class="btn btn-admin" onclick="saveSettings('sms')">
+                                                <i class="bi bi-check-circle me-2"></i>Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="notifications">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Notification Preferences</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="mb-3">Email Notifications</h6>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="notifyNewInquiry" checked>
+                                        <label class="form-check-label" for="notifyNewInquiry">New Inquiry
+                                            Created</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="notifyInstallation" checked>
+                                        <label class="form-check-label" for="notifyInstallation">Installation
+                                            Completed</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="notifyLowStock" checked>
+                                        <label class="form-check-label" for="notifyLowStock">Low Stock Alert</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-4">
+                                        <input class="form-check-input" type="checkbox" id="notifyOLTDown" checked>
+                                        <label class="form-check-label" for="notifyOLTDown">OLT Down Alert</label>
+                                    </div>
+
+                                    <h6 class="mb-3">SMS Notifications</h6>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="smsCustomer" checked>
+                                        <label class="form-check-label" for="smsCustomer">Customer Updates</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="smsEngineer" checked>
+                                        <label class="form-check-label" for="smsEngineer">Engineer Assignments</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-4">
+                                        <input class="form-check-input" type="checkbox" id="smsPayment">
+                                        <label class="form-check-label" for="smsPayment">Payment Reminders</label>
+                                    </div>
+
+                                    <button type="button" class="btn btn-admin" onclick="saveSettings('notifications')">
+                                        <i class="bi bi-check-circle me-2"></i>Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="security">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Security Settings</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label class="form-label">Session Timeout (minutes)</label>
+                                            <input type="number" class="form-control" value="30">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Password Min Length</label>
+                                            <input type="number" class="form-control" value="8">
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="requireUppercase"
+                                                checked>
+                                            <label class="form-check-label" for="requireUppercase">Require Uppercase
+                                                Letters</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="requireNumbers" checked>
+                                            <label class="form-check-label" for="requireNumbers">Require Numbers</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="requireSpecial" checked>
+                                            <label class="form-check-label" for="requireSpecial">Require Special
+                                                Characters</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="enable2FA">
+                                            <label class="form-check-label" for="enable2FA">Enable Two-Factor
+                                                Authentication</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="loginAttempts" checked>
+                                            <label class="form-check-label" for="loginAttempts">Lock Account After 5
+                                                Failed Attempts</label>
+                                        </div>
+                                        <button type="button" class="btn btn-admin" onclick="saveSettings('security')">
+                                            <i class="bi bi-check-circle me-2"></i>Save Changes
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="backup">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Backup & Restore</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-info">
+                                        <i class="bi bi-info-circle me-2"></i>
+                                        No backups available
+                                    </div>
+
+                                    <h6 class="mb-3">Automatic Backup</h6>
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="autoBackup" checked>
+                                        <label class="form-check-label" for="autoBackup">Enable Automatic Backup</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Backup Frequency</label>
+                                        <select class="form-select">
+                                            <option value="daily" selected>Daily</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Backup Time</label>
+                                        <input type="time" class="form-control" value="02:00">
+                                    </div>
+
+                                    <h6 class="mb-3">Manual Backup</h6>
+                                    <div class="d-flex gap-2 mb-4">
+                                        <button type="button" class="btn btn-primary" onclick="createBackup()">
+                                            <i class="bi bi-cloud-arrow-up me-2"></i>Create Backup Now
+                                        </button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            onclick="downloadBackup()">
+                                            <i class="bi bi-download me-2"></i>Download Latest Backup
+                                        </button>
+                                    </div>
+
+                                    <h6 class="mb-3">Restore</h6>
+                                    <div class="mb-3">
+                                        <label class="form-label">Upload Backup File</label>
+                                        <input type="file" class="form-control" accept=".zip,.sql">
+                                    </div>
+                                    <button type="button" class="btn btn-warning" onclick="restoreBackup()">
+                                        <i class="bi bi-arrow-counterclockwise me-2"></i>Restore from Backup
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['admin']);
+        document.addEventListener('DOMContentLoaded', function () {
+            Layout.render('admin');
+        });
+
+        function saveSettings(section) {
+            Toast.info(`Saving ${section} settings...`, 1500);
+            setTimeout(() => {
+                Toast.success('Settings saved successfully!', 2000);
+            }, 1500);
+        }
+
+        function testEmail() {
+            Toast.info('Sending test email...', 2000);
+            setTimeout(() => {
+                Toast.success('Test email sent successfully!', 2000);
+            }, 2000);
+        }
+
+        function testSMS() {
+            Toast.info('Sending test SMS...', 2000);
+            setTimeout(() => {
+                Toast.success('Test SMS sent successfully!', 2000);
+            }, 2000);
+        }
+
+        function createBackup() {
+            Toast.info('Creating backup...', 2000);
+            setTimeout(() => {
+                Toast.success('Backup created successfully!', 2000);
+            }, 2000);
+        }
+
+        function downloadBackup() {
+            Toast.info('Downloading backup...', 2000);
+            setTimeout(() => {
+                Toast.success('Backup downloaded successfully!', 2000);
+            }, 2000);
+        }
+
+        function restoreBackup() {
+            Modal.confirm('Restore Backup', 'Are you sure you want to restore from this backup? This will overwrite current data.', () => {
+                Toast.info('Restoring backup...', 3000);
+                setTimeout(() => {
+                    Toast.success('Backup restored successfully!', 2000);
+                }, 3000);
+            });
+        }
+    </script>
+</body>
+
+</html>

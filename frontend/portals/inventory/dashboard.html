@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Dashboard - Joitex Fiber</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar"></aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header"></header>
+
+        <!-- Content -->
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">Inventory Dashboard</h1>
+                        <p class="content-subtitle">Monitor stock levels and manage inventory</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary" onclick="exportInventory()">
+                            <i class="bi bi-download me-2"></i>Export
+                        </button>
+                        <a href="receive.html" class="btn btn-inventory">
+                            <i class="bi bi-plus-circle me-2"></i>Receive Stock
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(147, 51, 234, 0.1); color: #9333ea;">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+                        <div class="kpi-trend up">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>5%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-title">Total Stock Items</div>
+                    <div class="kpi-value">-</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Across 12 categories
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <div class="kpi-trend">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-title">Low Stock Alerts</div>
+                    <div class="kpi-value">-</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-exclamation-triangle me-1"></i>
+                        Requires attention
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                            <i class="bi bi-hourglass-split"></i>
+                        </div>
+                        <div class="kpi-trend">
+                            <i class="bi bi-clock"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-title">Pending Issue Requests</div>
+                    <div class="kpi-value">-</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        From engineers
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background-color: rgba(34, 197, 94, 0.1); color: #22c55e;">
+                            <i class="bi bi-arrow-left-right"></i>
+                        </div>
+                        <div class="kpi-trend up">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>8%</span>
+                        </div>
+                    </div>
+                    <div class="kpi-title">Today's Movements</div>
+                    <div class="kpi-value">-</div>
+                    <div class="kpi-footer">
+                        <i class="bi bi-info-circle me-1"></i>
+                        In: 28 | Out: 17
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Stock by Category</h3>
+                            <div class="chart-actions">
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-secondary active">Quantity</button>
+                                    <button class="btn btn-outline-secondary">Value</button>
+                                </div>
+                            </div>
+                        </div>
+                        <canvas id="stockChart" height="250"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Stock Status</h3>
+                        </div>
+                        <canvas id="statusChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Low Stock Alerts -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Low Stock Alerts</h5>
+                            <span class="badge bg-danger">12 Items</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Current</th>
+                                            <th>Threshold</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="4" class="text-center p-3 text-muted">
+                                                <div class="spinner-border spinner-border-sm text-primary me-2"
+                                                    role="status"></div>
+                                                Loading alerts...
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="catalog.html?filter=low-stock" class="text-decoration-none">View All Low Stock
+                                Items <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Recent Transactions</h5>
+                            <a href="transactions.html" class="btn btn-sm btn-outline-primary">View All</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush">
+                                <div class="p-4 text-center text-muted">Loading transactions...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Items -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Most Used Items (This Month)</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Item</th>
+                                    <th>Category</th>
+                                    <th>Issued</th>
+                                    <th>Current Stock</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center p-3 text-muted">Loading items...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/portal-switcher.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script src="../../assets/js/inventory-dashboard.js"></script>
+    <script>
+        auth.protectPage(['inventory']);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Layout.render('inventory');
+        });
+    </script>
+</body>
+
+</html>

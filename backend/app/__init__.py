@@ -2,10 +2,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+import os
 from .config import Config
 
 db = SQLAlchemy()
 jwt = JWTManager()
+limiter = Limiter(key_func=get_remote_address)
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -14,7 +18,11 @@ def create_app(config_class=Config):
     # Initialize extensions
     db.init_app(app)
     jwt.init_app(app)
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    limiter.init_app(app)
+    
+    # CORS Configuration
+    allowed_origins = os.environ.get('ALLOWED_ORIGINS', '*').split(',')
+    CORS(app, resources={r"/api/*": {"origins": allowed_origins}})
 
     # Register blueprints
     # Register blueprints
@@ -50,6 +58,14 @@ def create_app(config_class=Config):
 
     # Create tables if they don't exist
     with app.app_context():
+        from . import models
+        from . import models_job
+        from . import models_inventory
+        from . import models_network
+        from . import models_finance
+        from . import models_sales
+        from . import models_service
+        
         db.create_all()
 
     return app

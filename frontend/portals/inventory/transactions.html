@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History - Joitex Fiber</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar"></aside>
+
+    <div class="main-content">
+        <header class="header"></header>
+
+        <main class="content">
+            <div class="content-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="content-title">Transaction History</h1>
+                        <p class="content-subtitle">Complete audit trail of all inventory movements</p>
+                    </div>
+                    <button class="btn btn-inventory" onclick="Toast.info('Preparing report...')">
+                        <i class="bi bi-download me-2"></i>Export Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Today's Transactions</p>
+                                    <h3 class="mb-0" id="todayTxCount">0</h3>
+                                </div>
+                                <div class="stat-icon"
+                                    style="background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);">
+                                    <i class="bi bi-arrow-left-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Items Received</p>
+                                    <h3 class="mb-0 text-success" id="receiveCount">0</h3>
+                                </div>
+                                <div class="stat-icon bg-success">
+                                    <i class="bi bi-box-arrow-in-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Items Issued</p>
+                                    <h3 class="mb-0 text-warning" id="issueCount">0</h3>
+                                </div>
+                                <div class="stat-icon bg-warning">
+                                    <i class="bi bi-box-arrow-up"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="text-muted mb-1">Items Returned</p>
+                                    <h3 class="mb-0 text-info" id="returnCount">0</h3>
+                                </div>
+                                <div class="stat-icon bg-info">
+                                    <i class="bi bi-arrow-return-left"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Type</label>
+                            <select class="form-select" id="typeFilter">
+                                <option value="">All Types</option>
+                                <option value="IN">Receive (IN)</option>
+                                <option value="OUT">Issue (OUT)</option>
+                                <option value="RET">Return (RET)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Search</label>
+                            <input type="text" class="form-control" id="searchInput"
+                                placeholder="Search by item, reference or user...">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-inventory w-100" onclick="applyFilters()">
+                                <i class="bi bi-funnel me-2"></i>Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">All Transactions</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date & Time</th>
+                                    <th>Type</th>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Reference</th>
+                                    <th>Performed By</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="txTbody">
+                                <tr>
+                                    <td colspan="8" class="text-center p-4">Loading transactions...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved. | Version 1.0.0</p>
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="txModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" id="txModalContent"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['inventory']);
+
+        let allTx = [];
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            Layout.render('inventory');
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+
+            await loadTransactions();
+        });
+
+        async function loadTransactions() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/inventory/transactions', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                allTx = await res.json();
+
+                updateStats(allTx);
+                renderTable(allTx);
+            } catch (e) {
+                console.error(e);
+                Toast.error('Failed to load transactions');
+            }
+        }
+
+        function updateStats(txs) {
+            const today = new Date().toLocaleDateString();
+            document.getElementById('todayTxCount').textContent = txs.filter(t => new Date(t.created_at).toLocaleDateString() === today).length;
+            document.getElementById('receiveCount').textContent = txs.filter(t => t.transaction_type === 'IN').length;
+            document.getElementById('issueCount').textContent = txs.filter(t => t.transaction_type === 'OUT').length;
+            document.getElementById('returnCount').textContent = txs.filter(t => t.transaction_type === 'RET').length;
+        }
+
+        function renderTable(txs) {
+            const tbody = document.getElementById('txTbody');
+            if (txs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center p-3">No transactions found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = txs.map(t => {
+                const typeClass = t.transaction_type === 'IN' ? 'success' : (t.transaction_type === 'OUT' ? 'warning' : 'info');
+                const qtyPrefix = t.transaction_type === 'IN' ? '+' : '-';
+                const date = new Date(t.created_at);
+
+                return `
+                    <tr>
+                        <td><span class="badge bg-secondary">#${t.id}</span></td>
+                        <td>
+                            <div>${date.toLocaleDateString()}</div>
+                            <small class="text-muted">${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
+                        </td>
+                        <td><span class="badge bg-${typeClass}">${t.transaction_type}</span></td>
+                        <td><strong>${t.item_name}</strong></td>
+                        <td><span class="fw-bold text-${typeClass}">${qtyPrefix}${t.quantity}</span></td>
+                        <td>${t.reference || '-'}</td>
+                        <td>${t.performed_by}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewDetails(${t.id})">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function applyFilters() {
+            const type = document.getElementById('typeFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = allTx;
+            if (type) filtered = filtered.filter(t => t.transaction_type === type);
+            if (search) {
+                filtered = filtered.filter(t =>
+                    t.item_name.toLowerCase().includes(search) ||
+                    (t.reference && t.reference.toLowerCase().includes(search)) ||
+                    t.performed_by.toLowerCase().includes(search)
+                );
+            }
+
+            renderTable(filtered);
+        }
+
+        function viewDetails(id) {
+            const t = allTx.find(x => x.id === id);
+            if (!t) return;
+
+            const modalContent = `
+                <div class="modal-header">
+                    <h5 class="modal-title">Transaction Details #${t.id}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-6"><label class="text-muted small">Date & Time</label><p>${new Date(t.created_at).toLocaleString()}</p></div>
+                        <div class="col-6"><label class="text-muted small">Type</label><p><span class="badge bg-${t.transaction_type === 'IN' ? 'success' : 'warning'}">${t.transaction_type}</span></p></div>
+                        <div class="col-6"><label class="text-muted small">Item</label><p>${t.item_name}</p></div>
+                        <div class="col-6"><label class="text-muted small">Quantity</label><p>${t.quantity}</p></div>
+                        <div class="col-6"><label class="text-muted small">Reference</label><p>${t.reference || 'None'}</p></div>
+                        <div class="col-6"><label class="text-muted small">Performed By</label><p>${t.performed_by}</p></div>
+                        <div class="col-12"><label class="text-muted small">Notes</label><p>${t.notes || 'No notes provided'}</p></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            `;
+            document.getElementById('txModalContent').innerHTML = modalContent;
+            new bootstrap.Modal(document.getElementById('txModal')).show();
+        }
+    </script>
+</body>
+
+</html>

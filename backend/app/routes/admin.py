@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app import db
-from app.models import User, Role
+from app.models import User, Role, UserLog
+from datetime import datetime, timedelta
 from app.models_sales import BroadbandPlan
 import bcrypt
 
@@ -155,13 +156,12 @@ def update_user_portals(id):
 @jwt_required()
 def get_stats():
     total = User.query.count()
-    # Assuming 'active' status logic, but model might not have status field based on seed. 
-    # Checking seed.py: User model has 'role', 'name', 'email', 'permissions', 'portals'. No 'status'.
-    # We will assume all users are active for now or add a status field. 
-    # For now, let's treat all as active.
-    active = total 
-    inactive = 0
-    online = 1 # Mocking online count
+    active = User.query.filter_by(is_active=True).count()
+    inactive = User.query.filter_by(is_active=False).count()
+    
+    # Online = last_seen within 5 minutes
+    five_mins_ago = datetime.utcnow() - timedelta(minutes=5)
+    online = User.query.filter(User.last_seen >= five_mins_ago).count()
     
     return jsonify({
         'total': total,
@@ -169,3 +169,67 @@ def get_stats():
         'inactive': inactive,
         'online': online
     })
+
+@bp.route('/users/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_user(id):
+    user = User.query.get_or_404(id)
+    data = request.json
+    
+    current_admin_id = get_jwt_identity()
+    changes = []
+
+    if 'name' in data and data['name'] != user.name:
+        changes.append(f"Name changed from {user.name} to {data['name']}")
+        user.name = data['name']
+        
+    if 'email' in data and data['email'] != user.email:
+        # Check if email taken
+        if User.query.filter(User.email == data['email'], User.id != id).first():
+             return jsonify({'error': 'Email already exists'}), 400
+        changes.append(f"Email changed from {user.email} to {data['email']}")
+        user.email = data['email']
+        
+    if 'password' in data and data['password']:
+        hashed = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        user.password_hash = hashed
+        changes.append("Password changed")
+        
+    if 'role' in data and data['role'] != user.role:
+        changes.append(f"Role changed from {user.role} to {data['role']}")
+        user.role = data['role']
+        # Also update portals default if role changed? Maybe keep it flexible.
+        
+    if 'is_active' in data:
+        # data['is_active'] should be boolean
+        if data['is_active'] != user.is_active:
+             status = "Active" if data['is_active'] else "Inactive"
+             changes.append(f"Status changed to {status}")
+             user.is_active = data['is_active']
+
+    if changes:
+        # Log the update
+        log = UserLog(
+            user_id=user.id,
+            action='update',
+            details=f"Admin updated user: {', '.join(changes)}",
+            ip_address=request.remote_addr,
+            timestamp=datetime.utcnow()
+        )
+        db.session.add(log)
+        db.session.commit()
+    
+    return jsonify(user.to_dict())
+
+@bp.route('/users/<int:id>/logs', methods=['GET'])
+@jwt_required()
+def get_user_logs(id):
+    # Optional: fetch last 30 days only
+    thirty_days_ago = datetime.utcnow() - timedelta(days=30)
+    
+    logs = UserLog.query.filter(
+        UserLog.user_id == id,
+        UserLog.timestamp >= thirty_days_ago
+    ).order_by(UserLog.timestamp.desc()).all()
+    
+    return jsonify([l.to_dict() for l in logs])

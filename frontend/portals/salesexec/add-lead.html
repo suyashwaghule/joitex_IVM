@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Lead - Joitex Fiber</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+</head>
+
+<body data-theme="light">
+    <div class="sidebar-overlay"></div>
+
+    <aside class="sidebar"></aside>
+
+    <div class="main-content">
+        <header class="header"></header>
+
+        <main class="content">
+            <div class="content-header">
+                <div>
+                    <h1 class="content-title">Add New Lead</h1>
+                    <p class="content-subtitle">Register a new prospective customer</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="addLeadForm">
+                                <h5 class="mb-4">Customer Details</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" name="name" required
+                                            placeholder="John Doe">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" name="phone" required
+                                            placeholder="+91 9876543210">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" name="email"
+                                            placeholder="john@example.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Plan Interest</label>
+                                        <select class="form-select" name="plan_interest" id="planSelect" required>
+                                            <option value="">Loading plans...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Complete Address</label>
+                                        <textarea class="form-control" name="address" rows="3" required
+                                            placeholder="Apartment, Street, Landmark..."></textarea>
+                                    </div>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <h5 class="mb-4">Sales Tracking</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Lead Source</label>
+                                        <select class="form-select" name="source" required>
+                                            <option value="self">Self-sourced</option>
+                                            <option value="referral">Referral</option>
+                                            <option value="website">Website</option>
+                                            <option value="door-to-door">Door to Door</option>
+                                            <option value="call">Inbound Call</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Initial Notes</label>
+                                        <textarea class="form-control" name="notes" rows="2"
+                                            placeholder="Any specific requirements or discussion points..."></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 pt-2">
+                                    <button type="submit" class="btn btn-primary px-4 py-2">
+                                        <i class="bi bi-check2-circle me-2"></i>Create Lead
+                                    </button>
+                                    <button type="reset" class="btn btn-outline-secondary px-4 py-2 ms-2">Reset</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="mb-0">&copy; 2025 Joitex Fiber. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/layout.js"></script>
+    <script src="../../assets/js/common.js"></script>
+    <script>
+        auth.protectPage(['salesexec']);
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            Layout.render('salesexec');
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelector('.user-avatar').textContent = initials;
+            }
+
+
+
+            await loadPlans();
+            document.getElementById('addLeadForm').addEventListener('submit', handleAddLead);
+        });
+
+        async function loadPlans() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/salesexec/plans', {
+                    headers: { 'Authorization': `Bearer ${auth.token}` }
+                });
+                const plans = await res.json();
+                const select = document.getElementById('planSelect');
+                select.innerHTML = '<option value="">Select a plan</option>' +
+                    plans.map(p => `<option value="${p.name}">${p.name} (${p.speed_mbps} Mbps - ₹${p.price_monthly})</option>`).join('');
+            } catch (e) {
+                console.error(e);
+                Toast.error('Failed to load plans');
+            }
+        }
+
+        async function handleAddLead(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/salesexec/leads', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${auth.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    Toast.success('Lead created successfully!');
+                    setTimeout(() => window.location.href = 'my-leads.html', 1500);
+                } else {
+                    const error = await res.json();
+                    Toast.error(error.message || 'Failed to create lead');
+                }
+            } catch (e) {
+                console.error(e);
+                Toast.error('Network error');
+            }
+        }
+    </script>
+</body>
+
+</html>

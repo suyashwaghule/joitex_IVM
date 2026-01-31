@@ -15,30 +15,5 @@
 
 # Python pycache:
 __pycache__/
-*.pyc
-*.pyo
-
-# Virtual environment
-venv/
-.venv/
-
-# Environment files (secrets should be set in GCP Console)
-.env
-.env.local
-.env.production
-
-# Database files
-*.db
-*.sqlite3
-
-# IDE
-.idea/
-.vscode/
-
-# Testing
-.pytest_cache/
-htmlcov/
-.coverage
-
 # Ignored by the build system
 /setup.cfg

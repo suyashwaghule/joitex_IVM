@@ -1,5 +1,18 @@
 runtime: python311
-entrypoint: gunicorn -b :$PORT main:app
+service: api
+entrypoint: gunicorn -b :$PORT run:app
+
+instance_class: F1
 
 automatic_scaling:
-  max_instances: 1
+  min_instances: 0
+  max_instances: 2
+  target_cpu_utilization: 0.65
+
+env_variables:
+  FLASK_ENV: "production"
+  # IMPORTANT: Set these in Google Cloud Console -> App Engine -> Settings
+  # Or use: gcloud app deploy --set-env-vars="SECRET_KEY=xxx,JWT_SECRET_KEY=xxx"
+  # SECRET_KEY: "your-secret-key"
+  # JWT_SECRET_KEY: "your-jwt-secret-key"
+  # SQLALCHEMY_DATABASE_URI: "postgresql://user:pass@/dbname?host=/cloudsql/PROJECT:REGION:INSTANCE"

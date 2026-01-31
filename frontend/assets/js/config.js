@@ -14,13 +14,22 @@
     const hostname = window.location.hostname;
     const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '';
 
+    // Determine API URL based on environment
+    let apiBaseUrl;
+    if (isLocalhost) {
+        apiBaseUrl = 'http://127.0.0.1:5000';
+    } else if (hostname.includes('appspot.com') || hostname.includes('joitex')) {
+        // Google App Engine - backend is on 'api' service
+        apiBaseUrl = 'https://api-dot-joitex.el.r.appspot.com';
+    } else {
+        // Custom domain
+        apiBaseUrl = 'https://api.' + hostname.replace('www.', '');
+    }
+
     // Configuration object
     window.config = {
         // API Base URL
-        // Update this for production deployment
-        apiBaseUrl: isLocalhost
-            ? 'http://127.0.0.1:5000'
-            : 'https://api.yourdomain.com',
+        apiBaseUrl: apiBaseUrl,
 
         // Application Settings
         appName: 'Joitex Fiber',
